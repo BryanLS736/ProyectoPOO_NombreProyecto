@@ -5,6 +5,9 @@
 package vista.area2Historial;
 
 import java.awt.Color;
+import vista.area1TomarPedido.FormTomarPedido;
+import vista.area3Inventario.FormInventario;
+import vista.area4Boletas.FormBoletas;
 
 /**
  *
@@ -532,7 +535,7 @@ public class FormHistorial extends javax.swing.JFrame {
 
         jLabel43.setFont(new java.awt.Font("Inter SemiBold", 0, 16)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel43.setText("s/ 50.00");
+        jLabel43.setText("     s/ 0.00");
 
         jLabel44.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
         jLabel44.setText("  Total:");
@@ -543,9 +546,9 @@ public class FormHistorial extends javax.swing.JFrame {
             pnlSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuma2Layout.createSequentialGroup()
                 .addComponent(jLabel44)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jLabel43)
-                .addGap(14, 14, 14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlSuma2Layout.setVerticalGroup(
             pnlSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,10 +567,10 @@ public class FormHistorial extends javax.swing.JFrame {
         jLabel40.setText("IGV (18%):");
 
         jLabel41.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel41.setText("s/41.00");
+        jLabel41.setText("s/0.00");
 
         jLabel42.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel42.setText("s/9.00");
+        jLabel42.setText("s/0.00");
 
         javax.swing.GroupLayout pnlCalculoSuma2Layout = new javax.swing.GroupLayout(pnlCalculoSuma2);
         pnlCalculoSuma2.setLayout(pnlCalculoSuma2Layout);
@@ -667,11 +670,9 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnMostrarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnMostrarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(15, 15, 15))
         );
         pnlPrincipalLayout.setVerticalGroup(
@@ -702,10 +703,10 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
-                .addComponent(btnMostrarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnMostrarDetalle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -739,6 +740,9 @@ public class FormHistorial extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
+        
+        new FormTomarPedido().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
@@ -751,19 +755,22 @@ public class FormHistorial extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
+        
+        new FormInventario().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnBoletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletasActionPerformed
         deseleccionarBotonesLaterales();
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
+        new FormBoletas().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
     
-        txtFechaInicio.setText("");
-        txtFechaFin.setText("");
-        txtBuscarPor.setText("");
+       
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 

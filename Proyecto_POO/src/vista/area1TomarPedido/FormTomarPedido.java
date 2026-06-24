@@ -5,6 +5,9 @@
 package vista.area1TomarPedido;
 
 import java.awt.Color;
+import vista.area2Historial.FormHistorial;
+import vista.area3Inventario.FormInventario;
+import vista.area4Boletas.FormBoletas;
 
 /**
  *
@@ -448,7 +451,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
             }
         });
 
-        lblCantidad1.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        lblCantidad1.setFont(new java.awt.Font("Inter SemiBold", 0, 16)); // NOI18N
         lblCantidad1.setText("Cant:");
 
         btnAgregar.setBackground(new java.awt.Color(240, 240, 240));
@@ -546,7 +549,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                         .addGap(37, 37, 37))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCentralLayout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(56, 56, 56))))
+                        .addGap(47, 47, 47))))
         );
 
         pnlDerecho.setBackground(new java.awt.Color(255, 246, 239));
@@ -857,21 +860,27 @@ public class FormTomarPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        deseleccionarBotonesLaterales();
-        btnHistorial.setBackground(new Color(252,231,218));
-        btnHistorial.setForeground(new Color(181,69,63));
+
+        new FormHistorial().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         deseleccionarBotonesLaterales();
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
+        
+        new FormInventario().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnBoletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletasActionPerformed
         deseleccionarBotonesLaterales();
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
+        
+        new FormBoletas().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarPedidoActionPerformed

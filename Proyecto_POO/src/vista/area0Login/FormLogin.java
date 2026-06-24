@@ -1,22 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista.area0Login;
 
-/**
- *
- * @author Diego
- */
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import vista.area1TomarPedido.FormTomarPedido;
+
 public class FormLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormLogin.class.getName());
 
-    /**
-     * Creates new form FormLogin
-     */
+    FondoPanel fondo = new FondoPanel();
+
     public FormLogin() {
+
+        this.setContentPane(fondo);
+
         initComponents();
+
+        this.setLocationRelativeTo(null); //Para centrar el Jframe
+        this.requestFocusInWindow();
+
+        txtUsuarioLogin.setText("Usuario");
+        txtUsuarioLogin.setForeground(Color.decode("#666666"));
+
+        pswContraseña.setEchoChar((char) 0);
+        pswContraseña.setText("Contraseña");
+        pswContraseña.setForeground(Color.GRAY);
+
+
     }
 
     /**
@@ -28,21 +46,354 @@ public class FormLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtNombre = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jPanel12 = new javax.swing.JPanel();
+        btnIniciarSesión3 = new javax.swing.JToggleButton();
+        jLabel27 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        txtUsuarioLogin = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        pswContraseña = new javax.swing.JPasswordField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+
+        txtNombre.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombre.setFont(new java.awt.Font("Inter SemiBold", 0, 14)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(51, 51, 51));
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombreClickenTxt(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreClicFuera(evt);
+            }
+        });
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        jCheckBox1.setText("jCheckBox1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 255, 51));
+        setResizable(false);
+
+        jPanel12.setBackground(new java.awt.Color(254, 251, 246));
+
+        btnIniciarSesión3.setBackground(new java.awt.Color(182, 22, 20));
+        btnIniciarSesión3.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
+        btnIniciarSesión3.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciarSesión3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoIniciarSesion6.png"))); // NOI18N
+        btnIniciarSesión3.setText("   Iniciar sesión ");
+        btnIniciarSesión3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesiónActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel27.setText("Rol:");
+
+        jComboBox4.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Seleccione su rol", "Empleado", "Admin" }));
+
+        jLabel28.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel28.setFont(new java.awt.Font("Inter SemiBold", 0, 9)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel28.setText(" Acceso segurio al sistema");
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoEscudo2.png"))); // NOI18N
+
+        jLabel30.setFont(new java.awt.Font("Inter SemiBold", 0, 11)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setText("¡Bienvenido!");
+
+        jLabel31.setFont(new java.awt.Font("Inter SemiBold", 0, 9)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel31.setText("Inicia sesión para continuar");
+
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoUsuario2.png"))); // NOI18N
+
+        txtUsuarioLogin.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsuarioLogin.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtUsuarioLogin.setForeground(new java.awt.Color(51, 51, 51));
+        txtUsuarioLogin.setBorder(null);
+        txtUsuarioLogin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                clickEnUsuario(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                clickFueraUsuario(evt);
+            }
+        });
+        txtUsuarioLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtUsuarioLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel32)
+                .addGap(12, 12, 12))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(txtUsuarioLogin)
+                .addContainerGap())
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoCandado2.png"))); // NOI18N
+
+        pswContraseña.setBackground(new java.awt.Color(255, 255, 255));
+        pswContraseña.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        pswContraseña.setBorder(null);
+        pswContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                clicEnConstraseña(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                clicFueraContraseña(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(pswContraseña))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(pswContraseña)
+                .addGap(12, 12, 12))
+        );
+
+        jLabel11.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(96, 49, 14));
+        jLabel11.setText("Sistema de Gestión");
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/arrib1.png"))); // NOI18N
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/abajo2.png"))); // NOI18N
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/LoginMarcela6.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel28)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel11))
+                            .addComponent(jLabel13))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel30)
+                                .addGap(135, 135, 135))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel31)
+                                .addGap(112, 112, 112))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)))
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnIniciarSesión3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox4, 0, 221, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(84, 84, 84))))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel31)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnIniciarSesión3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel28)))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 658, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(196, 196, 196))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNombreClickenTxt(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClickenTxt
+        if (txtNombre.getText().equals("Nombre del cliente")) {
+            txtNombre.setText("");
+            txtNombre.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtNombreClickenTxt
+
+    private void txtNombreClicFuera(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreClicFuera
+        if (txtNombre.getText().isEmpty()) {
+            txtNombre.setText("Nombre del cliente");
+            txtNombre.setForeground(Color.decode("#666666"));
+        }
+    }//GEN-LAST:event_txtNombreClicFuera
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void clicFueraContraseña(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clicFueraContraseña
+        if (pswContraseña.getText().isEmpty()) {
+            pswContraseña.setEchoChar((char) 0);
+            pswContraseña.setText("Contraseña");
+            pswContraseña.setForeground(Color.decode("#666666"));
+        }
+    }//GEN-LAST:event_clicFueraContraseña
+
+    private void clicEnConstraseña(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clicEnConstraseña
+        if (String.valueOf(pswContraseña.getPassword()).equals("Contraseña")) {
+            pswContraseña.setText("");
+            pswContraseña.setEchoChar('*');
+            pswContraseña.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_clicEnConstraseña
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void clickFueraUsuario(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clickFueraUsuario
+        if (txtUsuarioLogin.getText().isEmpty()) {
+            txtUsuarioLogin.setText("Usuario");
+            txtUsuarioLogin.setForeground(Color.decode("#666666"));
+        }
+    }//GEN-LAST:event_clickFueraUsuario
+
+    private void clickEnUsuario(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clickEnUsuario
+        if (txtUsuarioLogin.getText().equals("Usuario")) {
+            txtUsuarioLogin.setText("");
+            txtUsuarioLogin.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_clickEnUsuario
+
+    private void btnIniciarSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesiónActionPerformed
+
+        String usuario = txtUsuarioLogin.getText();
+        String contraseña = pswContraseña.getText();
+        txtUsuarioLogin.setText("Usuario");
+        txtUsuarioLogin.setForeground(Color.decode("#666666"));
+
+        pswContraseña.setText("Contraseña");
+        pswContraseña.setForeground(Color.decode("#666666"));
+
+        pswContraseña.setEchoChar((char) 0);
+        pswContraseña.setText("Contraseña");
+        pswContraseña.setForeground(Color.GRAY);
+
+        new FormTomarPedido().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIniciarSesiónActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +421,48 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnIniciarSesión3;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPasswordField pswContraseña;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtUsuarioLogin;
     // End of variables declaration//GEN-END:variables
+
+    class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paintComponent(Graphics g) {
+
+            super.paintComponent(g);
+
+            imagen = new ImageIcon(getClass().getResource("/vista/imagenes/fondoPanaderia.png")).getImage();
+
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+
+        }
+
+    }
+
 }
