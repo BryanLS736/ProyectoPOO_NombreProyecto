@@ -26,9 +26,7 @@ Sistema desarrollado en Java como proyecto universitario.
 
 ## Estructura del proyecto
 - `src/` → código fuente Java
-- `lib/` → librerías externas (conector MySQL)
-- `sql/` → scripts de base de datos
-- `docs/` → documentación del equipo
+
 
 # Panadería App — Estructura del Proyecto
 
@@ -38,7 +36,7 @@ Este documento explica qué hace cada carpeta (`package`) del proyecto, para que
 
 ## Arquitectura general
 
-El proyecto sigue una arquitectura en capas. La idea es que cada parte del código tenga una sola responsabilidad y no se mezcle con las demás:
+El proyecto sigue una arquitectura MVC + DAO. La idea es que cada parte del código tenga una sola responsabilidad y no se mezcle con las demás:
 
 ```
 Vista (Swing)  →  Controlador  →  DAO  →  Base de datos
@@ -49,30 +47,35 @@ Vista (Swing)  →  Controlador  →  DAO  →  Base de datos
 - El **DAO** es el único que habla con la base de datos (SQL puro).
 - El **Modelo** son las clases que representan nuestras tablas como objetos Java.
 
-Ninguna capa debería saltarse a otra. Por ejemplo, la Vista nunca debe ejecutar SQL directamente, y el DAO nunca debe validar reglas de negocio.
+> [!info] IMPORTANTE
+> Ninguna capa debería saltarse a otra. Por ejemplo, la Vista nunca debe ejecutar SQL directamente, y el DAO nunca debe validar reglas de negocio.
+
 
 ## Estructura de carpetas
 
-```
+```text
 PanaderiaApp/
 └── src/
     └── panaderia/
-        ├── modelo/
-        ├── dao/
         ├── conexion/
-        ├── factory/
-        ├── vista/
         ├── controlador/
-        └── util/
+        ├── dao/
+        ├── factory/
+        ├── imagenes/
+        ├── interfaces/
+        ├── modelo/
+        ├── proyecto_poo/
+        ├── util/
+        └── vista/
 ```
 
 ### `modelo/`
 
-Clases que representan cada tabla de la base de datos como un objeto Java (también llamados POJOs). Solo tienen atributos, constructores, getters y setters. No contienen lógica ni SQL.
+Contiene las clases que representan las entidades del sistema y las tablas de la base de datos. Estas clases almacenan los datos mediante atributos, constructores, getters y setters.
 
-Aquí también vive la jerarquía de herencia de `Producto`:
+También incluye la jerarquía de herencia de productos:
 
-```
+```text
 Producto (abstracta)
 ├── Pan
 ├── Bocadito
@@ -80,71 +83,179 @@ Producto (abstracta)
 └── Pastel
 ```
 
-Archivos: `Empleado.java`, `Cliente.java`, `Caja.java`, `Venta.java`, `DetalleVenta.java`, `Producto.java`, `Pan.java`, `Bebida.java`, `Bocadito.java`, `Pastel.java`.
+Ejemplos: `Empleado.java`, `Cliente.java`, `Caja.java`, `Venta.java`, `DetalleVenta.java`, `Producto.java`, `Pan.java`, `Bebida.java`, `Bocadito.java`, `Pastel.java`.
 
-**Regla:** si estás escribiendo un `INSERT` o un `JOptionPane` dentro de una clase de este package, está en el lugar equivocado.
+**Regla:** las clases de este paquete no deben contener código SQL ni componentes de interfaz gráfica.
+
+---
+
+### `interfaces/`
+
+Contiene las interfaces que definen las operaciones de acceso a datos que deberán implementar los DAO.
+
+Ejemplos:
+
+```java
+public interface IEmpleadoDAO {
+    boolean registrar(Empleado empleado);
+    boolean modificar(Empleado empleado);
+    boolean eliminar(int id);
+    List<Empleado> listar();
+}
+```
+
+Archivos: `IEmpleadoDAO.java`, `IClienteDAO.java`, `IProductoDAO.java`, etc.
+
+**Regla:** aquí solo se declaran métodos; la implementación se realiza en el paquete `dao`.
+
+---
 
 ### `dao/`
 
-DAO significa *Data Access Object*. Cada clase aquí se encarga únicamente de ejecutar SQL (SELECT, INSERT, UPDATE, DELETE) para una tabla específica, y de convertir el resultado en objetos del package `modelo`.
+Contiene las clases encargadas de acceder a la base de datos mediante JDBC.
 
-Archivos: `EmpleadoDAO.java`, `ClienteDAO.java`, `CajaDAO.java`, `VentaDAO.java`, `DetalleVentaDAO.java`, `ProductoDAO.java`.
+Cada DAO implementa una interfaz del paquete `interfaces` y se encarga de ejecutar consultas SQL (SELECT, INSERT, UPDATE y DELETE), transformando los resultados en objetos del paquete `modelo`.
 
-**Regla:** un DAO no valida si un precio es negativo ni decide si un login es correcto en términos de negocio; solo ejecuta la consulta y devuelve el resultado. Esa validación va en el `controlador`.
+Ejemplos: `EmpleadoDAO.java`, `ClienteDAO.java`, `ProductoDAO.java`, `VentaDAO.java`, etc.
+
+**Regla:** un DAO solo accede a los datos; no contiene lógica de negocio ni validaciones de la aplicación.
+
+---
 
 ### `conexion/`
 
-Contiene la clase `Conexion.java`, que maneja la conexión a MySQL usando el patrón **Singleton** (una sola instancia de conexión reutilizada en toda la app, en lugar de abrir una conexión nueva cada vez).
+Contiene la clase `Conexion.java`, responsable de administrar la conexión con MySQL mediante el patrón Singleton.
 
-Todos los DAO usan esta clase para obtener la conexión:
+Todos los DAO obtienen la conexión desde esta clase:
 
 ```java
 Connection conn = Conexion.getInstancia().getConexion();
 ```
 
-**Regla:** nadie fuera de este package debería llamar a `DriverManager.getConnection(...)` directamente.
+**Regla:** las conexiones a la base de datos deben centralizarse aquí para evitar duplicación de código y facilitar el mantenimiento.
+
+---
 
 ### `factory/`
 
-Contiene `ProductoFactory.java`, encargada de decidir qué subclase de `Producto` instanciar (`Pan`, `Bebida`, `Bocadito`, `Pastel`) según el campo `categoria` que viene de la base de datos.
+Contiene las fábricas de objetos utilizadas para encapsular la creación de instancias complejas.
 
-Esto evita tener un `switch` repetido en varias partes del código; el DAO le delega esa decisión a la Factory.
+Por ejemplo, `ProductoFactory.java` determina qué tipo de producto crear según la categoría obtenida desde la base de datos:
+
+```java
+Producto producto = ProductoFactory.crearProducto(categoria);
+```
+
+Esto evita repetir estructuras condicionales en distintos lugares del sistema.
+
+---
 
 ### `vista/`
 
-Todos los formularios Swing (`JFrame`, `JPanel`, etc.) que el usuario ve e interactúa directamente.
+Contiene todas las interfaces gráficas desarrolladas con Swing (`JFrame`, `JDialog`, `JPanel`, etc.).
 
-Archivos: `LoginForm.java`, `MenuPrincipalForm.java`, `EmpleadoForm.java`, `ClienteForm.java`, `ProductoForm.java`, `VentaForm.java`, `CajaForm.java`, `HistorialForm.java`, `ReportesForm.java`.
+Ejemplos:
 
-**Regla:** una clase de este package no debería escribir SQL ni instanciar un DAO directamente para guardar datos sin pasar antes por el `controlador`. Sí puede llamar al controlador y mostrar el resultado (éxito, error, lista de datos, etc.).
+* `LoginForm.java`
+* `MenuPrincipalForm.java`
+* `EmpleadoForm.java`
+* `ClienteForm.java`
+* `ProductoForm.java`
+* `VentaForm.java`
+* `CajaForm.java`
+* `HistorialForm.java`
+* `ReportesForm.java`
+
+**Regla:** la vista se encarga únicamente de mostrar información y capturar acciones del usuario.
+
+---
 
 ### `controlador/`
 
-Capa intermedia entre la `vista` y el `dao`. Aquí va la lógica de negocio: validar campos vacíos, verificar que un total no sea negativo, comprobar que el login sea correcto, etc.
+Actúa como intermediario entre la vista y los DAO.
 
-Archivos: `EmpleadoController.java`, `VentaController.java`, `ProductoController.java`, etc.
+Aquí se implementa la lógica de negocio de la aplicación, tales como:
 
-**Regla:** si la vista necesita saber "¿puedo guardar esto?", la respuesta la da el controlador, no el DAO ni la vista misma.
+* Validación de campos.
+* Verificación de credenciales.
+* Cálculo de totales.
+* Reglas de negocio del sistema.
+* Coordinación entre múltiples DAO.
+
+Ejemplos: `EmpleadoController.java`, `ProductoController.java`, `VentaController.java`.
+
+**Regla:** toda operación solicitada por la vista debe pasar por un controlador.
+
+---
 
 ### `util/`
 
-Clases de utilidad reutilizables en cualquier parte del proyecto, que no pertenecen a ninguna entidad específica.
+Contiene clases reutilizables que pueden ser utilizadas desde cualquier capa del sistema.
 
-Archivos:
-- `Negocio.java` — constantes fijas del negocio (nombre de la panadería, RUC, dirección). No van en la base de datos porque no cambian.
-- `PasswordUtil.java` — funciones para hashear contraseñas (SHA-256) antes de guardarlas o compararlas en el login.
-- `ValidacionUtil.java` — validaciones genéricas (campo vacío, formato de DNI, etc.) que se repiten en varios formularios.
+Ejemplos:
 
-## Resumen rápido: ¿dónde pongo mi código?
+* `Negocio.java` — información fija de la empresa.
+* `PasswordUtil.java` — cifrado y verificación de contraseñas.
+* `ValidacionUtil.java` — validaciones genéricas.
+* `FechaUtil.java` — utilidades para manejo de fechas.
 
-| Si estás haciendo... | Va en... |
-|---|---|
-| Una clase que representa una fila de una tabla | `modelo` |
-| Un método que ejecuta SQL | `dao` |
-| Una pantalla con botones, tablas o campos de texto | `vista` |
-| Una validación antes de guardar algo | `controlador` |
-| Decidir si crear un Pan, Bebida, etc. | `factory` |
-| Algo que se usa en todos lados y no es de una tabla en particular | `util` |
+**Regla:** aquí solo deben colocarse herramientas genéricas que no pertenezcan a una entidad específica.
 
+---
 
-Cada uno trabaja en su propia rama (`feature/nombre-modulo`) siguiendo el flujo de Git ya definido, y al terminar abre un Pull Request hacia `develop` para revisión del equipo.
+### `imagenes/`
+
+Contiene los recursos gráficos utilizados por la interfaz de usuario, como íconos, logotipos y fotografías.
+
+Ejemplos:
+
+```text
+imagenes/
+├── logo.png
+├── usuario.png
+├── producto.png
+└── fondo_login.jpg
+```
+
+---
+
+### `proyecto_poo/`
+
+Contiene la clase principal encargada de iniciar la aplicación.
+
+Ejemplo:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        new LoginForm().setVisible(true);
+    }
+}
+```
+
+---
+
+## Resumen rápido
+
+| Si estás haciendo...                  | Va en...       |
+| ------------------------------------- | -------------- |
+| Una entidad o modelo de datos         | `modelo`       |
+| Una interfaz para operaciones CRUD    | `interfaces`   |
+| Una implementación JDBC con SQL       | `dao`          |
+| Una conexión a la base de datos       | `conexion`     |
+| Una ventana o formulario Swing        | `vista`        |
+| Una validación o regla de negocio     | `controlador`  |
+| La creación de objetos especializados | `factory`      |
+| Funciones auxiliares reutilizables    | `util`         |
+| Recursos gráficos                     | `imagenes`     |
+| Clase principal de ejecución          | `proyecto_poo` |
+
+## Flujo de trabajo con Git
+
+Cada integrante desarrollará su funcionalidad en una rama propia siguiendo la nomenclatura:
+
+```text
+feature/nombre-modulo
+```
+
+Una vez finalizado el desarrollo, se deberá crear un Pull Request hacia la rama `develop` para su revisión e integración con el proyecto principal.

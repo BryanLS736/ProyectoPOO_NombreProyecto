@@ -385,11 +385,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblLogoMarcela">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\LENOVO\OneDrive\Desktop\logos de POO\OP2.png"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnTomarPedido">
           <Properties>

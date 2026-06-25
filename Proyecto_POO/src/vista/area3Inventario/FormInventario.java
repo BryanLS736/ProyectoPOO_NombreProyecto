@@ -168,8 +168,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 246, 241));
 
-        lblLogoMarcela.setIcon(new javax.swing.ImageIcon("C:\\Users\\LENOVO\\OneDrive\\Desktop\\logos de POO\\OP2.png")); // NOI18N
-
         btnTomarPedido.setBackground(new java.awt.Color(253, 246, 240));
         btnTomarPedido.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnTomarPedido.setForeground(new java.awt.Color(0, 0, 0));
@@ -379,7 +377,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel2.setForeground(new java.awt.Color(204, 204, 204));
 
         lblProductos.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         lblProductos.setForeground(new java.awt.Color(204, 0, 0));
@@ -404,7 +401,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel3.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
@@ -446,7 +442,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel5.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel3.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         jLabel3.setText("Buscar producto:");
@@ -577,7 +572,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel10.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
@@ -619,7 +613,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel11.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
@@ -661,7 +654,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel12.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel32.setBackground(new java.awt.Color(0, 0, 0));
         jLabel32.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
@@ -813,12 +805,10 @@ public class FormInventario extends javax.swing.JFrame {
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
         new FormAgregarProducto().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
         new FormActualizarProducto().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
@@ -829,31 +819,6 @@ public class FormInventario extends javax.swing.JFrame {
         new FormAdministracion().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracionActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FormInventario().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarProducto;

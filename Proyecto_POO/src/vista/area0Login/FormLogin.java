@@ -19,7 +19,7 @@ public class FormLogin extends javax.swing.JFrame {
     FondoPanel fondo = new FondoPanel();
 
     public FormLogin() {
-
+        
         this.setContentPane(fondo);
 
         initComponents();
@@ -27,6 +27,10 @@ public class FormLogin extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); //Para centrar el Jframe
         this.requestFocusInWindow();
 
+        System.out.println(getClass().getResource("/vista/imagenes/FLORES4.png"));
+
+        
+        
         txtUsuarioLogin.setText("Usuario");
         txtUsuarioLogin.setForeground(Color.decode("#666666"));
 
@@ -111,6 +115,11 @@ public class FormLogin extends javax.swing.JFrame {
 
         jComboBox4.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Seleccione su rol", "Empleado", "Admin" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
 
         jLabel28.setBackground(new java.awt.Color(0, 0, 0));
         jLabel28.setFont(new java.awt.Font("Inter SemiBold", 0, 9)); // NOI18N
@@ -395,30 +404,9 @@ public class FormLogin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnIniciarSesiónActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FormLogin().setVisible(true));
-    }
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnIniciarSesión3;
