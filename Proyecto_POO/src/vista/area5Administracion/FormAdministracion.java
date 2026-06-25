@@ -5,6 +5,7 @@
 package vista.area5Administracion;
 
 import java.awt.Color;
+import modelo.Empleado;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
@@ -658,7 +659,6 @@ public class FormAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
         String nombres= txtNombres.getText();
         txtNombres.setText("");
         
@@ -679,7 +679,6 @@ public class FormAdministracion extends javax.swing.JFrame {
         
         String rol= cbxRoles.getSelectedItem().toString();
         cbxRoles.setSelectedItem("Empleado");
-        
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
