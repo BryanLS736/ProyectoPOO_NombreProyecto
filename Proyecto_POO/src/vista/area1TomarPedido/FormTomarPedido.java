@@ -8,6 +8,7 @@ import java.awt.Color;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area4Boletas.FormBoletas;
+import vista.area5Administracion.FormAdministracion;
 
 /**
  *
@@ -59,7 +60,9 @@ public class FormTomarPedido extends javax.swing.JFrame {
         btnBoletas.setBackground(new Color(253,246,240));
         btnBoletas.setForeground(Color.black);
         
-        
+        btnAdministracion.setBackground(new Color(253,246,240));
+        btnAdministracion.setForeground(Color.black);
+
         
     }
     
@@ -112,6 +115,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
         lblLogoMarcela = new javax.swing.JLabel();
         btnTomarPedido = new javax.swing.JButton();
         lblLogoFlores = new javax.swing.JLabel();
+        btnAdministracion = new javax.swing.JButton();
         pnlSuperior = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -267,6 +271,22 @@ public class FormTomarPedido extends javax.swing.JFrame {
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
+        btnAdministracion.setBackground(new java.awt.Color(253, 246, 240));
+        btnAdministracion.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        btnAdministracion.setForeground(new java.awt.Color(0, 0, 0));
+        btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo Administraicon.png"))); // NOI18N
+        btnAdministracion.setText("  Administracion");
+        btnAdministracion.setBorder(null);
+        btnAdministracion.setBorderPainted(false);
+        btnAdministracion.setContentAreaFilled(false);
+        btnAdministracion.setFocusPainted(false);
+        btnAdministracion.setOpaque(true);
+        btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBarraLateralLayout = new javax.swing.GroupLayout(pnlBarraLateral);
         pnlBarraLateral.setLayout(pnlBarraLateralLayout);
         pnlBarraLateralLayout.setHorizontalGroup(
@@ -282,6 +302,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
             .addGroup(pnlBarraLateralLayout.createSequentialGroup()
                 .addComponent(lblLogoFlores)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(btnAdministracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlBarraLateralLayout.setVerticalGroup(
             pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +317,9 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addComponent(lblLogoFlores))
         );
 
@@ -1076,6 +1099,15 @@ public class FormTomarPedido extends javax.swing.JFrame {
         txtCantidad2.setText("");
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
+        deseleccionarBotonesLaterales();
+        btnAdministracion.setBackground(new Color(252,231,218));
+        btnAdministracion.setForeground(new Color(181,69,63));
+        
+        new FormAdministracion().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdministracionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1102,6 +1134,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdministracion;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAqui;
     private javax.swing.JButton btnBebidas;
