@@ -804,11 +804,14 @@ public class FormInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        new FormAgregarProducto().setVisible(true);
+        new FormAgregarProducto(this).setVisible(true);
+        this.setEnabled(false);
+        
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
-        new FormActualizarProducto().setVisible(true);
+        new FormActualizarProducto(this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
