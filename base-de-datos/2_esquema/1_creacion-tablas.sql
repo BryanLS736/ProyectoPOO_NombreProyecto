@@ -4,16 +4,16 @@ USE panaderia_db;
 -- =========================
 -- EMPLEADO
 -- =========================
-
 CREATE TABLE Empleado (
     id_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
     dni CHAR(8) NOT NULL UNIQUE,
     contrasenia VARCHAR(255) NOT NULL,
     direccion VARCHAR(200),
     telefono VARCHAR(15),
-    rol ENUM('Administrador','Cajero') NOT NULL,
+    rol ENUM('Administrador','Empleado') NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_modificacion DATETIME DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -27,6 +27,7 @@ CREATE TABLE Cliente (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     dni CHAR(8) UNIQUE,
+    activo BOOLEAN DEFAULT TRUE,
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_modificacion DATETIME DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -39,12 +40,11 @@ CREATE TABLE Cliente (
 CREATE TABLE Producto (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    categoria VARCHAR(100) NOT NULL,
+    categoria ENUM('Panes','Bocaditos','Bebidas','Tortas') NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     precio DECIMAL(10,2) NOT NULL,
-    estado ENUM('Activo','Inactivo') DEFAULT 'Activo',
-    descripcion VARCHAR(255),
-    unid_medida VARCHAR(50),
+    unid_medida VARCHAR(50) DEFAULT 'unid.',
+    activo BOOLEAN DEFAULT TRUE,
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_modificacion DATETIME DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -82,12 +82,14 @@ CREATE TABLE Venta (
     id_venta INT AUTO_INCREMENT PRIMARY KEY,
     id_empleado INT NOT NULL,
     id_caja INT NOT NULL,
-    id_cliente INT,
-    fecha_venta DATETIME DEFAULT CURRENT_TIMESTAMP,
-    tipo_despacho ENUM('Local','Delivery') DEFAULT 'Local',
+    id_cliente INT NOT NULL,
+    fecha_venta DATE DEFAULT  (CURRENT_DATE()),
+    hora_venta TIME DEFAULT (CURRENT_TIME()),
+    tipo_despacho ENUM('Aquí','Llevar','Delivery') DEFAULT 'Aquí',
     nota_adicional VARCHAR(255),
+    
     total_venta DECIMAL(10,2) NOT NULL,
-    metodo_pago ENUM('Efectivo','Tarjeta','Yape','Plin') NOT NULL,
+    metodo_pago ENUM('Efectivo','Yape','Tarjeta') NOT NULL,
 
     CONSTRAINT fk_venta_empleado
         FOREIGN KEY (id_empleado)
@@ -112,7 +114,7 @@ CREATE TABLE Detalle_Venta (
     id_producto INT NOT NULL,
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
-    detalle VARCHAR(255),
+    precio_total DECIMAL(10,2) NOT NULL,
 
     CONSTRAINT fk_detalle_venta
         FOREIGN KEY (id_venta)
