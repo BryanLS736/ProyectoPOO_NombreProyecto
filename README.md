@@ -60,7 +60,6 @@ PanaderiaApp/
         ├── conexion/
         ├── controlador/
         ├── dao/
-        ├── factory/
         ├── imagenes/
         ├── interfaces/
         ├── modelo/
@@ -133,20 +132,6 @@ Connection conn = Conexion.getInstancia().getConexion();
 ```
 
 **Regla:** las conexiones a la base de datos deben centralizarse aquí para evitar duplicación de código y facilitar el mantenimiento.
-
----
-
-### `factory/`
-
-Contiene las fábricas de objetos utilizadas para encapsular la creación de instancias complejas.
-
-Por ejemplo, `ProductoFactory.java` determina qué tipo de producto crear según la categoría obtenida desde la base de datos:
-
-```java
-Producto producto = ProductoFactory.crearProducto(categoria);
-```
-
-Esto evita repetir estructuras condicionales en distintos lugares del sistema.
 
 ---
 
@@ -245,7 +230,6 @@ public class Main {
 | Una conexión a la base de datos       | `conexion`     |
 | Una ventana o formulario Swing        | `vista`        |
 | Una validación o regla de negocio     | `controlador`  |
-| La creación de objetos especializados | `factory`      |
 | Funciones auxiliares reutilizables    | `util`         |
 | Recursos gráficos                     | `imagenes`     |
 | Clase principal de ejecución          | `proyecto_poo` |
