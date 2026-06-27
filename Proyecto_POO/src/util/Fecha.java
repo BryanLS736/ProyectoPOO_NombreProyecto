@@ -6,10 +6,12 @@ import java.time.format.DateTimeFormatter;
 
 public class Fecha {
 
+    //Formato de fecha actual
     public static String fechaActual() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
+    //Formato de fecha y hora actual
     public static String fechaHoraActual() {
         return LocalDateTime.now().format(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));

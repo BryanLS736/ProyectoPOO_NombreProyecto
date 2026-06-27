@@ -30,9 +30,10 @@ public class Validaciones {
         return texto.length() <= longitud;
     }
     
-    //Validar que la contraseña
+    //Validar que la contraseña sea válida
     public static boolean contraseñaValida(String contraseña) {
         return contraseña.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
-        //toda la linea de arriba verifica que tenga los criterios que debe tener la contraseña
+        //toda la linea de arriba verifica que tenga 
+        //los criterios que debe tener la contraseña
     }
 }
