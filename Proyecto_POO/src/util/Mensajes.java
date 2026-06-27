@@ -31,7 +31,7 @@ public class Mensajes {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Confirmación de actualizado un registro
+    // Confirmación de actualizar un registro
     public static void registroActualizado() {
         JOptionPane.showMessageDialog(null,
                 "Registro actualizado correctamente.",
@@ -39,7 +39,7 @@ public class Mensajes {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Confirmación de eliminación un registro 
+    // Confirmación de eliminar un registro (porsiacaso)
     public static void registroEliminado() {
         JOptionPane.showMessageDialog(null,
                 "Registro eliminado correctamente.",
@@ -55,7 +55,7 @@ public class Mensajes {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Contraseña inválida
+    // Mensaje de contraseña inválida
     public static void contraseñaInvalida() {
     JOptionPane.showMessageDialog(
             null,

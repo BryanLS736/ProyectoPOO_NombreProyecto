@@ -1,9 +1,5 @@
 package util;
 
-/**
- * Clase que almacena todas las constantes del sistema.
- * Modifica estos valores según tu proyecto.
- */
 public final class Constantes {
 
     private Constantes() {
@@ -16,7 +12,7 @@ public final class Constantes {
     public static final String TELEFONO = "351 2604";
     public static final String DIRECCION = "Av. Marco Puente 3024";
 
-    //Impuesto
+    //Impuesto general
 
     public static final double IGV = 0.18;
 
