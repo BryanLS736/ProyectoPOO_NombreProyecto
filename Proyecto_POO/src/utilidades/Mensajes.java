@@ -62,6 +62,14 @@ public class Mensajes {
             "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
             "Advertencia",
             JOptionPane.WARNING_MESSAGE
-    );
-}
+        );
+    }
+    
+    // Empleado sin rol
+    public static void rolDesconocido() {
+        JOptionPane.showMessageDialog(null,
+                "Rol no reconocido, contacte al administrador.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }

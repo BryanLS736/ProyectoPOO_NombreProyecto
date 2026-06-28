@@ -22,7 +22,7 @@ public class FormAdministracion extends javax.swing.JFrame {
     /**
      * Creates new form FormHistorial2
      */
-    public FormAdministracion() {
+    public FormAdministracion(Empleado empleado) {
         initComponents();
         
         btnAdministracion.setBackground(new Color(252,231,218));
@@ -614,7 +614,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
-        new FormTomarPedido().setVisible(true);
+        /*new FormTomarPedido().setVisible(true);*/
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
@@ -687,7 +687,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
 
-        new FormAdministracion().setVisible(true);
+        /*new FormAdministracion().setVisible(true); */
         this.dispose();
     }//GEN-LAST:event_btnAdministracionActionPerformed
 

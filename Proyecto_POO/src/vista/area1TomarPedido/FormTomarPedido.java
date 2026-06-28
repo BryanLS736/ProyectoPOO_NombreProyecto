@@ -5,6 +5,7 @@
 package vista.area1TomarPedido;
 
 import java.awt.Color;
+import modelo.Empleado;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area4Boletas.FormBoletas;
@@ -21,7 +22,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
     /**
      * Creates new form FormSistema
      */
-    public FormTomarPedido() {
+    public FormTomarPedido(Empleado empleado) {
         initComponents();
         
         btnTomarPedido.setBackground(new Color(252,231,218));
@@ -1119,9 +1120,9 @@ public class FormTomarPedido extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
-        
+        /*
         new FormAdministracion().setVisible(true);
-        this.dispose();
+        this.dispose();*/
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
