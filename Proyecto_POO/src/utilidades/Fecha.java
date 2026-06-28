@@ -2,6 +2,7 @@ package utilidades;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Fecha {
@@ -12,7 +13,7 @@ public class Fecha {
     }
     
     public static String horaActual() {
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     //Formato de fecha y hora actual
