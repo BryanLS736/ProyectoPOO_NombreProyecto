@@ -1,5 +1,6 @@
 package vista.area0Login;
 
+import controlador.EmpleadoController;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -10,15 +11,21 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import modelo.Empleado;
+import utilidades.Mensajes;
 import vista.area1TomarPedido.FormTomarPedido;
+import vista.area5Administracion.FormAdministracion;
 
 public class FormLogin extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormLogin.class.getName());
+    private EmpleadoController empleadoController;
 
     FondoPanel fondo = new FondoPanel();
 
     public FormLogin() {
+        // Controlador del empleado
+        this.empleadoController = new EmpleadoController();
         
         this.setContentPane(fondo);
 
@@ -31,12 +38,12 @@ public class FormLogin extends javax.swing.JFrame {
 
         
         
-        txtUsuarioLogin.setText("Usuario");
-        txtUsuarioLogin.setForeground(Color.decode("#666666"));
+        txtDniLogin.setText("Usuario");
+        txtDniLogin.setForeground(Color.decode("#666666"));
 
-        pswContraseña.setEchoChar((char) 0);
-        pswContraseña.setText("Contraseña");
-        pswContraseña.setForeground(Color.GRAY);
+        txtContraseniaLogin.setEchoChar((char) 0);
+        txtContraseniaLogin.setText("Contraseña");
+        txtContraseniaLogin.setForeground(Color.GRAY);
 
 
     }
@@ -55,19 +62,17 @@ public class FormLogin extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel12 = new javax.swing.JPanel();
-        btnIniciarSesión3 = new javax.swing.JToggleButton();
-        jLabel27 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        btnIniciarSesionLogin = new javax.swing.JToggleButton();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
-        txtUsuarioLogin = new javax.swing.JTextField();
+        txtDniLogin = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        pswContraseña = new javax.swing.JPasswordField();
+        txtContraseniaLogin = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -99,25 +104,14 @@ public class FormLogin extends javax.swing.JFrame {
 
         jPanel12.setBackground(new java.awt.Color(254, 251, 246));
 
-        btnIniciarSesión3.setBackground(new java.awt.Color(182, 22, 20));
-        btnIniciarSesión3.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
-        btnIniciarSesión3.setForeground(new java.awt.Color(255, 255, 255));
-        btnIniciarSesión3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoIniciarSesion6.png"))); // NOI18N
-        btnIniciarSesión3.setText("   Iniciar sesión ");
-        btnIniciarSesión3.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesionLogin.setBackground(new java.awt.Color(182, 22, 20));
+        btnIniciarSesionLogin.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
+        btnIniciarSesionLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciarSesionLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoIniciarSesion6.png"))); // NOI18N
+        btnIniciarSesionLogin.setText("   Iniciar sesión ");
+        btnIniciarSesionLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarSesiónActionPerformed(evt);
-            }
-        });
-
-        jLabel27.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel27.setText("Rol:");
-
-        jComboBox4.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Seleccione su rol", "Empleado", "Admin" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
             }
         });
 
@@ -141,11 +135,11 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoUsuario2.png"))); // NOI18N
 
-        txtUsuarioLogin.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuarioLogin.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtUsuarioLogin.setForeground(new java.awt.Color(51, 51, 51));
-        txtUsuarioLogin.setBorder(null);
-        txtUsuarioLogin.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtDniLogin.setBackground(new java.awt.Color(255, 255, 255));
+        txtDniLogin.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtDniLogin.setForeground(new java.awt.Color(51, 51, 51));
+        txtDniLogin.setBorder(null);
+        txtDniLogin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 clickEnUsuario(evt);
             }
@@ -153,7 +147,7 @@ public class FormLogin extends javax.swing.JFrame {
                 clickFueraUsuario(evt);
             }
         });
-        txtUsuarioLogin.addActionListener(new java.awt.event.ActionListener() {
+        txtDniLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
             }
@@ -167,17 +161,17 @@ public class FormLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUsuarioLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtDniLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel32)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDniLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel32)))
                 .addGap(12, 12, 12))
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(txtUsuarioLogin)
-                .addContainerGap())
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -185,15 +179,20 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoCandado2.png"))); // NOI18N
 
-        pswContraseña.setBackground(new java.awt.Color(255, 255, 255));
-        pswContraseña.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        pswContraseña.setBorder(null);
-        pswContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtContraseniaLogin.setBackground(new java.awt.Color(255, 255, 255));
+        txtContraseniaLogin.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtContraseniaLogin.setBorder(null);
+        txtContraseniaLogin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 clicEnConstraseña(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 clicFueraContraseña(evt);
+            }
+        });
+        txtContraseniaLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContraseniaLoginActionPerformed(evt);
             }
         });
 
@@ -205,17 +204,17 @@ public class FormLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(pswContraseña))
+                .addComponent(txtContraseniaLogin))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtContraseniaLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)))
                 .addGap(18, 18, 18))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(pswContraseña)
-                .addGap(12, 12, 12))
         );
 
         jLabel11.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
@@ -265,11 +264,7 @@ public class FormLogin extends javax.swing.JFrame {
                                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(45, 45, 45)))
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnIniciarSesión3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox4, 0, 221, Short.MAX_VALUE))
+                            .addComponent(btnIniciarSesionLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -291,15 +286,11 @@ public class FormLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel31)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnIniciarSesión3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(btnIniciarSesionLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,72 +344,89 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void clicFueraContraseña(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clicFueraContraseña
-        if (pswContraseña.getText().isEmpty()) {
-            pswContraseña.setEchoChar((char) 0);
-            pswContraseña.setText("Contraseña");
-            pswContraseña.setForeground(Color.decode("#666666"));
+        if (txtContraseniaLogin.getText().isEmpty()) {
+            txtContraseniaLogin.setEchoChar((char) 0);
+            txtContraseniaLogin.setText("Contraseña");
+            txtContraseniaLogin.setForeground(Color.decode("#666666"));
         }
     }//GEN-LAST:event_clicFueraContraseña
 
     private void clicEnConstraseña(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clicEnConstraseña
-        if (String.valueOf(pswContraseña.getPassword()).equals("Contraseña")) {
-            pswContraseña.setText("");
-            pswContraseña.setEchoChar('*');
-            pswContraseña.setForeground(Color.BLACK);
+        if (String.valueOf(txtContraseniaLogin.getPassword()).equals("Contraseña")) {
+            txtContraseniaLogin.setText("");
+            txtContraseniaLogin.setEchoChar('*');
+            txtContraseniaLogin.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_clicEnConstraseña
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void clickFueraUsuario(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clickFueraUsuario
-        if (txtUsuarioLogin.getText().isEmpty()) {
-            txtUsuarioLogin.setText("Usuario");
-            txtUsuarioLogin.setForeground(Color.decode("#666666"));
+        if (txtDniLogin.getText().isEmpty()) {
+            txtDniLogin.setText("Usuario");
+            txtDniLogin.setForeground(Color.decode("#666666"));
         }
     }//GEN-LAST:event_clickFueraUsuario
 
     private void clickEnUsuario(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clickEnUsuario
-        if (txtUsuarioLogin.getText().equals("Usuario")) {
-            txtUsuarioLogin.setText("");
-            txtUsuarioLogin.setForeground(Color.BLACK);
+        if (txtDniLogin.getText().equals("Usuario")) {
+            txtDniLogin.setText("");
+            txtDniLogin.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_clickEnUsuario
 
     private void btnIniciarSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesiónActionPerformed
+      
+        String dni = txtDniLogin.getText();
+        String contrasenia = new String(txtContraseniaLogin.getPassword());
+        
+        try {
+            Empleado empleado = empleadoController.iniciarSesionEmpleado(dni, contrasenia);
+            
+            switch (empleado.getRol()) {
+                case "Administrador" -> {
+                    new FormAdministracion(empleado).setVisible(true);
+                    this.dispose();
+                }
+                case "Empleado" -> {
+                    new FormTomarPedido(empleado).setVisible(true);
+                    this.dispose();
+                }
+                default -> {
+                    Mensajes.rolDesconocido();
+                }
+            }
+            
+            
+        } catch (Exception e) {
+            Mensajes.loginIncorrecto();
+            
+            txtDniLogin.setText("Usuario");
+            txtDniLogin.setForeground(Color.decode("#666666"));
 
-        String usuario = txtUsuarioLogin.getText();
-        String contraseña = pswContraseña.getText();
-        txtUsuarioLogin.setText("Usuario");
-        txtUsuarioLogin.setForeground(Color.decode("#666666"));
+            txtContraseniaLogin.setText("Contraseña");
+            txtContraseniaLogin.setForeground(Color.decode("#666666"));
 
-        pswContraseña.setText("Contraseña");
-        pswContraseña.setForeground(Color.decode("#666666"));
+            txtContraseniaLogin.setEchoChar((char) 0);
+        }
 
-        pswContraseña.setEchoChar((char) 0);
-        pswContraseña.setText("Contraseña");
-        pswContraseña.setForeground(Color.GRAY);
-
-        new FormTomarPedido().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnIniciarSesiónActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+    private void txtContraseniaLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaLoginActionPerformed
+        
+    }//GEN-LAST:event_txtContraseniaLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnIniciarSesión3;
+    private javax.swing.JToggleButton btnIniciarSesionLogin;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
@@ -429,9 +437,9 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JPasswordField pswContraseña;
+    private javax.swing.JPasswordField txtContraseniaLogin;
+    private javax.swing.JTextField txtDniLogin;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtUsuarioLogin;
     // End of variables declaration//GEN-END:variables
 
     class FondoPanel extends JPanel {
