@@ -8,6 +8,8 @@ public class Cliente {
     private int idCliente;
     private String nombre;
     private String dni;
+    private String direccion;
+    private String telefono;
     private boolean activo;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaModificacion;
@@ -52,6 +54,22 @@ public class Cliente {
         this.dni = dni;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
     public boolean isActivo() {
         return activo;
     }
@@ -75,7 +93,7 @@ public class Cliente {
     public void setFechaModificacion(LocalDateTime fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
-
+    
     // toString()
     @Override
     public String toString() {

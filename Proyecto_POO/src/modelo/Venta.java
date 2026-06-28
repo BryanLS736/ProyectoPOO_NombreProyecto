@@ -2,14 +2,16 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class Venta {
 
     // Atributos
     private int idVenta;
-    private int idEmpleado;
-    private int idCaja;
-    private int idCliente;
+    private Empleado empleado;
+    private Caja caja;
+    private Cliente cliente;
+    private List<DetalleVenta> detalles;
     private LocalDate fechaVenta;
     private LocalTime horaVenta;
     private String tipoDespacho;
@@ -22,14 +24,13 @@ public class Venta {
     }
 
     // Constructor con todos los atributos
-    public Venta(int idVenta, int idEmpleado, int idCaja, int idCliente,
-            LocalDate fechaVenta, LocalTime horaVenta, String tipoDespacho,
-            String notaAdicional, double totalVenta, String metodoPago) {
 
+    public Venta(int idVenta, Empleado empleado, Caja caja, Cliente cliente, List<DetalleVenta> detalles, LocalDate fechaVenta, LocalTime horaVenta, String tipoDespacho, String notaAdicional, double totalVenta, String metodoPago) {
         this.idVenta = idVenta;
-        this.idEmpleado = idEmpleado;
-        this.idCaja = idCaja;
-        this.idCliente = idCliente;
+        this.empleado = empleado;
+        this.caja = caja;
+        this.cliente = cliente;
+        this.detalles = detalles;
         this.fechaVenta = fechaVenta;
         this.horaVenta = horaVenta;
         this.tipoDespacho = tipoDespacho;
@@ -37,6 +38,7 @@ public class Venta {
         this.totalVenta = totalVenta;
         this.metodoPago = metodoPago;
     }
+    
 
     // Getters y Setters
     public int getIdVenta() {
@@ -47,28 +49,36 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public int getIdEmpleado() {
-        return idEmpleado;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setIdEmpleado(int idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
-    public int getIdCaja() {
-        return idCaja;
+    public Caja getCaja() {
+        return caja;
     }
 
-    public void setIdCaja(int idCaja) {
-        this.idCaja = idCaja;
+    public void setCaja(Caja caja) {
+        this.caja = caja;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<DetalleVenta> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetalleVenta> detalles) {
+        this.detalles = detalles;
     }
 
     public LocalDate getFechaVenta() {
@@ -120,19 +130,10 @@ public class Venta {
     }
 
     // toString()
+
     @Override
     public String toString() {
-        return "Venta{" +
-                "idVenta=" + idVenta +
-                ", idEmpleado=" + idEmpleado +
-                ", idCaja=" + idCaja +
-                ", idCliente=" + idCliente +
-                ", fechaVenta=" + fechaVenta +
-                ", horaVenta=" + horaVenta +
-                ", tipoDespacho='" + tipoDespacho + '\'' +
-                ", notaAdicional='" + notaAdicional + '\'' +
-                ", totalVenta=" + totalVenta +
-                ", metodoPago='" + metodoPago + '\'' +
-                '}';
+        return "Venta{" + "idVenta=" + idVenta + ", empleado=" + empleado + ", caja=" + caja + ", cliente=" + cliente + ", detalles=" + detalles + ", fechaVenta=" + fechaVenta + ", horaVenta=" + horaVenta + ", tipoDespacho=" + tipoDespacho + ", notaAdicional=" + notaAdicional + ", totalVenta=" + totalVenta + ", metodoPago=" + metodoPago + '}';
     }
+    
 }

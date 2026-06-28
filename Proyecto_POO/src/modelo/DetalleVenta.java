@@ -4,8 +4,8 @@ public class DetalleVenta {
 
     // Atributos
     private int idDetalleVenta;
-    private int idVenta;
-    private int idProducto;
+    private Venta venta;
+    private Producto producto;
     private int cantidad;
     private double precioUnitario;
     private double precioTotal;
@@ -15,15 +15,16 @@ public class DetalleVenta {
     }
 
     // Constructor con atributos
-    public DetalleVenta(int idDetalleVenta, int idVenta, int idProducto,
-            int cantidad, double precioUnitario, double precioTotal) {
+
+    public DetalleVenta(int idDetalleVenta, Venta venta, Producto producto, int cantidad, double precioUnitario, double precioTotal) {
         this.idDetalleVenta = idDetalleVenta;
-        this.idVenta = idVenta;
-        this.idProducto = idProducto;
+        this.venta = venta;
+        this.producto = producto;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.precioTotal = precioTotal;
     }
+    
 
     // Getters y Setters
     public int getIdDetalleVenta() {
@@ -34,20 +35,20 @@ public class DetalleVenta {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public int getIdVenta() {
-        return idVenta;
+    public Venta getVenta() {
+        return venta;
     }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public int getCantidad() {
@@ -75,15 +76,10 @@ public class DetalleVenta {
     }
 
     // toString()
+
     @Override
     public String toString() {
-        return "DetalleVenta{" +
-                "idDetalleVenta=" + idDetalleVenta +
-                ", idVenta=" + idVenta +
-                ", idProducto=" + idProducto +
-                ", cantidad=" + cantidad +
-                ", precioUnitario=" + precioUnitario +
-                ", precioTotal=" + precioTotal +
-                '}';
+        return "DetalleVenta{" + "idDetalleVenta=" + idDetalleVenta + ", venta=" + venta + ", producto=" + producto + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", precioTotal=" + precioTotal + '}';
     }
+    
 }
