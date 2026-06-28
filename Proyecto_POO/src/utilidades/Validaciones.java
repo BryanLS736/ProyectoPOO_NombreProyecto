@@ -31,8 +31,8 @@ public class Validaciones {
     }
     
     //Validar que la contraseña sea válida
-    public static boolean contraseñaValida(String contraseña) {
-        return contraseña.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
+    public static boolean contraseniaValida(String contrasenia) {
+        return contrasenia.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
         //toda la linea de arriba verifica que tenga 
         //los criterios que debe tener la contraseña
     }
