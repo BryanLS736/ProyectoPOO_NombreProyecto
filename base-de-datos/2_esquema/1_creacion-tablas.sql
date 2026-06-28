@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS panaderia_db;
 CREATE DATABASE panaderia_db;
 USE panaderia_db;
 
@@ -27,6 +28,8 @@ CREATE TABLE Cliente (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     dni CHAR(8) UNIQUE,
+    direccion VARCHAR(250),
+    telefono VARCHAR(15),
     activo BOOLEAN DEFAULT TRUE,
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_modificacion DATETIME DEFAULT CURRENT_TIMESTAMP

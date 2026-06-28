@@ -7,8 +7,8 @@ public class Caja {
 
     // Atributos
     private int idCaja;
-    private int idEmpleadoApertura;
-    private int idEmpleadoCierre;
+    private Empleado empleadoApertura;
+    private Empleado empleadoCierre;
     private LocalDate fecha;
     private LocalTime horaApertura;
     private LocalTime horaCierre;
@@ -21,12 +21,11 @@ public class Caja {
     }
 
     // Constructor con atributos
-    public Caja(int idCaja, int idEmpleadoApertura, int idEmpleadoCierre,
-                LocalDate fecha, LocalTime horaApertura, LocalTime horaCierre,
-                double montoApertura, double montoCierre, String estado) {
+
+    public Caja(int idCaja, Empleado empleadoApertura, Empleado empleadoCierre, LocalDate fecha, LocalTime horaApertura, LocalTime horaCierre, double montoApertura, double montoCierre, String estado) {
         this.idCaja = idCaja;
-        this.idEmpleadoApertura = idEmpleadoApertura;
-        this.idEmpleadoCierre = idEmpleadoCierre;
+        this.empleadoApertura = empleadoApertura;
+        this.empleadoCierre = empleadoCierre;
         this.fecha = fecha;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
@@ -44,20 +43,20 @@ public class Caja {
         this.idCaja = idCaja;
     }
 
-    public int getIdEmpleadoApertura() {
-        return idEmpleadoApertura;
+    public Empleado getEmpleadoApertura() {
+        return empleadoApertura;
     }
 
-    public void setIdEmpleadoApertura(int idEmpleadoApertura) {
-        this.idEmpleadoApertura = idEmpleadoApertura;
+    public void setEmpleadoApertura(Empleado empleadoApertura) {
+        this.empleadoApertura = empleadoApertura;
     }
 
-    public int getIdEmpleadoCierre() {
-        return idEmpleadoCierre;
+    public Empleado getEmpleadoCierre() {
+        return empleadoCierre;
     }
 
-    public void setIdEmpleadoCierre(int idEmpleadoCierre) {
-        this.idEmpleadoCierre = idEmpleadoCierre;
+    public void setEmpleadoCierre(Empleado empleadoCierre) {
+        this.empleadoCierre = empleadoCierre;
     }
 
     public LocalDate getFecha() {
@@ -109,18 +108,10 @@ public class Caja {
     }
 
     // toString()
+
     @Override
     public String toString() {
-        return "Caja{" +
-                "idCaja=" + idCaja +
-                ", idEmpleadoApertura=" + idEmpleadoApertura +
-                ", idEmpleadoCierre=" + idEmpleadoCierre +
-                ", fecha=" + fecha +
-                ", horaApertura=" + horaApertura +
-                ", horaCierre=" + horaCierre +
-                ", montoApertura=" + montoApertura +
-                ", montoCierre=" + montoCierre +
-                ", estado='" + estado + '\'' +
-                '}';
+        return "Caja{" + "idCaja=" + idCaja + ", empleadoApertura=" + empleadoApertura + ", empleadoCierre=" + empleadoCierre + ", fecha=" + fecha + ", horaApertura=" + horaApertura + ", horaCierre=" + horaCierre + ", montoApertura=" + montoApertura + ", montoCierre=" + montoCierre + ", estado=" + estado + '}';
     }
+    
 }
