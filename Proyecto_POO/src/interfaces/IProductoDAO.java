@@ -15,6 +15,6 @@ public interface IProductoDAO {
     Producto buscarProductoPorID(int id) throws Exception;
     List<Producto> buscarProductoPorNombre(String nombre) throws Exception;
     List<Producto> buscarProductoPorCategoria(String categoria) throws Exception;
-    List<Producto> buscarProductoPorStock(int stockMin, int stockMax) throws Exception;
-    List<Producto> buscarProductoPorPrecio(int precioMin, int precioMax) throws Exception;
+    List<Producto> buscarProductoPorStock(Integer stockMin, Integer stockMax) throws Exception;
+    List<Producto> buscarProductoPorPrecio(Double precioMin, Double precioMax) throws Exception;
 }
