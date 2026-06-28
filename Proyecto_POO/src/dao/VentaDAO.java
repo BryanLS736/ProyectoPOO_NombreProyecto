@@ -1,5 +1,239 @@
 package dao;
 
-public class VentaDAO {
+import conexion.Conexion;
+import interfaces.IVentaDAO;
+import java.time.LocalDate;
+import java.util.List;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Date;
+import java.util.ArrayList;
+import modelo.Caja;
+import modelo.Cliente;
+import modelo.Empleado;
+import modelo.Venta;
+
+public class VentaDAO implements IVentaDAO {
+
+    @Override
+    public void registrarVenta(Venta venta) throws Exception {
+        String sql = """
+                     INSERT INTO Venta
+                     (
+                        id_empleado,
+                        id_caja,
+                        id_cliente,
+                        tipo_despacho,
+                        nota_adicional,
+                        total_venta,
+                        metodo_pago
+                     )
+                     VALUES (?,?,?,?,?,?,?)
+                     """;
+        
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            ps.setInt(1, venta.getEmpleado().getIdEmpleado());
+            ps.setInt(2, venta.getCaja().getIdCaja());
+            ps.setInt(3, venta.getCliente().getIdCliente());
+            ps.setString(4, venta.getTipoDespacho());
+            ps.setString(5, venta.getNotaAdicional());
+            ps.setDouble(6, venta.getTotalVenta());
+            ps.setString(7, venta.getMetodoPago());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new Exception("Error al registrar venta: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Venta> verTodasLasVentas() throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        String sql = """
+                     SELECT *
+                     FROM Venta
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery();
+            ) {
+                
+            while (rs.next()) {
+                listaVentas.add(mapearVenta(rs));
+            }
+            return listaVentas;
+        } catch (SQLException e) {
+            throw new Exception("Error al cargar la lista de las ventas: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Venta buscarVentaPorID(int id) throws Exception {
+        Venta venta = null;
+        
+        String sql = """
+                     SELECT *
+                     FROM Venta
+                     WHERE id_venta = ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setInt(1, id);
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    venta = mapearVenta(rs);
+                }
+            }
+            
+            return venta;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar la venta por ID: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Venta> buscarVentaPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFinal) throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        
+        String sql = """
+                     SELECT *
+                     FROM Venta
+                     WHERE fecha_venta BETWEEN ? AND ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setDate(1, Date.valueOf(fechaInicio));
+            ps.setDate(2, Date.valueOf(fechaFinal));
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    listaVentas.add(mapearVenta(rs));
+                }
+            }
+            
+            return listaVentas;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar la venta por rango de fechas: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Venta> buscarVentaPorDniCliente(String dni) throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        
+        String sql = """
+                     SELECT *
+                     FROM Venta v
+                     INNER JOIN Cliente c
+                     ON v.id_cliente = c.id_cliente
+                     WHERE c.dni = ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setString(1, dni);
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    listaVentas.add(mapearVenta(rs));
+                }
+            }
+            
+            return listaVentas;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar la venta por dni del cliente: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Venta> buscarVentaPorNombreCliente(String nombre) throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        
+        String sql = """
+                     SELECT *
+                     FROM Venta v
+                     INNER JOIN Cliente c
+                     ON v.id_cliente = c.id_cliente
+                     WHERE c.nombre LIKE ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setString(1, "%" + nombre + "%");
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    listaVentas.add(mapearVenta(rs));
+                }
+            }
+            
+            return listaVentas;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar la venta por nombre del cliente: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        
+        String sql = """
+                     SELECT *
+                     FROM Venta
+                     WHERE metodo_pago = ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setString(1, metodoPago);
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    listaVentas.add(mapearVenta(rs));
+                }
+            }
+            
+            return listaVentas;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar la venta metodo de pago: " + e.getMessage());
+        }
+    }
     
+    private Venta mapearVenta(ResultSet rs) throws SQLException {
+        Venta venta = new Venta();
+
+        venta.setIdVenta(rs.getInt("id_venta"));
+        
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(rs.getInt("id_empleado"));
+        venta.setEmpleado(empleado);
+
+        Caja caja = new Caja();
+        caja.setIdCaja(rs.getInt("id_caja"));
+        venta.setCaja(caja);
+        
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(rs.getInt("id_cliente"));
+        venta.setCliente(cliente);
+        
+        venta.setFechaVenta(rs.getDate("fecha_venta").toLocalDate());
+        venta.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
+        venta.setTipoDespacho(rs.getString("tipo_despacho"));
+        venta.setNotaAdicional(rs.getString("nota_adicional"));
+        
+        venta.setTotalVenta(rs.getDouble("total_venta"));
+        venta.setMetodoPago(rs.getString("metodo_pago"));
+        return venta;
+    }
 }

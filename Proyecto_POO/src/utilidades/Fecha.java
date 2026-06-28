@@ -1,4 +1,4 @@
-package util;
+package utilidades;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,6 +9,10 @@ public class Fecha {
     //Formato de fecha actual
     public static String fechaActual() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+    
+    public static String horaActual() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     //Formato de fecha y hora actual

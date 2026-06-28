@@ -2,22 +2,32 @@ package dao;
 
 import conexion.Conexion;
 import interfaces.IEmpleadoDAO;
-import java.util.List;
 import modelo.Empleado;
+import java.util.List;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.Types;
+import utilidades.SQLUtils;
 
 public class EmpleadoDAO implements IEmpleadoDAO{
     
     @Override
     public void registrarEmpleado(Empleado empleado) throws Exception {
         String sql = """
-                     INSERT INTO empleado(nombres,apellidos,dni,contrasenia,direccion,
-                     telefono,rol,activo,fecha_creacion,fecha_modificacion)
-                     VALUES (?, ?, ?, ?, ?, ? ,? ,?)
+                     INSERT INTO Empleado
+                     (
+                        nombres,
+                        apellidos,
+                        dni,
+                        contrasenia,
+                        direccion,
+                        telefono,
+                        rol
+                     )
+                     VALUES (?, ?, ?, ?, ?, ? ,?)
                      """;
         
         try (Connection conn = new Conexion().conectar();
@@ -26,10 +36,9 @@ public class EmpleadoDAO implements IEmpleadoDAO{
             ps.setString(2, empleado.getApellidos());
             ps.setString(3, empleado.getDni());
             ps.setString(4, empleado.getContrasenia());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getTelefono());
+            SQLUtils.setNullableString(ps, 5, empleado.getDireccion(), Types.VARCHAR);
+            SQLUtils.setNullableString(ps, 6, empleado.getTelefono(), Types.VARCHAR);
             ps.setString(7, empleado.getRol());
-            ps.setBoolean(8, empleado.isActivo());
             ps.executeUpdate();
             
         } catch (SQLException e) {
@@ -41,14 +50,14 @@ public class EmpleadoDAO implements IEmpleadoDAO{
     @Override
     public void actualizarEmpleado(Empleado empleado) throws Exception {
         String sql = """
-                     UPDATE empleado 
+                     UPDATE Empleado 
                      SET nombres = ?,
                      apellidos = ?,
                      dni = ?,
                      contrasenia = ?,
                      direccion = ?,
                      telefono = ?,
-                     rol = ?,
+                     rol = ?
                      WHERE id_empleado = ?
                      """;
         try (Connection conn = new Conexion().conectar();
@@ -58,8 +67,8 @@ public class EmpleadoDAO implements IEmpleadoDAO{
             ps.setString(2, empleado.getApellidos());
             ps.setString(3, empleado.getDni());
             ps.setString(4, empleado.getContrasenia());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getTelefono());
+            SQLUtils.setNullableString(ps, 5, empleado.getDireccion(), Types.VARCHAR);
+            SQLUtils.setNullableString(ps, 6, empleado.getTelefono(), Types.VARCHAR);
             ps.setString(7, empleado.getRol());
             ps.setInt(8, empleado.getIdEmpleado());
             ps.executeUpdate();
@@ -72,7 +81,7 @@ public class EmpleadoDAO implements IEmpleadoDAO{
     @Override
     public void cambiarEstadoEmpleado(int idEmpleado, boolean activo) throws Exception {
         String sql = """
-                     UPDATE empleado 
+                     UPDATE Empleado 
                      SET activo = ?
                      WHERE id_empleado = ?
                      """;
