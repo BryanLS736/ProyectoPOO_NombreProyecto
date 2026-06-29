@@ -434,10 +434,8 @@
                           <Component id="jPanel12" min="-2" pref="153" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPanel5" alignment="0" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnActualizarProducto" alignment="0" pref="174" max="32767" attributes="0"/>
-                          <Component id="btnAgregarProducto" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="btnActualizarProducto" alignment="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnAgregarProducto" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
@@ -638,7 +636,7 @@
                       <EmptySpace type="separate" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnLimpiar" max="32767" attributes="0"/>
-                          <Component id="jButton1" pref="103" max="32767" attributes="0"/>
+                          <Component id="jButton1" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
@@ -1122,7 +1120,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="jPanel22" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -1137,7 +1135,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel55" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       </Group>
@@ -1191,7 +1189,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel56" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel65" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombresEmp" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel57" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1208,7 +1206,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jLabel56" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel65" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombresEmp" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel66" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1231,7 +1229,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel57">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel65">
+            <Component class="javax.swing.JLabel" name="txtNombresEmp">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Inter SemiBold" size="12" style="0"/>
@@ -1251,7 +1249,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel29">
+        <Component class="javax.swing.JLabel" name="lblFecha">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Inter SemiBold" size="12" style="0"/>

@@ -30,6 +30,12 @@ public class Mensajes {
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    // Fallo al guardar un registro
+    public static void error(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, 
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Confirmación de actualizar un registro
     public static void registroActualizado() {
@@ -71,5 +77,15 @@ public class Mensajes {
                 "Rol no reconocido, contacte al administrador.",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // Cerrar Sesión
+    public static boolean cerrarSesion() {
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                "¿Esta seguro que desea salir de la sesión?",
+                "Cerrar Sesión",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        return respuesta == JOptionPane.YES_OPTION;
     }
 }

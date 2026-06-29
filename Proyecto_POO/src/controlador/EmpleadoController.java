@@ -15,33 +15,33 @@ public class EmpleadoController {
     }
 
     public void registrarEmpleado(Empleado empleado) throws Exception {
-    if (empleado == null) {
-        throw new Exception("El empleado no puede ser nulo.");
-    }
-    if (Validaciones.campoVacio(empleado.getNombres()) || !Validaciones.soloLetras(empleado.getNombres())) {
-        throw new Exception("Ingrese un nombre válido (solo letras).");
-    }
-    if (Validaciones.campoVacio(empleado.getApellidos()) || !Validaciones.soloLetras(empleado.getApellidos())) {
-        throw new Exception("Ingrese apellidos válidos (solo letras).");
-    }
-    if (Validaciones.campoVacio(empleado.getDni()) 
-            || !Validaciones.soloNumeros(empleado.getDni()) 
-            || !Validaciones.longitudMinima(empleado.getDni(), 8) 
-            || !Validaciones.longitudMaxima(empleado.getDni(), 8)) {
-        throw new Exception("El DNI debe tener exactamente 8 dígitos numéricos.");
-    }
-    if (Validaciones.campoVacio(empleado.getContrasenia()) || !Validaciones.contraseniaValida(empleado.getContrasenia())) {
-        throw new Exception("La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número.");
-    }
-    if (Validaciones.campoVacio(empleado.getRol())) {
-        throw new Exception("Debe asignar un rol al empleado.");
-    }
-    if (empleadoDAO.buscarEmpleadoPorDNI(empleado.getDni()) != null) {
-        throw new Exception("Ya existe un empleado registrado con ese DNI.");
-    }
+        if (empleado == null) {
+            throw new Exception("El empleado no puede ser nulo.");
+        }
+        if (Validaciones.campoVacio(empleado.getNombres()) || !Validaciones.soloLetras(empleado.getNombres())) {
+            throw new Exception("Ingrese un nombre válido (solo letras).");
+        }
+        if (Validaciones.campoVacio(empleado.getApellidos()) || !Validaciones.soloLetras(empleado.getApellidos())) {
+            throw new Exception("Ingrese apellidos válidos (solo letras).");
+        }
+        if (Validaciones.campoVacio(empleado.getDni()) 
+                || !Validaciones.soloNumeros(empleado.getDni()) 
+                || !Validaciones.longitudMinima(empleado.getDni(), 8) 
+                || !Validaciones.longitudMaxima(empleado.getDni(), 8)) {
+            throw new Exception("El DNI debe tener exactamente 8 dígitos numéricos.");
+        }
+        if (Validaciones.campoVacio(empleado.getContrasenia()) || !Validaciones.contraseniaValida(empleado.getContrasenia())) {
+            throw new Exception("La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número.");
+        }
+        if (Validaciones.campoVacio(empleado.getRol())) {
+            throw new Exception("Debe asignar un rol al empleado.");
+        }
+        if (empleadoDAO.buscarEmpleadoPorDNI(empleado.getDni()) != null) {
+            throw new Exception("Ya existe un empleado registrado con ese DNI.");
+        }
 
-    empleadoDAO.registrarEmpleado(empleado);
-}
+        empleadoDAO.registrarEmpleado(empleado);
+    }
 
     public void actualizarEmpleado(Empleado empleado) throws Exception {
         if (empleado == null) {
