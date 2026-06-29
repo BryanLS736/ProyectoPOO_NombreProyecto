@@ -6,6 +6,7 @@ package vista.area3Inventario;
 
 import java.awt.Color;
 import modelo.Empleado;
+import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
@@ -17,31 +18,51 @@ import vista.area5Administracion.FormAdministracion;
  * @author Diego
  */
 public class FormInventario extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormInventario.class.getName());
 
     Empleado empleado = null;
-            
+
     public FormInventario(Empleado empleado) {
         initComponents();
-        this. empleado = empleado;
-        btnInventario.setBackground(new Color(252,231,218));
-        btnInventario.setForeground(new Color(181,69,63));
+        this.empleado = empleado;
+        btnInventario.setBackground(new Color(252, 231, 218));
+        btnInventario.setForeground(new Color(181, 69, 63));
+
+        switch (empleado.getRol()) {
+            case "Administrador" -> {
+
+            }
+            case "Empleado" -> {
+
+                btnAgregarProducto.setVisible(false);
+                btnActualizarProducto.setVisible(false);
+                
+                btnAdministracion.setVisible(false);
+            }
+            default -> {
+                Mensajes.rolDesconocido();
+            }
+        }
+        
+        
+
     }
-    
-    private void deseleccionarBotonesLaterales(){
-        btnTomarPedido.setBackground(new Color(253,246,240));
+
+    private void deseleccionarBotonesLaterales() {
+        btnTomarPedido.setBackground(new Color(253, 246, 240));
         btnTomarPedido.setForeground(Color.black);
-        
-        btnHistorial.setBackground(new Color(253,246,240));
+
+        btnHistorial.setBackground(new Color(253, 246, 240));
         btnHistorial.setForeground(Color.black);
-        
-        btnInventario.setBackground(new Color(253,246,240));
+
+        btnInventario.setBackground(new Color(253, 246, 240));
         btnInventario.setForeground(Color.black);
-        
-        btnBoletas.setBackground(new Color(253,246,240));
+
+        btnBoletas.setBackground(new Color(253, 246, 240));
         btnBoletas.setForeground(Color.black);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,7 +269,7 @@ public class FormInventario extends javax.swing.JFrame {
         btnAdministracion.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnAdministracion.setForeground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo Administraicon.png"))); // NOI18N
-        btnAdministracion.setText("  Administracion");
+        btnAdministracion.setText("  Administración");
         btnAdministracion.setBorder(null);
         btnAdministracion.setBorderPainted(false);
         btnAdministracion.setContentAreaFilled(false);
@@ -305,9 +326,9 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(35, 35, 35)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores1))
@@ -653,8 +674,8 @@ public class FormInventario extends javax.swing.JFrame {
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnActualizarProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)))
+                        .addComponent(btnActualizarProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                        .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -790,32 +811,32 @@ public class FormInventario extends javax.swing.JFrame {
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarPedidoActionPerformed
         deseleccionarBotonesLaterales();
-        btnTomarPedido.setBackground(new Color(252,231,218));
-        btnTomarPedido.setForeground(new Color(181,69,63));
-        
+        btnTomarPedido.setBackground(new Color(252, 231, 218));
+        btnTomarPedido.setForeground(new Color(181, 69, 63));
+
         new FormTomarPedido(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         deseleccionarBotonesLaterales();
-        btnHistorial.setBackground(new Color(252,231,218));
-        btnHistorial.setForeground(new Color(181,69,63));
+        btnHistorial.setBackground(new Color(252, 231, 218));
+        btnHistorial.setForeground(new Color(181, 69, 63));
         new FormHistorial(empleado).setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         deseleccionarBotonesLaterales();
-        btnInventario.setBackground(new Color(252,231,218));
-        btnInventario.setForeground(new Color(181,69,63));
+        btnInventario.setBackground(new Color(252, 231, 218));
+        btnInventario.setForeground(new Color(181, 69, 63));
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnBoletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletasActionPerformed
         deseleccionarBotonesLaterales();
-        btnBoletas.setBackground(new Color(252,231,218));
-        btnBoletas.setForeground(new Color(181,69,63));
+        btnBoletas.setBackground(new Color(252, 231, 218));
+        btnBoletas.setForeground(new Color(181, 69, 63));
         new FormBoletas(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
@@ -827,23 +848,35 @@ public class FormInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
+        
         new FormAgregarProducto(this).setVisible(true);
         this.setEnabled(false);
-        
+
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
+        
         new FormActualizarProducto(this).setVisible(true);
         this.setEnabled(false);
+        
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
-        deseleccionarBotonesLaterales();
-        btnAdministracion.setBackground(new Color(252,231,218));
-        btnAdministracion.setForeground(new Color(181,69,63));
 
-        new FormAdministracion(empleado).setVisible(true);
-        this.dispose();
+        switch (empleado.getRol()) {
+            case "Administrador" -> {
+                new FormAdministracion(empleado).setVisible(true);
+                this.dispose();
+            }
+            case "Empleado" -> {
+
+                // Si el rol es de empleado no va a abrir nada
+            }
+            default -> {
+                Mensajes.rolDesconocido();
+            }
+        }
+
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void cbxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaActionPerformed
@@ -879,55 +912,20 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
-    private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
-    private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
@@ -937,24 +935,14 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
