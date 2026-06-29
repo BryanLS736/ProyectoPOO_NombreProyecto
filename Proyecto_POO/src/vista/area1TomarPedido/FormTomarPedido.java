@@ -19,12 +19,13 @@ public class FormTomarPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormTomarPedido.class.getName());
 
+    Empleado empleado = null;
     /**
      * Creates new form FormSistema
      */
     public FormTomarPedido(Empleado empleado) {
         initComponents();
-        
+        this.empleado = empleado;
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
         
@@ -902,7 +903,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
 
-        new FormHistorial().setVisible(true);
+        new FormHistorial(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
@@ -911,7 +912,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
         
-        new FormInventario().setVisible(true);
+        new FormInventario(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
@@ -920,7 +921,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
         
-        new FormBoletas().setVisible(true);
+        new FormBoletas(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 

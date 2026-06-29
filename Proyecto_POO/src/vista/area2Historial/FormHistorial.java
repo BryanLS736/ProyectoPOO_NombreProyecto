@@ -19,11 +19,12 @@ public class FormHistorial extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormHistorial.class.getName());
 
-    /**
-     * Creates new form FormHistorial2
-     */
-    public FormHistorial() {
+    Empleado empleado = null;
+    
+    public FormHistorial(Empleado empleado) {
         initComponents();
+        
+        this.empleado = empleado;
         
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
@@ -766,7 +767,7 @@ public class FormHistorial extends javax.swing.JFrame {
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
         
-        new FormTomarPedido().setVisible(true);
+        new FormTomarPedido(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
@@ -781,7 +782,7 @@ public class FormHistorial extends javax.swing.JFrame {
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
         
-        new FormInventario().setVisible(true);
+        new FormInventario(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
@@ -789,7 +790,7 @@ public class FormHistorial extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
-        new FormBoletas().setVisible(true);
+        new FormBoletas(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 
@@ -802,7 +803,7 @@ public class FormHistorial extends javax.swing.JFrame {
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
 
-        new FormAdministracion().setVisible(true);
+        new FormAdministracion(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
