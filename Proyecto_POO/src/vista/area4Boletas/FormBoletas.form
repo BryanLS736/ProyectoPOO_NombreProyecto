@@ -377,7 +377,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="212" max="32767" attributes="0"/>
+                  <EmptySpace pref="268" max="32767" attributes="0"/>
                   <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
@@ -557,7 +557,7 @@
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="372" max="32767" attributes="0"/>
+                  <EmptySpace pref="352" max="32767" attributes="0"/>
                   <Component id="btnMostrarBoleta" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               </Group>

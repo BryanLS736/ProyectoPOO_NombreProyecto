@@ -377,7 +377,7 @@
                   <Component id="btnBoletas" min="-2" pref="37" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnAdministracion" min="-2" pref="37" max="-2" attributes="0"/>
-                  <EmptySpace pref="153" max="32767" attributes="0"/>
+                  <EmptySpace pref="179" max="32767" attributes="0"/>
                   <Component id="lblLogoFlores1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -545,7 +545,7 @@
                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="110" max="32767" attributes="0"/>
+                  <EmptySpace pref="140" max="32767" attributes="0"/>
                   <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
@@ -735,7 +735,7 @@
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <Component id="cmbTipoDespacho" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="24" max="32767" attributes="0"/>
+                          <EmptySpace pref="54" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
@@ -804,7 +804,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="216" max="32767" attributes="0"/>
+                  <EmptySpace pref="245" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="btnMostrarDetalle" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
