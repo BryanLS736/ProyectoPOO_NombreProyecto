@@ -26,6 +26,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
     public FormTomarPedido(Empleado empleado) {
         initComponents();
         this.empleado = empleado;
+        
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
         
@@ -929,6 +930,8 @@ public class FormTomarPedido extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
+        new FormTomarPedido(empleado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodoActionPerformed

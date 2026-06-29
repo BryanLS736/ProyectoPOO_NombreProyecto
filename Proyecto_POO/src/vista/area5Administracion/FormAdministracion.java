@@ -613,7 +613,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
-        /*new FormTomarPedido().setVisible(true);*/
+        new FormTomarPedido(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
