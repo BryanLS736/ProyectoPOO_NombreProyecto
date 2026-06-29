@@ -4,8 +4,10 @@
  */
 package vista.area1TomarPedido;
 
+import controlador.EmpleadoController;
 import java.awt.Color;
 import modelo.Empleado;
+import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
@@ -46,6 +48,20 @@ public class FormTomarPedido extends javax.swing.JFrame {
         
         txtDNI.setText("DNI");
         txtDNI.setForeground(Color.decode("#666666"));
+        
+        switch (empleado.getRol()) {
+                case "Administrador" -> {
+                    
+                    
+                }
+                case "Empleado" -> {
+                    
+                    btnAdministracion.setVisible(false);
+                }
+                default -> {
+                    Mensajes.rolDesconocido();
+                }
+        }
         
     }
 
@@ -283,7 +299,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
         btnAdministracion.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnAdministracion.setForeground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo Administraicon.png"))); // NOI18N
-        btnAdministracion.setText("  Administracion");
+        btnAdministracion.setText("  Administración");
         btnAdministracion.setBorder(null);
         btnAdministracion.setBorderPainted(false);
         btnAdministracion.setContentAreaFilled(false);
@@ -341,9 +357,9 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores))
@@ -1161,12 +1177,23 @@ public class FormTomarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
-        deseleccionarBotonesLaterales();
-        btnAdministracion.setBackground(new Color(252,231,218));
-        btnAdministracion.setForeground(new Color(181,69,63));
         
-        new FormAdministracion(empleado).setVisible(true);
-        this.dispose();
+            //Definir que hace el botón Administración dependiendo del rol.
+            switch (empleado.getRol()) {
+                case "Administrador" -> {
+                    new FormAdministracion(empleado).setVisible(true);
+                    this.dispose();
+                }
+                case "Empleado" -> {
+                    
+                    // Si el rol es de empleado no va a abrir nada
+                }
+                default -> {
+                    Mensajes.rolDesconocido();
+                }
+            }
+            
+        
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed

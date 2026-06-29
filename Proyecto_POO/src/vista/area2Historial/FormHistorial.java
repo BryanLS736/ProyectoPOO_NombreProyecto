@@ -6,6 +6,7 @@ package vista.area2Historial;
 
 import java.awt.Color;
 import modelo.Empleado;
+import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area3Inventario.FormInventario;
@@ -29,6 +30,20 @@ public class FormHistorial extends javax.swing.JFrame {
         
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
+        
+        switch (empleado.getRol()) {
+                case "Administrador" -> {
+                    
+                    
+                }
+                case "Empleado" -> {
+                    
+                    btnAdministracion.setVisible(false);
+                }
+                default -> {
+                    Mensajes.rolDesconocido();
+                }
+        }
     }
     
     private void deseleccionarBotonesLaterales(){
@@ -357,7 +372,7 @@ public class FormHistorial extends javax.swing.JFrame {
         btnAdministracion.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnAdministracion.setForeground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo Administraicon.png"))); // NOI18N
-        btnAdministracion.setText("  Administracion");
+        btnAdministracion.setText("  Administración");
         btnAdministracion.setBorder(null);
         btnAdministracion.setBorderPainted(false);
         btnAdministracion.setContentAreaFilled(false);
@@ -414,9 +429,9 @@ public class FormHistorial extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores1))
@@ -823,12 +838,21 @@ public class FormHistorial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
-        deseleccionarBotonesLaterales();
-        btnAdministracion.setBackground(new Color(252,231,218));
-        btnAdministracion.setForeground(new Color(181,69,63));
+        
 
-        new FormAdministracion(empleado).setVisible(true);
-        this.dispose();
+        switch (empleado.getRol()) {
+                case "Administrador" -> {
+                    new FormAdministracion(empleado).setVisible(true);
+                    this.dispose();
+                }
+                case "Empleado" -> {
+                    
+                    // Si el rol es de empleado no va a abrir nada
+                }
+                default -> {
+                    Mensajes.rolDesconocido();
+                }
+            }
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnCerrarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion1ActionPerformed
