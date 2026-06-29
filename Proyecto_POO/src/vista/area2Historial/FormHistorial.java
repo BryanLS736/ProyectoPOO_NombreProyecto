@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista.area2Historial;
 
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import modelo.Empleado;
 import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
@@ -13,10 +11,6 @@ import vista.area3Inventario.FormInventario;
 import vista.area4Boletas.FormBoletas;
 import vista.area5Administracion.FormAdministracion;
 
-/**
- *
- * @author Diego
- */
 public class FormHistorial extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormHistorial.class.getName());
@@ -27,6 +21,9 @@ public class FormHistorial extends javax.swing.JFrame {
         initComponents();
         
         this.empleado = empleado;
+        
+        txtNombresEmp.setText(empleado.getNombres());
+        lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
@@ -138,9 +135,9 @@ public class FormHistorial extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
+        txtNombresEmp = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
@@ -702,9 +699,9 @@ public class FormHistorial extends javax.swing.JFrame {
         jLabel25.setForeground(new java.awt.Color(193, 99, 92));
         jLabel25.setText("Cajero(a):");
 
-        jLabel27.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel27.setText("Rosa Isabel");
+        txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
+        txtNombresEmp.setText("Rosa Isabel");
 
         jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo usuario 7.png"))); // NOI18N
 
@@ -721,7 +718,7 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel27))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel26))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -734,14 +731,14 @@ public class FormHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel25)
-                        .addComponent(jLabel27))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel28))
                 .addContainerGap())
         );
 
-        jLabel29.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel29.setText("24/02/26");
+        lblFecha.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
+        lblFecha.setText("24/02/26");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -755,7 +752,7 @@ public class FormHistorial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel29)
+                .addComponent(lblFecha)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -768,7 +765,7 @@ public class FormHistorial extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel30)
-                            .addComponent(jLabel29))
+                            .addComponent(lblFecha))
                         .addGap(8, 8, 8))
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -856,8 +853,10 @@ public class FormHistorial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnCerrarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion1ActionPerformed
-        new FormLogin().setVisible(true);
-        this.dispose();
+        if (Mensajes.cerrarSesion()) {
+            new FormLogin().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCerrarSesion1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -887,9 +886,7 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -916,6 +913,7 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
@@ -929,5 +927,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscarPor;
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
+    private javax.swing.JLabel txtNombresEmp;
     // End of variables declaration//GEN-END:variables
 }

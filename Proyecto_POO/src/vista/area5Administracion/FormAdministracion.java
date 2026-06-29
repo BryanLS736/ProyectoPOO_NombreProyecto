@@ -1,10 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista.area5Administracion;
 
+import controlador.EmpleadoController;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import modelo.Empleado;
 import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
@@ -13,19 +14,40 @@ import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area4Boletas.FormBoletas;
 
-/**
- *
- * @author Diego
- */
 public class FormAdministracion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormAdministracion.class.getName());
 
-    Empleado empleado = null;
+    private Empleado empleado = null;
+    private EmpleadoController empControl = new EmpleadoController();
+    private DefaultTableModel modelo = new DefaultTableModel();
     
     public FormAdministracion(Empleado empleado) {
         initComponents();
+        
+        // Asignar los datos del empleado en sesion
         this.empleado = empleado;
+        
+        // Tabla
+        tablaEmp.setModel(modelo);
+        
+        Object[] columnas = new Object[]{
+            "ID",
+            "Nombres",
+            "Apellidos",
+            "DNI",
+            "Teléfono",
+            "Dirección",
+            "Rol",
+            "Activo"
+        };
+        
+        modelo.setColumnIdentifiers(columnas);
+        
+        // Datos del IGU
+        txtNombresEmp.setText(empleado.getNombres());
+        lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
         
@@ -97,16 +119,19 @@ public class FormAdministracion extends javax.swing.JFrame {
         jPanel28 = new javax.swing.JPanel();
         jLabel84 = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
+        txtNombresEmp = new javax.swing.JLabel();
         jLabel87 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         jLabel83 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         lblBuscar = new javax.swing.JLabel();
-        txtBuscarPersonal = new javax.swing.JTextField();
+        txtBuscarEmp = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaEmp = new javax.swing.JTable();
+        cmbFiltros = new javax.swing.JComboBox<>();
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
@@ -301,7 +326,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores1))
@@ -421,7 +446,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,9 +503,9 @@ public class FormAdministracion extends javax.swing.JFrame {
         jLabel84.setForeground(new java.awt.Color(193, 99, 92));
         jLabel84.setText("Cajero(a):");
 
-        jLabel86.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel86.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel86.setText("Rosa Isabel");
+        txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
+        txtNombresEmp.setText("Rosa Isabel");
 
         jLabel87.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo usuario 7.png"))); // NOI18N
 
@@ -497,7 +522,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel84)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel86))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel85))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -510,14 +535,14 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel84)
-                        .addComponent(jLabel86))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel87))
                 .addContainerGap())
         );
 
-        jLabel29.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel29.setText("24/02/26");
+        lblFecha.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
+        lblFecha.setText("24/02/26");
 
         jLabel83.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
         jLabel83.setForeground(new java.awt.Color(0, 0, 0));
@@ -530,10 +555,10 @@ public class FormAdministracion extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel82)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 696, Short.MAX_VALUE)
                 .addComponent(jLabel83)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel29)
+                .addComponent(lblFecha)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -546,7 +571,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel83)
-                            .addComponent(jLabel29))
+                            .addComponent(lblFecha))
                         .addGap(8, 8, 8))
                     .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel82))
@@ -562,9 +587,9 @@ public class FormAdministracion extends javax.swing.JFrame {
         lblBuscar.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         lblBuscar.setText("Buscar:");
 
-        txtBuscarPersonal.setBackground(new java.awt.Color(255, 255, 255));
-        txtBuscarPersonal.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtBuscarPersonal.setForeground(new java.awt.Color(102, 102, 102));
+        txtBuscarEmp.setBackground(new java.awt.Color(255, 255, 255));
+        txtBuscarEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtBuscarEmp.setForeground(new java.awt.Color(102, 102, 102));
 
         btnBuscar.setBackground(new java.awt.Color(194, 194, 194));
         btnBuscar.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
@@ -585,25 +610,47 @@ public class FormAdministracion extends javax.swing.JFrame {
             }
         });
 
+        tablaEmp.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaEmp);
+
+        cmbFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "DNI", "Nombre", "ID", "Activos", "Inactivos" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(lblBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lblBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(cmbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,9 +660,12 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscar)
-                    .addComponent(txtBuscarPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtBuscarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)
+                    .addComponent(cmbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
                 .addGap(48, 48, 48))
         );
@@ -629,14 +679,14 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -690,26 +740,40 @@ public class FormAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxRolesActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        
+        Empleado empAgregar = new Empleado();
+        
         String nombres= txtNombres.getText();
-        txtNombres.setText("");
-        
         String apellidos= txtApellidos.getText();
-        txtApellidos.setText("");
-        
-        String DNI= txtDNI.getText();
-        txtDNI.setText("");
-        
-        String contraseña= txtContraseña.getText();
-        txtContraseña.setText("");
-        
+        String dni= txtDNI.getText();
+        String contrasenia= txtContraseña.getText();
         String direccion= txtDireccion.getText();
-        txtDireccion.setText("");
-        
         String telefono = txtTelefono.getText();
-        txtTelefono.setText("");
-        
         String rol= cbxRoles.getSelectedItem().toString();
-        cbxRoles.setSelectedItem("Empleado");
+        
+        empAgregar.setNombres(nombres);
+        empAgregar.setApellidos(apellidos);
+        empAgregar.setDni(dni);
+        empAgregar.setContrasenia(contrasenia);
+        empAgregar.setDireccion(direccion);
+        empAgregar.setTelefono(telefono);
+        empAgregar.setRol(rol);
+        
+        try {
+            empControl.registrarEmpleado(empAgregar);
+            Mensajes.registroGuardado();
+            
+            txtNombres.setText("");
+            txtApellidos.setText("");
+            txtDNI.setText("");
+            txtContraseña.setText("");
+            txtDireccion.setText("");
+            txtTelefono.setText("");
+            cbxRoles.setSelectedItem("Empleado");
+        
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -722,7 +786,63 @@ public class FormAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        String filtro = txtBuscarEmp.getText().trim();
+        String tipoBusqueda = cmbFiltros.getSelectedItem().toString();
+        
+        modelo.setRowCount(0);
+        
+        try {
+            List<Empleado> listaEmpleados;
+            
+            switch (tipoBusqueda) {
+                case "Todos" -> {
+                    listaEmpleados = empControl.verTodosLosEmpleados();
+                }
+                
+                case "DNI" -> {
+                    listaEmpleados = List.of(empControl.buscarEmpleadoPorDNI(filtro));
+                }
+                
+                case "Nombre" -> {
+                    listaEmpleados = empControl.buscarEmpleadoPorNombre(filtro);
+                }
+                
+                case "ID" -> {
+                    listaEmpleados = List.of(empControl.buscarEmpleadoPorID(Integer.parseInt(filtro)));
+                }
+                
+                case "Activos" -> {
+                    listaEmpleados = empControl.verEmpleadosPorEstado(true);
+                }
+                
+                case "Inactivos" -> {
+                    listaEmpleados = empControl.verEmpleadosPorEstado(false);
+                }
+                
+                default -> {
+                    listaEmpleados = empControl.verTodosLosEmpleados();
+                }
+            }
+            
+            for (Empleado emp : listaEmpleados) {
+                Object[] fila = new Object[]{
+                    emp.getIdEmpleado(),
+                    emp.getNombres(),
+                    emp.getApellidos(),
+                    emp.getDni(),
+                    emp.getTelefono(),
+                    emp.getDireccion(),
+                    emp.getRol(),
+                    emp.isActivo()
+                };
+                
+                modelo.addRow(fila);
+            }
+            
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -730,8 +850,10 @@ public class FormAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
-        new FormLogin().setVisible(true);
-        this.dispose();
+        if (Mensajes.cerrarSesion()) {
+            new FormLogin().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -745,6 +867,7 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnTomarPedido;
     private javax.swing.JComboBox<String> cbxRoles;
+    private javax.swing.JComboBox<String> cmbFiltros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -756,7 +879,6 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -767,7 +889,6 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
-    private javax.swing.JLabel jLabel86;
     private javax.swing.JLabel jLabel87;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -776,18 +897,22 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
     private javax.swing.JLabel lblLogoMarcela;
+    private javax.swing.JTable tablaEmp;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtBuscarPersonal;
+    private javax.swing.JTextField txtBuscarEmp;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JLabel txtNombresEmp;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

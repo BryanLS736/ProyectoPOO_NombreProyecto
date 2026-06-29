@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista.area4Boletas;
 
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import modelo.Empleado;
 import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
@@ -13,10 +11,6 @@ import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area5Administracion.FormAdministracion;
 
-/**
- *
- * @author Diego
- */
 public class FormBoletas extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormBoletas.class.getName());
@@ -25,7 +19,12 @@ public class FormBoletas extends javax.swing.JFrame {
     
     public FormBoletas(Empleado empleado) {
         initComponents();
+        
         this.empleado = empleado;
+        
+        txtNombresEmp.setText(empleado.getNombres());
+        lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
         
@@ -114,9 +113,9 @@ public class FormBoletas extends javax.swing.JFrame {
         jPanel22 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
-        jLabel65 = new javax.swing.JLabel();
+        txtNombresEmp = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
@@ -513,9 +512,9 @@ public class FormBoletas extends javax.swing.JFrame {
         jLabel56.setForeground(new java.awt.Color(193, 99, 92));
         jLabel56.setText("Cajero(a):");
 
-        jLabel65.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel65.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel65.setText("Rosa Isabel");
+        txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
+        txtNombresEmp.setText("Rosa Isabel");
 
         jLabel66.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo usuario 7.png"))); // NOI18N
 
@@ -532,7 +531,7 @@ public class FormBoletas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel56)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel65))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel57))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -545,14 +544,14 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel56)
-                        .addComponent(jLabel65))
+                        .addComponent(txtNombresEmp))
                     .addComponent(jLabel66))
                 .addContainerGap())
         );
 
-        jLabel29.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel29.setText("24/02/26");
+        lblFecha.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
+        lblFecha.setText("24/02/26");
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -564,7 +563,7 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel29)
+                .addComponent(lblFecha)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -577,7 +576,7 @@ public class FormBoletas extends javax.swing.JFrame {
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel55)
-                            .addComponent(jLabel29))
+                            .addComponent(lblFecha))
                         .addGap(8, 8, 8))
                     .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel54))
@@ -675,8 +674,10 @@ public class FormBoletas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnCerrarSesion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion3ActionPerformed
-        new FormLogin().setVisible(true);
-        this.dispose();
+        if (Mensajes.cerrarSesion()) {
+            new FormLogin().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCerrarSesion3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -697,7 +698,6 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
@@ -705,7 +705,6 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -719,6 +718,7 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
@@ -726,5 +726,6 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscarPor;
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
+    private javax.swing.JLabel txtNombresEmp;
     // End of variables declaration//GEN-END:variables
 }
