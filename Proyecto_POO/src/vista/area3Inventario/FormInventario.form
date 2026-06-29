@@ -150,7 +150,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlSuperior2" max="32767" attributes="0"/>
-                  <Component id="jPanel6" pref="0" max="32767" attributes="0"/>
+                  <Component id="jPanel6" pref="654" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>

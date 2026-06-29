@@ -5,6 +5,7 @@
 package vista.area3Inventario;
 
 import java.awt.Color;
+import modelo.Empleado;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
 import vista.area4Boletas.FormBoletas;
@@ -18,12 +19,11 @@ public class FormInventario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormInventario.class.getName());
 
-    /**
-     * Creates new form FormHistorial2
-     */
-    public FormInventario() {
+    Empleado empleado = null;
+            
+    public FormInventario(Empleado empleado) {
         initComponents();
-        
+        this. empleado = empleado;
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
     }
@@ -769,7 +769,7 @@ public class FormInventario extends javax.swing.JFrame {
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
         
-        new FormTomarPedido().setVisible(true);
+        new FormTomarPedido(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
@@ -777,7 +777,7 @@ public class FormInventario extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
-        new FormHistorial().setVisible(true);
+        new FormHistorial(empleado).setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_btnHistorialActionPerformed
@@ -792,7 +792,7 @@ public class FormInventario extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
-        new FormBoletas().setVisible(true);
+        new FormBoletas(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 
@@ -818,7 +818,7 @@ public class FormInventario extends javax.swing.JFrame {
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
 
-        new FormAdministracion().setVisible(true);
+        new FormAdministracion(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracionActionPerformed
 

@@ -19,12 +19,11 @@ public class FormAdministracion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormAdministracion.class.getName());
 
-    /**
-     * Creates new form FormHistorial2
-     */
+    Empleado empleado = null;
+    
     public FormAdministracion(Empleado empleado) {
         initComponents();
-        
+        this.empleado = empleado;
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
     }
@@ -622,7 +621,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
-        new FormHistorial().setVisible(true);
+        new FormHistorial(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
@@ -630,7 +629,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
-        new FormInventario().setVisible(true);
+        new FormInventario(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
@@ -638,7 +637,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
-        new FormBoletas().setVisible(true);
+        new FormBoletas(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 

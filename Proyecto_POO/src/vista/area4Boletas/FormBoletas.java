@@ -5,6 +5,7 @@
 package vista.area4Boletas;
 
 import java.awt.Color;
+import modelo.Empleado;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
@@ -18,12 +19,11 @@ public class FormBoletas extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormBoletas.class.getName());
 
-    /**
-     * Creates new form FormHistorial2
-     */
-    public FormBoletas() {
+    Empleado empleado = null;
+    
+    public FormBoletas(Empleado empleado) {
         initComponents();
-        
+        this.empleado = empleado;
         btnBoletas.setBackground(new Color(252,231,218));
         btnBoletas.setForeground(new Color(181,69,63));
     }
@@ -574,7 +574,7 @@ public class FormBoletas extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnTomarPedido.setBackground(new Color(252,231,218));
         btnTomarPedido.setForeground(new Color(181,69,63));
-        new FormTomarPedido().setVisible(true);
+        new FormTomarPedido(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
@@ -583,7 +583,7 @@ public class FormBoletas extends javax.swing.JFrame {
         btnHistorial.setBackground(new Color(252,231,218));
         btnHistorial.setForeground(new Color(181,69,63));
         
-        new FormHistorial().setVisible(true);
+        new FormHistorial(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
@@ -591,7 +591,7 @@ public class FormBoletas extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnInventario.setBackground(new Color(252,231,218));
         btnInventario.setForeground(new Color(181,69,63));
-        new FormInventario().setVisible(true);
+        new FormInventario(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
@@ -621,7 +621,7 @@ public class FormBoletas extends javax.swing.JFrame {
         btnAdministracion.setBackground(new Color(252,231,218));
         btnAdministracion.setForeground(new Color(181,69,63));
 
-        new FormAdministracion().setVisible(true);
+        new FormAdministracion(empleado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
