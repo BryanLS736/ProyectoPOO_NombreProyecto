@@ -269,4 +269,5 @@ public class EmpleadoDAO implements IEmpleadoDAO{
 
         return empleado;
     }
+
 }

@@ -46,8 +46,7 @@ public class ProductoDAO implements IProductoDAO{
                      nombre = ?,
                      categoria = ?,
                      stock = ?,
-                     precio = ?,
-                     unid_medida = ?
+                     precio = ?
                      WHERE id_producto = ?
                      """;
         try (Connection conn = new Conexion().conectar();
@@ -57,9 +56,13 @@ public class ProductoDAO implements IProductoDAO{
             ps.setString(2, producto.getCategoria());
             ps.setInt(3, producto.getStock());
             ps.setDouble(4, producto.getPrecio());
-            ps.setString(5, producto.getUnidMedida());
-            ps.setInt(6, producto.getIdProducto());
-            ps.executeUpdate();
+            ps.setInt(5, producto.getIdProducto());
+            
+            int filas = ps.executeUpdate();
+            
+            if (filas == 0) {
+                throw new Exception("No se encontró el producto a actualizar (ID inválido).");
+            }
             
         } catch (SQLException e) {
             throw new Exception("Error al actualizar producto: " + e.getMessage());
