@@ -1,9 +1,14 @@
 package vista.area3Inventario;
 
+import controlador.ProductoController;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import modelo.Empleado;
+import modelo.Producto;
 import utilidades.Mensajes;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
@@ -16,12 +21,38 @@ public class FormInventario extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormInventario.class.getName());
 
     Empleado empleado = null;
+    private ProductoController prodControl = new ProductoController();
+    private DefaultTableModel modelo = new DefaultTableModel();
+    List<Producto> listaProductos = new ArrayList<>();
 
     public FormInventario(Empleado empleado) {
         initComponents();
         
+        // Asignar los datos del empleado en sesion
         this.empleado = empleado;
         
+        // Tabla
+        tablaProd.setModel(modelo);
+        
+        Object[] columnas = new Object[]{
+            "ID",
+            "Nombre",
+            "Categoria",
+            "Stock",
+            "Precio",
+            "Unid. Medida",
+            "Activo"
+        };
+        
+        modelo.setColumnIdentifiers(columnas);
+        
+        tablaProd.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaProd.setDefaultEditor(Object.class, null);
+        
+        // Llama a la tabla al abrir menu inventario
+        cargarTablaProductos("Todos","");
+        
+        // Extras
         txtNombresEmp.setText(empleado.getNombres());
         lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         
@@ -104,7 +135,7 @@ public class FormInventario extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         txtBuscarProducto = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
-        cbxCategoria = new javax.swing.JComboBox<>();
+        cmbCategoria = new javax.swing.JComboBox<>();
         cbxEstadoStock = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -122,6 +153,8 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProd = new javax.swing.JTable();
         jPanel19 = new javax.swing.JPanel();
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
@@ -439,18 +472,18 @@ public class FormInventario extends javax.swing.JFrame {
             .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        cbxCategoria.setBackground(new java.awt.Color(255, 255, 255));
-        cbxCategoria.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Todas", "Panes", "Bocaditos", "Bebidas", "Tortas" }));
-        cbxCategoria.addActionListener(new java.awt.event.ActionListener() {
+        cmbCategoria.setBackground(new java.awt.Color(255, 255, 255));
+        cmbCategoria.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Panes", "Bocaditos", "Bebidas", "Tortas" }));
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxCategoriaActionPerformed(evt);
+                cmbCategoriaActionPerformed(evt);
             }
         });
 
         cbxEstadoStock.setBackground(new java.awt.Color(255, 255, 255));
         cbxEstadoStock.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        cbxEstadoStock.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Todos", "Suficiente", "Bajo", "Sin stock" }));
+        cbxEstadoStock.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Suficiente", "Bajo", "Sin stock" }));
 
         btnLimpiar.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo escoba 2.png"))); // NOI18N
@@ -463,6 +496,11 @@ public class FormInventario extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         jButton1.setText("Buscar filtros");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -479,7 +517,7 @@ public class FormInventario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
@@ -507,7 +545,7 @@ public class FormInventario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
@@ -655,6 +693,19 @@ public class FormInventario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tablaProd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tablaProd);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -662,7 +713,6 @@ public class FormInventario extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -671,10 +721,14 @@ public class FormInventario extends javax.swing.JFrame {
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(539, 539, 539))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -689,7 +743,9 @@ public class FormInventario extends javax.swing.JFrame {
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnActualizarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -791,7 +847,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
                     .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -840,22 +896,34 @@ public class FormInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBoletasActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        cbxCategoria.setSelectedIndex(0);
+        cmbCategoria.setSelectedIndex(0);
         cbxEstadoStock.setSelectedIndex(0);
         txtBuscarProducto.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        
         new FormAgregarProducto(this).setVisible(true);
         this.setEnabled(false);
-
+        
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
-        
-        new FormActualizarProducto(this).setVisible(true);
-        this.setEnabled(false);
+        int fila = tablaProd.getSelectedRow();
+                
+        if (fila == -1){
+            Mensajes.error("Seleccione un producto de la tabla.");
+            return;
+        }
+                        
+        try {
+            Producto prodAgregar = listaProductos.get(fila);
+            
+            new FormActualizarProducto(this, prodAgregar).setVisible(true);
+            this.setEnabled(false);
+            
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
         
     }//GEN-LAST:event_btnActualizarProductoActionPerformed
 
@@ -867,7 +935,6 @@ public class FormInventario extends javax.swing.JFrame {
                 this.dispose();
             }
             case "Empleado" -> {
-
                 // Si el rol es de empleado no va a abrir nada
             }
             default -> {
@@ -877,9 +944,9 @@ public class FormInventario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
-    private void cbxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaActionPerformed
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbxCategoriaActionPerformed
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
 
     private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
         if (Mensajes.cerrarSesion()) {
@@ -888,6 +955,46 @@ public class FormInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String filtro = txtBuscarProducto.getText().trim();
+        String tipoBusqueda = cmbCategoria.getSelectedItem().toString();
+        cargarTablaProductos(tipoBusqueda, filtro);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    protected void cargarTablaProductos (String tipoBusqueda, String filtro) {
+        modelo.setRowCount(0);
+        
+        try {
+            
+            switch (tipoBusqueda) {
+                case "Todos" -> {
+                    listaProductos = prodControl.verTodosLosProductos();
+                }
+                
+                default -> {
+                    listaProductos = prodControl.verTodosLosProductos();
+                }
+            }
+            
+            for (Producto prod : listaProductos) {
+                Object[] fila = new Object[]{
+                    prod.getIdProducto(),
+                    prod.getNombre(),
+                    prod.getCategoria(),
+                    prod.getStock(),
+                    prod.getPrecio(),
+                    prod.getUnidMedida(),
+                    prod.isActivo()
+                };
+                
+                modelo.addRow(fila);
+            }
+            
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarProducto;
     private javax.swing.JButton btnAdministracion;
@@ -899,8 +1006,8 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnTomarPedido;
-    private javax.swing.JComboBox<String> cbxCategoria;
     private javax.swing.JComboBox<String> cbxEstadoStock;
+    private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -941,12 +1048,14 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
     private javax.swing.JLabel lblLogoMarcela;
     private javax.swing.JLabel lblProductos;
+    private javax.swing.JTable tablaProd;
     private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JLabel txtNombresEmp;
     // End of variables declaration//GEN-END:variables

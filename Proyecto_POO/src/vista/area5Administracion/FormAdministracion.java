@@ -44,6 +44,12 @@ public class FormAdministracion extends javax.swing.JFrame {
         
         modelo.setColumnIdentifiers(columnas);
         
+        tablaEmp.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaEmp.setDefaultEditor(Object.class, null);
+        
+        // Llama a la tabla al abrir el menu de admin
+        cargarTablaEmpleados("Todos","");
+        
         // Datos del IGU
         txtNombresEmp.setText(empleado.getNombres());
         lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -132,6 +138,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmp = new javax.swing.JTable();
         cmbFiltros = new javax.swing.JComboBox<>();
+        btnRestaurar = new javax.swing.JButton();
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
@@ -612,18 +619,28 @@ public class FormAdministracion extends javax.swing.JFrame {
 
         tablaEmp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tablaEmp);
 
         cmbFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "DNI", "Nombre", "ID", "Activos", "Inactivos" }));
+
+        btnRestaurar.setBackground(new java.awt.Color(255, 102, 51));
+        btnRestaurar.setFont(new java.awt.Font("Inter SemiBold", 0, 14)); // NOI18N
+        btnRestaurar.setForeground(new java.awt.Color(0, 0, 0));
+        btnRestaurar.setText("Restaurar");
+        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -633,11 +650,14 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnRestaurar)
+                                .addGap(3, 3, 3)))
                         .addGap(16, 16, 16))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,9 +685,11 @@ public class FormAdministracion extends javax.swing.JFrame {
                     .addComponent(cmbFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(btnEliminar)
-                .addGap(48, 48, 48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -762,6 +784,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         try {
             empControl.registrarEmpleado(empAgregar);
             Mensajes.registroGuardado();
+            cargarTablaEmpleados("Todos","");
             
             txtNombres.setText("");
             txtApellidos.setText("");
@@ -788,7 +811,75 @@ public class FormAdministracion extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String filtro = txtBuscarEmp.getText().trim();
         String tipoBusqueda = cmbFiltros.getSelectedItem().toString();
+        cargarTablaEmpleados(tipoBusqueda, filtro);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = tablaEmp.getSelectedRow();
         
+        if (fila == -1){
+            Mensajes.error("Seleccione un empleado de la tabla.");
+            return;
+        }
+        
+        int id = (int) modelo.getValueAt(fila, 0);
+        boolean activo = (boolean) modelo.getValueAt(fila, 7);
+        
+        if (!activo) {
+            Mensajes.error("El registro ya está eliminado (inactivo)");
+            return;
+        }
+                
+        boolean confirmacion = Mensajes.confirmarEliminacion();
+        
+        if (confirmacion) {
+            try {
+                empControl.cambiarEstadoEmpleado(id, false);
+                Mensajes.registroEliminado();
+                cargarTablaEmpleados("Todos","");
+            } catch (Exception e) {
+                Mensajes.error(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
+        if (Mensajes.cerrarSesion()) {
+            new FormLogin().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
+
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        int fila = tablaEmp.getSelectedRow();
+        
+        if (fila == -1){
+            Mensajes.error("Seleccione un empleado de la tabla.");
+            return;
+        }
+        
+        int id = (int) modelo.getValueAt(fila, 0);
+        boolean activo = (boolean) modelo.getValueAt(fila, 7);
+        
+        if (activo) {
+            Mensajes.error("El registro no está eliminado (activo)");
+            return;
+        }
+                
+        boolean confirmacion = Mensajes.confirmacion("¿Esta seguro de deshacer la eliminación?", "Restauración");
+        
+        if (confirmacion) {
+            try {
+                empControl.cambiarEstadoEmpleado(id, true);
+                Mensajes.exito("Se deshizo la eliminación!");
+                cargarTablaEmpleados("Todos","");
+            } catch (Exception e) {
+                Mensajes.error(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnRestaurarActionPerformed
+
+    private void cargarTablaEmpleados (String tipoBusqueda, String filtro) {
         modelo.setRowCount(0);
         
         try {
@@ -842,20 +933,8 @@ public class FormAdministracion extends javax.swing.JFrame {
         } catch (Exception e) {
             Mensajes.error(e.getMessage());
         }
-        
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
-        if (Mensajes.cerrarSesion()) {
-            new FormLogin().setVisible(true);
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
-
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
     private javax.swing.JButton btnAgregar;
@@ -865,6 +944,7 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnTomarPedido;
     private javax.swing.JComboBox<String> cbxRoles;
     private javax.swing.JComboBox<String> cmbFiltros;

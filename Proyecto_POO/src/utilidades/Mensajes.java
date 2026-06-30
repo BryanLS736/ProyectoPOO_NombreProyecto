@@ -22,6 +22,16 @@ public class Mensajes {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
+    
+    // Cerrar Sesión
+    public static boolean cerrarSesion() {
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                "¿Esta seguro que desea salir de la sesión?",
+                "Cerrar Sesión",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        return respuesta == JOptionPane.YES_OPTION;
+    }
 
     // Confirmación de guardar un registro
     public static void registroGuardado() {
@@ -31,10 +41,36 @@ public class Mensajes {
                 JOptionPane.INFORMATION_MESSAGE);
     }
     
-    // Fallo al guardar un registro
+    // Mensaje de contraseña inválida
+    public static void contraseñaInvalida() {
+        JOptionPane.showMessageDialog(
+            null,
+            "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
+            "Advertencia",
+            JOptionPane.WARNING_MESSAGE
+        );
+    }
+    
+    // Exito en una accion
+    public static void exito(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, 
+                "Operación exitosa!", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    // Fallo en una accion
     public static void error(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, 
                 "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // Confirmación
+    public static boolean confirmacion(String mensaje, String tipo) {
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                mensaje,
+                tipo,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        return respuesta == JOptionPane.YES_OPTION;
     }
 
     // Confirmación de actualizar un registro
@@ -43,6 +79,16 @@ public class Mensajes {
                 "Registro actualizado correctamente.",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    // Confirmación de eliminación
+    public static boolean confirmarEliminacion() {
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                "¿Esta seguro que desea eliminar el empleado?",
+                "Eliminación de Empleado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        return respuesta == JOptionPane.YES_OPTION;
     }
 
     // Confirmación de eliminar un registro (porsiacaso)
@@ -60,16 +106,6 @@ public class Mensajes {
                 "Información",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
-    // Mensaje de contraseña inválida
-    public static void contraseñaInvalida() {
-    JOptionPane.showMessageDialog(
-            null,
-            "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.",
-            "Advertencia",
-            JOptionPane.WARNING_MESSAGE
-        );
-    }
     
     // Empleado sin rol
     public static void rolDesconocido() {
@@ -78,14 +114,5 @@ public class Mensajes {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
-    
-    // Cerrar Sesión
-    public static boolean cerrarSesion() {
-        int respuesta = JOptionPane.showConfirmDialog(null,
-                "¿Esta seguro que desea salir de la sesión?",
-                "Cerrar Sesión",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        return respuesta == JOptionPane.YES_OPTION;
-    }
+
 }

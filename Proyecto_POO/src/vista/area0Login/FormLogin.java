@@ -377,10 +377,8 @@ public class FormLogin extends javax.swing.JFrame {
         } catch (Exception e) {
             Mensajes.loginIncorrecto();
             
-            txtDniLogin.setText("Usuario");
             txtDniLogin.setForeground(Color.decode("#666666"));
 
-            txtContraseniaLogin.setText("Contraseña");
             txtContraseniaLogin.setForeground(Color.decode("#666666"));
             
             btnIniciarSesionLogin.setFocusable(false);
