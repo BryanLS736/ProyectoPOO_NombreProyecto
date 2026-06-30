@@ -384,14 +384,9 @@ public class FormLogin extends javax.swing.JFrame {
             btnIniciarSesionLogin.setFocusable(false);
             btnIniciarSesionLogin.setBackground(new Color(182,22,20));
 
-            txtContraseniaLogin.setEchoChar((char) 0);
-            
-            
+            // txtContraseniaLogin.setEchoChar((char) 0);
         }
         
-        
-        
-
     }//GEN-LAST:event_btnIniciarSesiónActionPerformed
 
     private void txtContraseniaLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaLoginActionPerformed

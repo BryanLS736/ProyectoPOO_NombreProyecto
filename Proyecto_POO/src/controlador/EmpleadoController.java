@@ -33,6 +33,20 @@ public class EmpleadoController {
         if (Validaciones.campoVacio(empleado.getContrasenia()) || !Validaciones.contraseniaValida(empleado.getContrasenia())) {
             throw new Exception("La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número.");
         }
+        if (!empleado.getTelefono().isBlank()) {
+            if (!Validaciones.soloNumeros(empleado.getTelefono())) {
+                throw new Exception("El telefono solo puede tener numeros.");
+            }
+            if (!(empleado.getTelefono().length() == 7) && !(empleado.getTelefono().length() == 9)) {
+                throw new Exception("El telefono debe tener 7 numeros para fijo y 9 para numero celular.");
+            }
+            if (empleado.getTelefono().length() == 7 && empleado.getTelefono().startsWith("1")) {
+                    throw new Exception("El telefono fijo debe empezar por cualquier numero, menos el 1");
+                }
+            if (empleado.getTelefono().length() == 9 && !empleado.getTelefono().startsWith("9")) {
+                throw new Exception("El telefono celular debe empezar con el numero 9.");
+            }
+        }
         if (Validaciones.campoVacio(empleado.getRol())) {
             throw new Exception("Debe asignar un rol al empleado.");
         }
