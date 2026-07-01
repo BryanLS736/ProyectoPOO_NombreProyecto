@@ -12,6 +12,7 @@ public class Fecha {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
     
+    //Formato de hora actual
     public static String horaActual() {
         return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
