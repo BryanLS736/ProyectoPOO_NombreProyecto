@@ -16,6 +16,29 @@ public class DetalleVentaController {
         this.detalleVentaDAO = new DetalleVentaDAO();
         this.ventaDAO = new VentaDAO();
     }
+    
+    public void registrarDetalleVenta(DetalleVenta detalleVenta) throws Exception {
+        if (detalleVenta == null) {
+            throw new Exception("El detalle de venta no puede ser nulo.");
+        }
+        if (detalleVenta.getVenta() == null || detalleVenta.getVenta().getIdVenta() <= 0) {
+            throw new Exception("Debe asignar una venta válida al detalle.");
+        }
+        if (detalleVenta.getProducto() == null || detalleVenta.getProducto().getIdProducto() <= 0) {
+            throw new Exception("Debe asignar un producto válido al detalle.");
+        }
+        if (detalleVenta.getCantidad() <= 0) {
+            throw new Exception("La cantidad debe ser mayor a 0.");
+        }
+        if (detalleVenta.getPrecioUnitario() <= 0) {
+            throw new Exception("El precio unitario debe ser mayor a 0.");
+        }
+        if (detalleVenta.getPrecioTotal() <= 0) {
+            throw new Exception("El precio total debe ser mayor a 0.");
+        }
+
+        detalleVentaDAO.registrarDetalleVenta(detalleVenta);
+    }
 
     public List<DetalleVenta> buscarDetallesPorVenta(int idVenta) throws Exception {
         if (idVenta <= 0) {
