@@ -126,7 +126,16 @@ public class EmpleadoController {
         return lista;
     }
 
-    public Empleado buscarEmpleadoPorID(int id) throws Exception {
+    public Empleado buscarEmpleadoPorID(String idTexto) throws Exception {
+        
+        if (Validaciones.campoVacio(idTexto)
+                || !Validaciones.soloNumeros(idTexto)
+            ) {
+            throw new Exception("El ID no puede estar vacio y debe ser numérico.");
+        }
+        
+        int id = Integer.parseInt(idTexto);
+        
         if (id <= 0) {
             throw new Exception("El ID del empleado no es válido.");
         }

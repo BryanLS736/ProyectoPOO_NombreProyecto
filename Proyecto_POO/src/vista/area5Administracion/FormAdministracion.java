@@ -21,7 +21,7 @@ public class FormAdministracion extends javax.swing.JFrame {
     private Empleado empleado = null;
     private EmpleadoController empControl = new EmpleadoController();
     private DefaultTableModel modelo = new DefaultTableModel();
-    
+        
     public FormAdministracion(Empleado empleado) {
         initComponents();
         
@@ -123,7 +123,7 @@ public class FormAdministracion extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel82 = new javax.swing.JLabel();
         jPanel28 = new javax.swing.JPanel();
-        jLabel84 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel87 = new javax.swing.JLabel();
@@ -506,9 +506,9 @@ public class FormAdministracion extends javax.swing.JFrame {
 
         jPanel28.setBackground(new java.awt.Color(255, 246, 239));
 
-        jLabel84.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
-        jLabel84.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel84.setText("Administrador(a):");
+        txtRol.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol.setText("Administrador(a):");
 
         txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
@@ -528,7 +528,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel87)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel84)
+                .addComponent(txtRol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombresEmp)
                 .addContainerGap())
@@ -541,7 +541,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel84)
+                        .addComponent(txtRol)
                         .addComponent(txtNombresEmp))
                     .addComponent(jLabel87))
                 .addContainerGap())
@@ -576,11 +576,11 @@ public class FormAdministracion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel82)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel83)
-                            .addComponent(lblFecha))))
+                            .addComponent(lblFecha))
+                        .addComponent(jLabel82)))
                 .addContainerGap())
         );
 
@@ -900,7 +900,7 @@ public class FormAdministracion extends javax.swing.JFrame {
                 }
                 
                 case "ID" -> {
-                    listaEmpleados = List.of(empControl.buscarEmpleadoPorID(Integer.parseInt(filtro)));
+                    listaEmpleados = List.of(empControl.buscarEmpleadoPorID(filtro));
                 }
                 
                 case "Activos" -> {
@@ -968,7 +968,6 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
-    private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
     private javax.swing.JLabel jLabel87;
     private javax.swing.JLabel jLabel9;
@@ -994,6 +993,7 @@ public class FormAdministracion extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JLabel txtNombresEmp;
+    private javax.swing.JLabel txtRol;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

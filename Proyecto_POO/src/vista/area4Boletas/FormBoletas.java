@@ -17,6 +17,10 @@ public class FormBoletas extends javax.swing.JFrame {
 
     Empleado empleado = null;
     
+    // Tipo de rol asignado (va junto al nombre del empleado)
+    private String adminLabel = "Administrador(a):";
+    private String empleadoLabel = "Empleado(a):";
+    
     public FormBoletas(Empleado empleado) {
         initComponents();
         
@@ -30,11 +34,10 @@ public class FormBoletas extends javax.swing.JFrame {
         
         switch (empleado.getRol()) {
                 case "Administrador" -> {
-                    
-                    
+                    txtRol.setText(adminLabel);
                 }
                 case "Empleado" -> {
-                    
+                    txtRol.setText(empleadoLabel);
                     btnAdministracion.setVisible(false);
                 }
                 default -> {
@@ -112,7 +115,7 @@ public class FormBoletas extends javax.swing.JFrame {
         jLabel55 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
-        jLabel58 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel67 = new javax.swing.JLabel();
@@ -512,9 +515,9 @@ public class FormBoletas extends javax.swing.JFrame {
 
         jPanel23.setBackground(new java.awt.Color(255, 246, 239));
 
-        jLabel58.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
-        jLabel58.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel58.setText("Cajero(a):");
+        txtRol.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol.setText("Cajero(a):");
 
         txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
@@ -532,7 +535,7 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel67)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel58)
+                .addComponent(txtRol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombresEmp)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -544,7 +547,7 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel58)
+                            .addComponent(txtRol)
                             .addComponent(txtNombresEmp))
                         .addComponent(jLabel67))
                     .addComponent(jLabel59))
@@ -698,7 +701,6 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel67;
@@ -723,5 +725,6 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JLabel txtNombresEmp;
+    private javax.swing.JLabel txtRol;
     // End of variables declaration//GEN-END:variables
 }
