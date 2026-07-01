@@ -16,7 +16,7 @@ public final class Constantes {
 
     public static final double IGV = 0.18;
 
-    //Roles de manera simplificada
+    //Roles
 
     public static final String ADMIN = "Administrador";
     public static final String EMPLEADO = "Empleado";

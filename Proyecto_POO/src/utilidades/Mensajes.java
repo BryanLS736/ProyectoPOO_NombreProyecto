@@ -91,7 +91,7 @@ public class Mensajes {
         return respuesta == JOptionPane.YES_OPTION;
     }
 
-    // Confirmación de eliminar un registro (porsiacaso)
+    // Confirmación de eliminar un registro 
     public static void registroEliminado() {
         JOptionPane.showMessageDialog(null,
                 "Registro eliminado correctamente.",
