@@ -11,6 +11,10 @@ public class Venta {
     private Empleado empleado;
     private Caja caja;
     private Cliente cliente;
+    private String nombreCliente;
+    private String direccionEntrega;
+    private String telefonoContacto;
+    private String dniCliente;
     private List<DetalleVenta> detalles;
     private LocalDate fechaVenta;
     private LocalTime horaVenta;
@@ -24,12 +28,15 @@ public class Venta {
     }
 
     // Constructor con todos los atributos
-
-    public Venta(int idVenta, Empleado empleado, Caja caja, Cliente cliente, List<DetalleVenta> detalles, LocalDate fechaVenta, LocalTime horaVenta, String tipoDespacho, String notaAdicional, double totalVenta, String metodoPago) {
+    public Venta(int idVenta, Empleado empleado, Caja caja, Cliente cliente, String nombreCliente, String direccionEntrega, String telefonoContacto, String dniCliente, List<DetalleVenta> detalles, LocalDate fechaVenta, LocalTime horaVenta, String tipoDespacho, String notaAdicional, double totalVenta, String metodoPago) {
         this.idVenta = idVenta;
         this.empleado = empleado;
         this.caja = caja;
         this.cliente = cliente;
+        this.nombreCliente = nombreCliente;
+        this.direccionEntrega = direccionEntrega;
+        this.telefonoContacto = telefonoContacto;
+        this.dniCliente = dniCliente;
         this.detalles = detalles;
         this.fechaVenta = fechaVenta;
         this.horaVenta = horaVenta;
@@ -38,7 +45,6 @@ public class Venta {
         this.totalVenta = totalVenta;
         this.metodoPago = metodoPago;
     }
-    
 
     // Getters y Setters
     public int getIdVenta() {
@@ -71,6 +77,38 @@ public class Venta {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getDniCliente() {
+        return dniCliente;
+    }
+
+    public void setDniCliente(String dniCliente) {
+        this.dniCliente = dniCliente;
     }
 
     public List<DetalleVenta> getDetalles() {
@@ -133,7 +171,7 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta{" + "idVenta=" + idVenta + ", empleado=" + empleado + ", caja=" + caja + ", cliente=" + cliente + ", detalles=" + detalles + ", fechaVenta=" + fechaVenta + ", horaVenta=" + horaVenta + ", tipoDespacho=" + tipoDespacho + ", notaAdicional=" + notaAdicional + ", totalVenta=" + totalVenta + ", metodoPago=" + metodoPago + '}';
+        return "Venta{" + "idVenta=" + idVenta + ", empleado=" + empleado + ", caja=" + caja + ", detalles=" + detalles + ", fechaVenta=" + fechaVenta + ", horaVenta=" + horaVenta + ", tipoDespacho=" + tipoDespacho + ", notaAdicional=" + notaAdicional + ", totalVenta=" + totalVenta + ", metodoPago=" + metodoPago + '}';
     }
     
 }

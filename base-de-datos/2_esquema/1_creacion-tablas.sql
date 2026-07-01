@@ -85,12 +85,15 @@ CREATE TABLE Venta (
     id_venta INT AUTO_INCREMENT PRIMARY KEY,
     id_empleado INT NOT NULL,
     id_caja INT NOT NULL,
-    id_cliente INT NOT NULL,
+    id_cliente INT,
+    nombre_cliente VARCHAR(100),
+    direccion_entrega VARCHAR(250),
+    telefono_contacto VARCHAR(15),
+    dni_cliente CHAR(8),
     fecha_venta DATE DEFAULT  (CURRENT_DATE()),
     hora_venta TIME DEFAULT (CURRENT_TIME()),
     tipo_despacho ENUM('Aquí','Llevar','Delivery') DEFAULT 'Aquí',
     nota_adicional VARCHAR(255),
-    
     total_venta DECIMAL(10,2) NOT NULL,
     metodo_pago ENUM('Efectivo','Yape','Tarjeta') NOT NULL,
 
@@ -101,8 +104,8 @@ CREATE TABLE Venta (
     CONSTRAINT fk_venta_caja
         FOREIGN KEY (id_caja)
         REFERENCES Caja(id_caja),
-
-    CONSTRAINT fk_venta_cliente
+        
+	CONSTRAINT fk_venta_cliente
         FOREIGN KEY (id_cliente)
         REFERENCES Cliente(id_cliente)
 );

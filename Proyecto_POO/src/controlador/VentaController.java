@@ -30,8 +30,33 @@ public class VentaController {
         if (venta.getCaja() == null || venta.getCaja().getIdCaja() <= 0) {
             throw new Exception("Debe asignar una caja válida a la venta.");
         }
-        if (venta.getCliente() == null || venta.getCliente().getIdCliente() <= 0) {
-            throw new Exception("Debe asignar un cliente válido a la venta.");
+        if (venta.getCliente() != null && venta.getCliente().getIdCliente() <= 0) {
+            throw new Exception("El cliente asignado no es válido.");
+        }
+        if (venta.getNombreCliente() != null && !Validaciones.soloLetras(venta.getNombreCliente())) {
+            throw new Exception("El nombre solo puede contener letras.");
+        }
+        if (venta.getTelefonoContacto() != null) {
+            if (!Validaciones.soloNumeros(venta.getTelefonoContacto())) {
+                throw new Exception("El telefono solo puede tener numeros.");
+            }
+            if (!(venta.getTelefonoContacto().length() == 7) && !(venta.getTelefonoContacto().length() == 9)) {
+                throw new Exception("El telefono debe tener 7 numeros para fijo y 9 para numero celular.");
+            }
+            if (venta.getTelefonoContacto().length() == 7 && venta.getTelefonoContacto().startsWith("1")) {
+                throw new Exception("El telefono fijo debe empezar por cualquier numero, menos el 1");
+            }
+            if (venta.getTelefonoContacto().length() == 9 && !venta.getTelefonoContacto().startsWith("9")) {
+                throw new Exception("El telefono celular debe empezar con el numero 9.");
+            }
+        }
+        if (venta.getDniCliente() != null) {
+            if (!Validaciones.soloNumeros(venta.getDniCliente())) {
+                throw new Exception("El dni solo puede tener numeros.");
+            }
+            if (!(venta.getDniCliente().length() == 8)) {
+                throw new Exception("El dni debe tener solo 8 números.");
+            }
         }
         if (Validaciones.campoVacio(venta.getTipoDespacho())) {
             throw new Exception("Seleccione el tipo de despacho.");

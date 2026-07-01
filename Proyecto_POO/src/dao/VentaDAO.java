@@ -7,13 +7,15 @@ import java.util.List;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.sql.Types;
 import java.util.ArrayList;
 import modelo.Caja;
-import modelo.Cliente;
 import modelo.Empleado;
 import modelo.Venta;
+import utilidades.SQLUtils;
 
 public class VentaDAO implements IVentaDAO {
 
@@ -25,25 +27,43 @@ public class VentaDAO implements IVentaDAO {
                         id_empleado,
                         id_caja,
                         id_cliente,
+                        nombre_cliente,
+                        direccion_entrega,
+                        telefono_contacto,
+                        dni_cliente,
                         tipo_despacho,
                         nota_adicional,
                         total_venta,
                         metodo_pago
                      )
-                     VALUES (?,?,?,?,?,?,?)
+                     VALUES (?,?,?,?,?,?,?,?,?,?,?)
                      """;
         
         try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ) {
             ps.setInt(1, venta.getEmpleado().getIdEmpleado());
             ps.setInt(2, venta.getCaja().getIdCaja());
-            ps.setInt(3, venta.getCliente().getIdCliente());
-            ps.setString(4, venta.getTipoDespacho());
-            ps.setString(5, venta.getNotaAdicional());
-            ps.setDouble(6, venta.getTotalVenta());
-            ps.setString(7, venta.getMetodoPago());
+            if (venta.getCliente() != null) {
+                ps.setInt(3, venta.getCliente().getIdCliente());
+            } else {
+                ps.setNull(3, Types.INTEGER);
+            }
+            SQLUtils.setNullableString(ps, 4, venta.getNombreCliente(), Types.VARCHAR);
+            SQLUtils.setNullableString(ps, 5, venta.getDireccionEntrega(), Types.VARCHAR);
+            SQLUtils.setNullableString(ps, 6, venta.getTelefonoContacto(), Types.VARCHAR);
+            SQLUtils.setNullableString(ps, 7, venta.getDniCliente(), Types.VARCHAR);
+            ps.setString(8, venta.getTipoDespacho());
+            SQLUtils.setNullableString(ps, 9, venta.getNotaAdicional(), Types.VARCHAR);
+            ps.setDouble(10, venta.getTotalVenta());
+            ps.setString(11, venta.getMetodoPago());
             ps.executeUpdate();
+            
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    venta.setIdVenta(rs.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             throw new Exception("Error al registrar venta: " + e.getMessage());
         }
@@ -132,9 +152,7 @@ public class VentaDAO implements IVentaDAO {
         String sql = """
                      SELECT *
                      FROM Venta v
-                     INNER JOIN Cliente c
-                     ON v.id_cliente = c.id_cliente
-                     WHERE c.dni = ?
+                     WHERE dni _cliente = ?
                      """;
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -161,9 +179,7 @@ public class VentaDAO implements IVentaDAO {
         String sql = """
                      SELECT *
                      FROM Venta v
-                     INNER JOIN Cliente c
-                     ON v.id_cliente = c.id_cliente
-                     WHERE c.nombre LIKE ?
+                     WHERE nombre_cliente LIKE ?
                      """;
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -223,9 +239,10 @@ public class VentaDAO implements IVentaDAO {
         caja.setIdCaja(rs.getInt("id_caja"));
         venta.setCaja(caja);
         
-        Cliente cliente = new Cliente();
-        cliente.setIdCliente(rs.getInt("id_cliente"));
-        venta.setCliente(cliente);
+        venta.setNombreCliente(rs.getString("nombre_cliente"));
+        venta.setDireccionEntrega(rs.getString("direccion_entrega"));
+        venta.setTelefonoContacto(rs.getString("telefono_contacto"));
+        venta.setDniCliente(rs.getString("dni_cliente"));
         
         venta.setFechaVenta(rs.getDate("fecha_venta").toLocalDate());
         venta.setHoraVenta(rs.getTime("hora_venta").toLocalTime());

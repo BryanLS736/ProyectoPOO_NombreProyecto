@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista.area1TomarPedido;
 
 import java.awt.Color;
@@ -49,11 +45,8 @@ public class FormTomarPedido extends javax.swing.JFrame {
         
         switch (empleado.getRol()) {
                 case "Administrador" -> {
-                    
-                    
                 }
                 case "Empleado" -> {
-                    
                     btnAdministracion.setVisible(false);
                 }
                 default -> {
@@ -151,7 +144,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
         pnlSuperior = new javax.swing.JPanel();
         pnlDerecho = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        txtNotas = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btnGenerarPedido = new javax.swing.JButton();
         pnlCalculoSuma = new javax.swing.JPanel();
@@ -173,6 +165,8 @@ public class FormTomarPedido extends javax.swing.JFrame {
         txtCantidad2 = new javax.swing.JTextField();
         cbxMetodoPago = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtNotas = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
@@ -491,7 +485,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
             .addGroup(pnlCentralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                    .addComponent(pnlSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCentralLayout.createSequentialGroup()
@@ -513,7 +507,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(287, Short.MAX_VALUE))
         );
         pnlCentralLayout.setVerticalGroup(
             pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,23 +545,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Inter SemiBold", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Pedido ");
-
-        txtNotas.setBackground(new java.awt.Color(204, 204, 204));
-        txtNotas.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtNotas.setForeground(new java.awt.Color(51, 51, 51));
-        txtNotas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                ClickenNotas(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ClicFueraNotas(evt);
-            }
-        });
-        txtNotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNotasActionPerformed(evt);
-            }
-        });
 
         jLabel12.setFont(new java.awt.Font("Inter", 0, 15)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -755,6 +732,10 @@ public class FormTomarPedido extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         jLabel1.setText("Método de pago:");
 
+        txtNotas.setColumns(20);
+        txtNotas.setRows(5);
+        jScrollPane1.setViewportView(txtNotas);
+
         javax.swing.GroupLayout pnlDerechoLayout = new javax.swing.GroupLayout(pnlDerecho);
         pnlDerecho.setLayout(pnlDerechoLayout);
         pnlDerechoLayout.setHorizontalGroup(
@@ -769,7 +750,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel12))
                             .addGroup(pnlDerechoLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 5, Short.MAX_VALUE)
                                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlDerechoLayout.createSequentialGroup()
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -780,28 +761,33 @@ public class FormTomarPedido extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnLlevar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(12, 12, 12)
-                                        .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(117, 117, 117)))
                         .addGap(22, 22, 22))
-                    .addGroup(pnlDerechoLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDerechoLayout.createSequentialGroup()
                         .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDerechoLayout.createSequentialGroup()
-                                .addComponent(lblCantidad2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtNotas, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlSuma, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlCalculoSuma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGenerarPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDerechoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlDerechoLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(pnlDerechoLayout.createSequentialGroup()
+                                        .addComponent(lblCantidad2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(pnlSuma, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pnlCalculoSuma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGenerarPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDerechoLayout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(23, 23, 23))))
         );
         pnlDerechoLayout.setVerticalGroup(
@@ -820,15 +806,15 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(lblCantidad2)
                     .addComponent(btnEditar)
                     .addComponent(txtCantidad2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -905,7 +891,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFecha)
@@ -935,7 +921,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlCentral, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlCentral, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlDerecho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1043,20 +1029,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
         txtCantidad.setText("");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void ClickenNotas(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ClickenNotas
-        if (txtNotas.getText().equals("Notas(sin azúcar, caliente,etc)")) {
-           txtNotas.setText("");
-           txtNotas.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_ClickenNotas
-
-    private void ClicFueraNotas(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ClicFueraNotas
-        if (txtNotas.getText().isEmpty()) {
-            txtNotas.setText("Notas(sin azúcar, caliente,etc)");
-            txtNotas.setForeground(Color.decode("#666666"));
-        }
-    }//GEN-LAST:event_ClicFueraNotas
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -1136,7 +1108,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
-        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnGenerarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPedidoActionPerformed
@@ -1164,10 +1135,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
         btnAqui.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnGenerarPedidoActionPerformed
 
-    private void txtNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNotasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNotasActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         
         
@@ -1175,23 +1142,19 @@ public class FormTomarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
-        
-            //Definir que hace el botón Administración dependiendo del rol.
-            switch (empleado.getRol()) {
-                case "Administrador" -> {
-                    new FormAdministracion(empleado).setVisible(true);
-                    this.dispose();
-                }
-                case "Empleado" -> {
-                    
-                    // Si el rol es de empleado no va a abrir nada
-                }
-                default -> {
-                    Mensajes.rolDesconocido();
-                }
+        //Definir que hace el botón Administración dependiendo del rol.
+        switch (empleado.getRol()) {
+            case "Administrador" -> {
+                new FormAdministracion(empleado).setVisible(true);
+                this.dispose();
             }
-            
-        
+            case "Empleado" -> {
+                // Si el rol es de empleado no va a abrir nada
+            }
+            default -> {
+                Mensajes.rolDesconocido();
+            }
+        }
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -1239,6 +1202,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblBuscar;
@@ -1261,6 +1225,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtNombre2;
     private javax.swing.JLabel txtNombresEmp;
-    private javax.swing.JTextField txtNotas;
+    private javax.swing.JTextArea txtNotas;
     // End of variables declaration//GEN-END:variables
 }

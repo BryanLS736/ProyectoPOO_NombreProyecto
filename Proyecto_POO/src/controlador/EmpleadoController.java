@@ -41,7 +41,7 @@ public class EmpleadoController {
                 throw new Exception("El telefono debe tener 7 numeros para fijo y 9 para numero celular.");
             }
             if (empleado.getTelefono().length() == 7 && empleado.getTelefono().startsWith("1")) {
-                    throw new Exception("El telefono fijo debe empezar por cualquier numero, menos el 1");
+                throw new Exception("El telefono fijo debe empezar por cualquier numero, menos el 1");
                 }
             if (empleado.getTelefono().length() == 9 && !empleado.getTelefono().startsWith("9")) {
                 throw new Exception("El telefono celular debe empezar con el numero 9.");

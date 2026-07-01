@@ -1,4 +1,3 @@
-
 -- INSERCIÓN DE EMPLEADOS --
 
 INSERT INTO Empleado (nombres, apellidos, dni, contrasenia, direccion, telefono, rol,activo)
@@ -55,8 +54,3 @@ VALUES
 		(2, 2, 3, 2.00, 6.00),
 		(3, 3, 2, 2.00, 4.00),
 		(4, 4, 2, 5.00, 10.00);
-
-
-
-
-
