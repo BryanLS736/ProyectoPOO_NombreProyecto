@@ -17,6 +17,10 @@ public class FormHistorial extends javax.swing.JFrame {
 
     Empleado empleado = null;
     
+    // Tipo de rol asignado (va junto al nombre del empleado)
+    private String adminLabel = "Administrador(a):";
+    private String empleadoLabel = "Empleado(a):";
+    
     public FormHistorial(Empleado empleado) {
         initComponents();
         
@@ -30,11 +34,10 @@ public class FormHistorial extends javax.swing.JFrame {
         
         switch (empleado.getRol()) {
                 case "Administrador" -> {
-                    
-                    
+                    txtRol.setText(adminLabel);
                 }
                 case "Empleado" -> {
-                    
+                    txtRol.setText(empleadoLabel);
                     btnAdministracion.setVisible(false);
                 }
                 default -> {
@@ -134,7 +137,7 @@ public class FormHistorial extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
-        jLabel56 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
@@ -699,9 +702,9 @@ public class FormHistorial extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(255, 246, 239));
 
-        jLabel56.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
-        jLabel56.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel56.setText("Cajero(a):");
+        txtRol.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol.setText("Cajero(a):");
 
         txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
@@ -719,7 +722,7 @@ public class FormHistorial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel66)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel56)
+                .addComponent(txtRol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombresEmp)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -731,7 +734,7 @@ public class FormHistorial extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel56)
+                            .addComponent(txtRol)
                             .addComponent(txtNombresEmp))
                         .addComponent(jLabel66))
                     .addComponent(jLabel57))
@@ -764,10 +767,9 @@ public class FormHistorial extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel30)
-                                .addComponent(lblFecha)))))
+                            .addComponent(jLabel30)
+                            .addComponent(lblFecha))
+                        .addComponent(jLabel15)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -892,7 +894,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel66;
@@ -925,5 +926,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JLabel txtNombresEmp;
+    private javax.swing.JLabel txtRol;
     // End of variables declaration//GEN-END:variables
 }

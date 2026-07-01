@@ -25,6 +25,10 @@ public class FormInventario extends javax.swing.JFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
     List<Producto> listaProductos = new ArrayList<>();
 
+    // Tipo de rol asignado (va junto al nombre del empleado)
+    private String adminLabel = "Administrador(a):";
+    private String empleadoLabel = "Empleado(a):";
+    
     public FormInventario(Empleado empleado) {
         initComponents();
         
@@ -61,10 +65,11 @@ public class FormInventario extends javax.swing.JFrame {
 
         switch (empleado.getRol()) {
             case "Administrador" -> {
-
+                txtRol.setText(adminLabel);
             }
             case "Empleado" -> {
-
+                txtRol.setText(empleadoLabel);
+                
                 btnAgregarProducto.setVisible(false);
                 btnActualizarProducto.setVisible(false);
                 
@@ -159,7 +164,7 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
-        jLabel56 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
@@ -524,7 +529,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addComponent(cbxEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
@@ -729,7 +734,7 @@ public class FormInventario extends javax.swing.JFrame {
                                 .addGap(539, 539, 539))
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
-                        .addGap(0, 1, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,9 +776,9 @@ public class FormInventario extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(255, 246, 239));
 
-        jLabel56.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
-        jLabel56.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel56.setText("Cajero(a):");
+        txtRol.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol.setText("Cajero(a):");
 
         txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
@@ -791,7 +796,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel66)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel56)
+                .addComponent(txtRol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombresEmp)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -803,7 +808,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel56)
+                            .addComponent(txtRol)
                             .addComponent(txtNombresEmp))
                         .addComponent(jLabel66))
                     .addComponent(jLabel57))
@@ -852,7 +857,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 644, Short.MAX_VALUE)
                     .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -1034,7 +1039,6 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel66;
@@ -1063,5 +1067,6 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JTable tablaProd;
     private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JLabel txtNombresEmp;
+    private javax.swing.JLabel txtRol;
     // End of variables declaration//GEN-END:variables
 }

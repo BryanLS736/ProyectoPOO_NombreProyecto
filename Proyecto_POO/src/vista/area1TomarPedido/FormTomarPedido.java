@@ -16,6 +16,10 @@ public class FormTomarPedido extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormTomarPedido.class.getName());
 
     Empleado empleado = null;
+    
+    // Tipo de rol asignado (va junto al nombre del empleado)
+    private String adminLabel = "Administrador(a):";
+    private String empleadoLabel = "Empleado(a):";
 
     public FormTomarPedido(Empleado empleado) {
         initComponents();
@@ -45,8 +49,10 @@ public class FormTomarPedido extends javax.swing.JFrame {
         
         switch (empleado.getRol()) {
                 case "Administrador" -> {
+                    txtRol.setText(adminLabel);
                 }
                 case "Empleado" -> {
+                    txtRol.setText(empleadoLabel);
                     btnAdministracion.setVisible(false);
                 }
                 default -> {
@@ -171,7 +177,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
         lblFecha = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
-        jLabel56 = new javax.swing.JLabel();
+        txtRol = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
@@ -842,9 +848,9 @@ public class FormTomarPedido extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(255, 246, 239));
 
-        jLabel56.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
-        jLabel56.setForeground(new java.awt.Color(193, 99, 92));
-        jLabel56.setText("Cajero(a):");
+        txtRol.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol.setText("Cajero(a):");
 
         txtNombresEmp.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtNombresEmp.setForeground(new java.awt.Color(193, 99, 92));
@@ -862,7 +868,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel66)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel56)
+                .addComponent(txtRol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombresEmp)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -874,7 +880,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel56)
+                            .addComponent(txtRol)
                             .addComponent(txtNombresEmp))
                         .addComponent(jLabel66))
                     .addComponent(jLabel57))
@@ -930,7 +936,7 @@ public class FormTomarPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlDerecho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)))
+                    .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)))
             .addComponent(pnlBarraLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1215,7 +1221,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel66;
@@ -1244,5 +1249,6 @@ public class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre2;
     private javax.swing.JLabel txtNombresEmp;
     private javax.swing.JTextField txtNotas;
+    private javax.swing.JLabel txtRol;
     // End of variables declaration//GEN-END:variables
 }
