@@ -1,26 +1,31 @@
 package vista.area0Login;
 
+import controlador.CajaController;
 import controlador.EmpleadoController;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import modelo.Caja;
 import modelo.Empleado;
 import utilidades.Mensajes;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area5Administracion.FormAdministracion;
+import vista.area6Caja.FormCaja;
 
 public class FormLogin extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormLogin.class.getName());
     private final EmpleadoController empleadoController;
+    private final CajaController cajaController;
 
     FondoPanel fondo = new FondoPanel();
 
     public FormLogin() {
         // Controlador del empleado
         this.empleadoController = new EmpleadoController();
+        this.cajaController = new CajaController();
         
         this.setContentPane(fondo);
 
@@ -355,15 +360,29 @@ public class FormLogin extends javax.swing.JFrame {
         
         try {
             Empleado empleado = empleadoController.iniciarSesionEmpleado(dni, contrasenia);
+            Caja caja = cajaController.buscarCajaAbierta();
             
             switch (empleado.getRol()) {
                 case "Administrador" -> {
                     new FormAdministracion(empleado).setVisible(true);
                     this.dispose();
+                    
+                    if (caja == null) {
+                        Mensajes.aviso("No hay caja Abierta");
+                    }
+                    
                 }
                 case "Empleado" -> {
-                    new FormTomarPedido(empleado).setVisible(true);
-                    this.dispose();
+                    
+                    
+                    if (caja == null) {
+                        new FormCaja(empleado).setVisible(true);
+                        this.dispose();
+                        Mensajes.aviso("No hay caja Abierta");
+                    } else {
+                        new FormTomarPedido(empleado).setVisible(true);
+                        this.dispose();
+                    }
                 }
                 default -> {
                     Mensajes.rolDesconocido();

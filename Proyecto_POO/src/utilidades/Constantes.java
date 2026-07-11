@@ -29,5 +29,7 @@ public final class Constantes {
     public static final String PREFIJO_EMPLEADO = "EMP";
     public static final String PREFIJO_CLIENTE = "CLI";
 
+    // Monto inicial
+    public static final double MONTO_APERTURA_FIJO = 100.0;
 
 }

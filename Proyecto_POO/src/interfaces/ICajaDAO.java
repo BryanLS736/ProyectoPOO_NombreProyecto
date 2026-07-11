@@ -10,6 +10,8 @@ public interface ICajaDAO {
     void cerrarCaja(Caja caja) throws Exception;
 
     Caja buscarCajaPorID(int id) throws Exception;
+    
+    Caja buscarCajaAbierta() throws Exception;
 
     List<Caja> buscarCajasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws Exception;
 
