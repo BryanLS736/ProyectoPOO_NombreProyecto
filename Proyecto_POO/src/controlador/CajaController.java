@@ -1,16 +1,19 @@
 package controlador;
 
 import dao.CajaDAO;
+import dao.VentaDAO;
 import interfaces.ICajaDAO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import modelo.Caja;
+import modelo.Empleado;
 import utilidades.Validaciones;
 
 public class CajaController {
 
     private final ICajaDAO cajaDAO;
+    private final VentaDAO ventaDAO = new VentaDAO();
 
     public CajaController() {
         this.cajaDAO = new CajaDAO();
@@ -38,31 +41,21 @@ public class CajaController {
         cajaDAO.abrirCaja(caja);
     }
 
-    public void cerrarCaja(Caja caja) throws Exception {
-        if (caja == null) {
-            throw new Exception("La caja no puede ser nula.");
-        }
-        if (caja.getIdCaja() <= 0) {
-            throw new Exception("El ID de la caja no es válido.");
-        }
-        if (caja.getEmpleadoCierre() == null || caja.getEmpleadoCierre().getIdEmpleado() <= 0) {
-            throw new Exception("Debe asignar un empleado de cierre válido.");
-        }
-        if (caja.getMontoCierre() < 0) {
-            throw new Exception("El monto de cierre no puede ser negativo.");
+    public void cerrarCaja(Empleado empleado) throws Exception {
+        Caja cajaAbierta = cajaDAO.buscarCajaAbierta();
+
+        if (cajaAbierta == null) {
+            throw new Exception("No hay ninguna caja abierta para cerrar.");
         }
 
-        Caja cajaExistente = cajaDAO.buscarCajaPorID(caja.getIdCaja());
-        if (cajaExistente == null) {
-            throw new Exception("No se encontró la caja a cerrar.");
-        }
-        if (!"Abierta".equals(cajaExistente.getEstado())) {
-            throw new Exception("La caja ya se encuentra cerrada.");
-        }
+        double totalVentas = ventaDAO.sumarVentasPorCaja(cajaAbierta.getIdCaja());
+        double montoCierreCalculado = cajaAbierta.getMontoApertura() + totalVentas;
 
-        caja.setHoraCierre(LocalTime.now());
+        cajaAbierta.setEmpleadoCierre(empleado);
+        cajaAbierta.setHoraCierre(LocalTime.now());
+        cajaAbierta.setMontoCierre(montoCierreCalculado);
 
-        cajaDAO.cerrarCaja(caja);
+        cajaDAO.cerrarCaja(cajaAbierta);
     }
 
     public Caja buscarCajaPorID(int id) throws Exception {
@@ -76,6 +69,11 @@ public class CajaController {
             throw new Exception("No se encontró ninguna caja con el ID: " + id);
         }
 
+        return caja;
+    }
+    
+    public Caja buscarCajaAbierta() throws Exception {
+        Caja caja = cajaDAO.buscarCajaAbierta();
         return caja;
     }
 

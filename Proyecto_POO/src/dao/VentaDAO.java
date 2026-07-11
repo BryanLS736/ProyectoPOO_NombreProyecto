@@ -226,6 +226,32 @@ public class VentaDAO implements IVentaDAO {
         }
     }
     
+    @Override
+    public double sumarVentasPorCaja(int idCaja) throws Exception {
+        double total = 0;
+
+        String sql = """
+                 SELECT COALESCE(SUM(total_venta), 0) AS total_ventas
+                 FROM Venta
+                 WHERE id_caja = ?
+                 """;
+
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql);) {
+
+            ps.setInt(1, idCaja);
+
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    total = rs.getDouble("total_ventas");
+                }
+            }
+
+            return total;
+        } catch (SQLException e) {
+            throw new Exception("Error al sumar las ventas de la caja: " + e.getMessage());
+        }
+    }
+    
     private Venta mapearVenta(ResultSet rs) throws SQLException {
         Venta venta = new Venta();
 

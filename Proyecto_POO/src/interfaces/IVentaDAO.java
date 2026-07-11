@@ -18,4 +18,7 @@ public interface IVentaDAO {
     List<Venta> buscarVentaPorNombreCliente(String nombre) throws Exception;
     
     List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception;
+    
+    double sumarVentasPorCaja(int idCaja) throws Exception;
+
 }

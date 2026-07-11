@@ -1,21 +1,29 @@
 package vista.area4Boletas;
 
+import controlador.CajaController;
+import controlador.ProductoController;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import modelo.Caja;
 import modelo.Empleado;
 import utilidades.Mensajes;
+import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area5Administracion.FormAdministracion;
+import vista.area6Caja.FormCaja;
 
 public class FormBoletas extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormBoletas.class.getName());
 
     Empleado empleado = null;
+    
+    // Controladores
+    private CajaController cajaControl;
     
     // Tipo de rol asignado (va junto al nombre del empleado)
     private String adminLabel = "Administrador(a):";
@@ -25,6 +33,10 @@ public class FormBoletas extends javax.swing.JFrame {
         initComponents();
         
         this.empleado = empleado;
+        
+        // Se inicializa los controladores
+        cajaControl = new CajaController();
+        UtilLabels.refrescarEstadoCaja(txtEstadoCaja, cajaControl, this);
         
         txtNombresEmp.setText(empleado.getNombres());
         lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -92,6 +104,7 @@ public class FormBoletas extends javax.swing.JFrame {
         lblLogoFlores1 = new javax.swing.JLabel();
         btnAdministracion = new javax.swing.JButton();
         btnCerrarSesion3 = new javax.swing.JButton();
+        btnCaja = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -119,6 +132,11 @@ public class FormBoletas extends javax.swing.JFrame {
         jLabel59 = new javax.swing.JLabel();
         txtNombresEmp = new javax.swing.JLabel();
         jLabel67 = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        txtRol1 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        txtEstadoCaja = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
 
         lblLogoFlores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/FLORES4.png"))); // NOI18N
 
@@ -276,14 +294,26 @@ public class FormBoletas extends javax.swing.JFrame {
             }
         });
 
+        btnCaja.setBackground(new java.awt.Color(253, 246, 240));
+        btnCaja.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        btnCaja.setForeground(new java.awt.Color(0, 0, 0));
+        btnCaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/Logo boletas3.png"))); // NOI18N
+        btnCaja.setText("Caja");
+        btnCaja.setBorder(null);
+        btnCaja.setBorderPainted(false);
+        btnCaja.setContentAreaFilled(false);
+        btnCaja.setFocusPainted(false);
+        btnCaja.setOpaque(true);
+        btnCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCajaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(lblLogoMarcela, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnBoletas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -294,8 +324,15 @@ public class FormBoletas extends javax.swing.JFrame {
             .addComponent(btnAdministracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCerrarSesion3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 8, Short.MAX_VALUE)
+                        .addComponent(lblLogoMarcela, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCerrarSesion3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnCaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,9 +347,11 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBoletas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(49, 49, 49)
                 .addComponent(btnCerrarSesion3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores1))
@@ -554,6 +593,47 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel24.setBackground(new java.awt.Color(255, 246, 239));
+
+        txtRol1.setFont(new java.awt.Font("Inter SemiBold", 0, 10)); // NOI18N
+        txtRol1.setForeground(new java.awt.Color(193, 99, 92));
+        txtRol1.setText("Caja:");
+
+        txtEstadoCaja.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtEstadoCaja.setForeground(new java.awt.Color(193, 99, 92));
+        txtEstadoCaja.setText("-");
+
+        jLabel68.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo usuario 7.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel58)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel68)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtRol1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEstadoCaja)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRol1)
+                            .addComponent(txtEstadoCaja))
+                        .addComponent(jLabel68))
+                    .addComponent(jLabel58))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
@@ -565,6 +645,8 @@ public class FormBoletas extends javax.swing.JFrame {
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFecha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -574,6 +656,7 @@ public class FormBoletas extends javax.swing.JFrame {
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel54)
@@ -607,11 +690,25 @@ public class FormBoletas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarPedidoActionPerformed
-        deseleccionarBotonesLaterales();
-        btnTomarPedido.setBackground(new Color(252,231,218));
-        btnTomarPedido.setForeground(new Color(181,69,63));
-        new FormTomarPedido(empleado).setVisible(true);
-        this.dispose();
+        try {
+            Caja caja = cajaControl.buscarCajaAbierta();
+            
+            if (caja == null) {
+                boolean abrirCaja = Mensajes.confirmacion("No se puede ingresar sin una caja abierta, ¿Desea ir al menú caja para abrir una?", "No hay Caja Abierta");
+                if (abrirCaja) {
+                    new FormCaja(empleado).setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                deseleccionarBotonesLaterales();
+                btnTomarPedido.setBackground(new Color(252,231,218));
+                btnTomarPedido.setForeground(new Color(181,69,63));
+                new FormTomarPedido(empleado).setVisible(true);
+                this.dispose();
+            }
+        } catch (Exception e) {
+            Mensajes.error("No se pudo entrar a la opción tomar pedido.");
+        }
     }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
@@ -679,9 +776,15 @@ public class FormBoletas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesion3ActionPerformed
 
+    private void btnCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCajaActionPerformed
+        new FormCaja(empleado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCajaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
     private javax.swing.JButton btnBoletas;
+    private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCerrarSesion3;
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnInventario;
@@ -701,9 +804,11 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -711,6 +816,7 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton jRadioButton3;
@@ -722,9 +828,11 @@ public class FormBoletas extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogoFlores1;
     private javax.swing.JLabel lblLogoMarcela;
     private javax.swing.JTextField txtBuscarPor;
+    private javax.swing.JLabel txtEstadoCaja;
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JLabel txtNombresEmp;
     private javax.swing.JLabel txtRol;
+    private javax.swing.JLabel txtRol1;
     // End of variables declaration//GEN-END:variables
 }

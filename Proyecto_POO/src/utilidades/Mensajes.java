@@ -72,6 +72,13 @@ public class Mensajes {
                 JOptionPane.QUESTION_MESSAGE);
         return respuesta == JOptionPane.YES_OPTION;
     }
+    
+    // Exito en una accion
+    public static void aviso(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, 
+                "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
 
     // Confirmación de actualizar un registro
     public static void registroActualizado() {

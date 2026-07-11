@@ -8,6 +8,7 @@ import modelo.Caja;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Date;
 import java.sql.Time;
@@ -20,24 +21,28 @@ public class CajaDAO implements ICajaDAO{
     @Override
     public void abrirCaja(Caja caja) throws Exception {
         String sql = """
-                     INSERT INTO Caja
-                     (
-                        id_empleado_apertura,
-                        fecha,
-                        hora_apertura,
-                        monto_apertura
-                     )
-                     VALUES (?,?,?,?)
-                     """;
-        
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
+                 INSERT INTO Caja
+                 (
+                    id_empleado_apertura,
+                    fecha,
+                    hora_apertura,
+                    monto_apertura
+                 )
+                 VALUES (?,?,?,?)
+                 """;
+
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             ps.setInt(1, caja.getEmpleadoApertura().getIdEmpleado());
             ps.setDate(2, Date.valueOf(caja.getFecha()));
             ps.setTime(3, Time.valueOf(caja.getHoraApertura()));
             ps.setDouble(4, caja.getMontoApertura());
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys();) {
+                if (rs.next()) {
+                    caja.setIdCaja(rs.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             throw new Exception("Error al abrir la caja: " + e.getMessage());
         }
@@ -46,24 +51,24 @@ public class CajaDAO implements ICajaDAO{
     @Override
     public void cerrarCaja(Caja caja) throws Exception {
         String sql = """
-                     UPDATE Caja
-                     SET
-                        id_empleado_cierre = ?,
-                        hora_cierre = ?,
-                        monto_cierre = ?,
-                        estado = 'Cerrada'
-                     WHERE id_caja = ?
-                     """;
-        
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
+                 UPDATE Caja
+                 SET
+                    id_empleado_cierre = ?,
+                    hora_cierre = ?,
+                    monto_cierre = ?,
+                    estado = 'Cerrada'
+                 WHERE id_caja = ?
+                 """;
+
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql);) {
             ps.setInt(1, caja.getEmpleadoCierre().getIdEmpleado());
+
             if (caja.getHoraCierre() != null) {
                 ps.setTime(2, Time.valueOf(caja.getHoraCierre()));
             } else {
                 ps.setNull(2, Types.TIME);
             }
+
             ps.setDouble(3, caja.getMontoCierre());
             ps.setInt(4, caja.getIdCaja());
             ps.executeUpdate();
@@ -99,6 +104,33 @@ public class CajaDAO implements ICajaDAO{
         }
     }
 
+    @Override
+    public Caja buscarCajaAbierta() throws Exception {
+        Caja caja = null;
+        
+        String sql = """
+                     SELECT *
+                     FROM Caja
+                     WHERE estado = ?
+                     """;
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+            ) {
+            
+            ps.setString(1, "Abierta");
+            
+            try (ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    caja = mapearCaja(rs);
+                }
+            }
+            
+            return caja;
+        } catch (SQLException e) {
+            throw new Exception("Error al buscar una caja abierta: " + e.getMessage());
+        }
+    }
+    
     @Override
     public List<Caja> buscarCajasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws Exception {
         List<Caja> listaCajas = new ArrayList<>();
