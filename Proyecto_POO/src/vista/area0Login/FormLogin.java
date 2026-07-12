@@ -391,7 +391,8 @@ public class FormLogin extends javax.swing.JFrame {
             
             
         } catch (Exception e) {
-            Mensajes.loginIncorrecto();
+            e.printStackTrace();
+            // Mensajes.loginIncorrecto();
             
             txtDniLogin.setForeground(Color.decode("#666666"));
 

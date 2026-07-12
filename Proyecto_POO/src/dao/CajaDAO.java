@@ -82,10 +82,15 @@ public class CajaDAO implements ICajaDAO{
         Caja caja = null;
         
         String sql = """
-                     SELECT *
-                     FROM Caja
-                     WHERE id_caja = ?
-                     """;
+                    SELECT c.*,
+                    ea.apellidos AS apellidos_apertura, ea.nombres AS nombres_apertura, ea.dni AS dni_apertura,
+                    ec.apellidos AS apellidos_cierre, ec.nombres AS nombres_cierre, ec.dni AS dni_cierre
+                    FROM Caja c
+                    LEFT JOIN Empleado ea ON c.id_empleado_apertura = ea.id_empleado
+                    LEFT JOIN Empleado ec ON c.id_empleado_cierre = ec.id_empleado
+                    WHERE c.id_caja = ?
+                    ORDER BY c.fecha DESC, c.hora_apertura DESC""";
+
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
             ) {
@@ -109,10 +114,15 @@ public class CajaDAO implements ICajaDAO{
         Caja caja = null;
         
         String sql = """
-                     SELECT *
-                     FROM Caja
-                     WHERE estado = ?
-                     """;
+                    SELECT c.*,
+                    ea.apellidos AS apellidos_apertura, ea.nombres AS nombres_apertura, ea.dni AS dni_apertura,
+                    ec.apellidos AS apellidos_cierre, ec.nombres AS nombres_cierre, ec.dni AS dni_cierre
+                    FROM Caja c
+                    LEFT JOIN Empleado ea ON c.id_empleado_apertura = ea.id_empleado
+                    LEFT JOIN Empleado ec ON c.id_empleado_cierre = ec.id_empleado
+                    WHERE c.estado = ?
+                    ORDER BY c.fecha DESC, c.hora_apertura DESC""";
+
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
             ) {
@@ -136,10 +146,15 @@ public class CajaDAO implements ICajaDAO{
         List<Caja> listaCajas = new ArrayList<>();
         
         String sql = """
-                     SELECT *
-                     FROM Caja
-                     WHERE fecha BETWEEN ? AND ?
-                     """;
+                    SELECT c.*,
+                    ea.apellidos AS apellidos_apertura, ea.nombres AS nombres_apertura, ea.dni AS dni_apertura,
+                    ec.apellidos AS apellidos_cierre, ec.nombres AS nombres_cierre, ec.dni AS dni_cierre
+                    FROM Caja c
+                    LEFT JOIN Empleado ea ON c.id_empleado_apertura = ea.id_empleado
+                    LEFT JOIN Empleado ec ON c.id_empleado_cierre = ec.id_empleado
+                    WHERE c.fecha BETWEEN ? AND ?
+                    ORDER BY c.fecha DESC, c.hora_apertura DESC""";
+        
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
             ) {
@@ -164,9 +179,14 @@ public class CajaDAO implements ICajaDAO{
         List<Caja> listaCajas = new ArrayList<>();
         
         String sql = """
-                     SELECT *
-                     FROM Caja
-                     """;
+                    SELECT c.*,
+                    ea.apellidos AS apellidos_apertura, ea.nombres AS nombres_apertura, ea.dni AS dni_apertura,
+                    ec.apellidos AS apellidos_cierre, ec.nombres AS nombres_cierre, ec.dni AS dni_cierre
+                    FROM Caja c
+                    LEFT JOIN Empleado ea ON c.id_empleado_apertura = ea.id_empleado
+                    LEFT JOIN Empleado ec ON c.id_empleado_cierre = ec.id_empleado
+                    ORDER BY c.fecha DESC, c.hora_apertura DESC""";
+        
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery();
@@ -187,10 +207,15 @@ public class CajaDAO implements ICajaDAO{
         List<Caja> listaCajas = new ArrayList<>();
         
         String sql = """
-                     SELECT *
-                     FROM Caja
-                     WHERE estado = ?
-                     """;
+                    SELECT c.*,
+                    ea.apellidos AS apellidos_apertura, ea.nombres AS nombres_apertura, ea.dni AS dni_apertura,
+                    ec.apellidos AS apellidos_cierre, ec.nombres AS nombres_cierre, ec.dni AS dni_cierre
+                    FROM Caja c
+                    LEFT JOIN Empleado ea ON c.id_empleado_apertura = ea.id_empleado
+                    LEFT JOIN Empleado ec ON c.id_empleado_cierre = ec.id_empleado
+                    WHERE c.estado = ?
+                    ORDER BY c.fecha DESC, c.hora_apertura DESC""";
+
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
             ) {
@@ -216,12 +241,18 @@ public class CajaDAO implements ICajaDAO{
         
         Empleado empApertura = new Empleado();
         empApertura.setIdEmpleado(rs.getInt("id_empleado_apertura"));
+        empApertura.setNombres(rs.getString("nombres_apertura"));
+        empApertura.setApellidos(rs.getString("apellidos_apertura"));
+        empApertura.setDni(rs.getString("dni_apertura"));
         caja.setEmpleadoApertura(empApertura);
-        
+
         int idCierre = rs.getInt("id_empleado_cierre");
         if (!rs.wasNull()) {
             Empleado empCierre = new Empleado();
             empCierre.setIdEmpleado(idCierre);
+            empCierre.setNombres(rs.getString("nombres_cierre"));
+            empCierre.setApellidos(rs.getString("apellidos_cierre"));
+            empCierre.setDni(rs.getString("dni_cierre"));
             caja.setEmpleadoCierre(empCierre);
         }
         
