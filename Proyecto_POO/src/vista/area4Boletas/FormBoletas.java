@@ -599,7 +599,7 @@ public class FormBoletas extends javax.swing.JFrame {
         txtRol2.setText("Caja:");
 
         txtEstadoCaja.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtEstadoCaja.setForeground(new java.awt.Color(51, 51, 51));
+        txtEstadoCaja.setForeground(new java.awt.Color(193, 99, 92));
         txtEstadoCaja.setText("-");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);

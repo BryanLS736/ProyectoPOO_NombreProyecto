@@ -45,7 +45,7 @@ public class FormInventario extends javax.swing.JFrame {
         // Se inicializa los controladores
         prodControl = new ProductoController();
         cajaControl = new CajaController();
-        UtilLabels.refrescarEstadoCaja(txtEstadoCaja, cajaControl, this);
+        UtilLabels.refrescarEstadoCaja(txtEstadoCaja1, cajaControl, this);
         
         // Tabla
         tablaProd.setModel(modelo);
@@ -903,7 +903,7 @@ public class FormInventario extends javax.swing.JFrame {
         txtRol2.setText("Caja:");
 
         txtEstadoCaja1.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtEstadoCaja1.setForeground(new java.awt.Color(51, 51, 51));
+        txtEstadoCaja1.setForeground(new java.awt.Color(193, 99, 92));
         txtEstadoCaja1.setText("-");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
