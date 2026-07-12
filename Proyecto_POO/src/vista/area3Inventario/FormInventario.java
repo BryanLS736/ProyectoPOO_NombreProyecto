@@ -69,7 +69,7 @@ public class FormInventario extends javax.swing.JFrame {
         cargarTablaProductos("Todos","");
         
         // Extras
-        txtNombresEmp.setText(empleado.getNombres());
+        txtNombresEmp.setText(empleado.getApellidos());
         lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         
         btnInventario.setBackground(new Color(252, 231, 218));

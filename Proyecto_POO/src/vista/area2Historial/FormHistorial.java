@@ -37,7 +37,7 @@ public class FormHistorial extends javax.swing.JFrame {
         cajaControl = new CajaController();
         UtilLabels.refrescarEstadoCaja(txtEstadoCaja, cajaControl, this);
         
-        txtNombresEmp.setText(empleado.getNombres());
+        txtNombresEmp.setText(empleado.getApellidos());
         lblFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         
         btnHistorial.setBackground(new Color(252,231,218));
