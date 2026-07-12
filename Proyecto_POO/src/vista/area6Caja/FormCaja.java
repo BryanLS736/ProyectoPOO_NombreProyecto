@@ -16,6 +16,7 @@ import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
+import vista.area3Inventario.FormInventario;
 import vista.area4Boletas.FormBoletas;
 import vista.area5Administracion.FormAdministracion;
 
@@ -547,7 +548,7 @@ public final class FormCaja extends javax.swing.JFrame {
         btnCerrarCaja.setBackground(new java.awt.Color(255, 153, 51));
         btnCerrarCaja.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
         btnCerrarCaja.setForeground(new java.awt.Color(0, 0, 0));
-        btnCerrarCaja.setText("- Cerrar la Caja Actual");
+        btnCerrarCaja.setText("-   Cerrar la Caja Actual ");
         btnCerrarCaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarCajaActionPerformed(evt);
@@ -660,7 +661,7 @@ public final class FormCaja extends javax.swing.JFrame {
         txtRol1.setText("Caja:");
 
         txtEstadoCaja.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        txtEstadoCaja.setForeground(new java.awt.Color(51, 51, 51));
+        txtEstadoCaja.setForeground(new java.awt.Color(193, 99, 92));
         txtEstadoCaja.setText("-");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
@@ -779,6 +780,8 @@ public final class FormCaja extends javax.swing.JFrame {
         deseleccionarBotonesLaterales();
         btnInventario.setBackground(new Color(252, 231, 218));
         btnInventario.setForeground(new Color(181, 69, 63));
+        new FormInventario(empleado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnBoletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletasActionPerformed
