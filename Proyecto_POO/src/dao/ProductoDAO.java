@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import utilidades.Constantes;
+import utilidades.ResumenStock;
 
 public class ProductoDAO implements IProductoDAO{
 
@@ -265,6 +267,89 @@ public class ProductoDAO implements IProductoDAO{
             return listaProductos;
         } catch (SQLException e) {
             throw new Exception("Error al cargar la lista de los productos filtrados por precio: " + e.getMessage());
+        }
+    }
+    
+    @Override
+    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock) throws Exception {
+        List<Producto> listaProductos = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM Producto WHERE 1=1");
+        List<Object> parametros = new ArrayList<>();
+
+        // Se anidan los filtros si en caso se solicitan
+        if (nombre != null && !nombre.isBlank()) {
+            sql.append(" AND nombre LIKE ?");
+            parametros.add("%" + nombre + "%");
+        }
+
+        if (categoria != null && !categoria.equalsIgnoreCase("Todos")) {
+            sql.append(" AND categoria = ?");
+            parametros.add(categoria);
+        }
+
+        if (estadoStock != null && !estadoStock.equalsIgnoreCase("Todos")) {
+            switch (estadoStock) {
+                case "Sin stock" ->
+                    sql.append(" AND stock = 0");
+                case "Bajo" -> {
+                    sql.append(" AND stock > 0 AND stock <= ?");
+                    parametros.add(Constantes.STOCK_BAJO_UMBRAL);
+                }
+                case "Suficiente" -> {
+                    sql.append(" AND stock > ?");
+                    parametros.add(Constantes.STOCK_BAJO_UMBRAL);
+                }
+            }
+        }
+
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    listaProductos.add(mapearProducto(rs));
+                }
+            }
+
+            return listaProductos;
+
+        } catch (SQLException e) {
+            throw new Exception("Error al filtrar productos: " + e.getMessage());
+        }
+    }
+    
+    @Override
+    public ResumenStock obtenerResumenStock() throws Exception {
+        String sql = """
+                 SELECT
+                    COUNT(*) AS total,
+                    SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) AS sin_stock,
+                    SUM(CASE WHEN stock > 0 AND stock <= ? THEN 1 ELSE 0 END) AS bajo,
+                    SUM(CASE WHEN stock > ? THEN 1 ELSE 0 END) AS suficiente
+                 FROM Producto
+                 """;
+
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, Constantes.STOCK_BAJO_UMBRAL);
+            ps.setInt(2, Constantes.STOCK_BAJO_UMBRAL);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                ResumenStock resumen = new ResumenStock();
+                if (rs.next()) {
+                    resumen.setTotal(rs.getInt("total"));
+                    resumen.setSinStock(rs.getInt("sin_stock"));
+                    resumen.setBajo(rs.getInt("bajo"));
+                    resumen.setSuficiente(rs.getInt("suficiente"));
+                }
+                return resumen;
+            }
+
+        } catch (SQLException e) {
+            throw new Exception("Error al obtener el resumen de stock: " + e.getMessage());
         }
     }
 

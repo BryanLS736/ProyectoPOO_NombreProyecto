@@ -12,6 +12,7 @@ import modelo.Caja;
 import modelo.Empleado;
 import modelo.Producto;
 import utilidades.Mensajes;
+import utilidades.ResumenStock;
 import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
@@ -20,7 +21,7 @@ import vista.area4Boletas.FormBoletas;
 import vista.area5Administracion.FormAdministracion;
 import vista.area6Caja.FormCaja;
 
-public class FormInventario extends javax.swing.JFrame {
+public final class FormInventario extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormInventario.class.getName());
 
@@ -66,7 +67,7 @@ public class FormInventario extends javax.swing.JFrame {
         tablaProd.setDefaultEditor(Object.class, null);
         
         // Llama a la tabla al abrir menu inventario
-        cargarTablaProductos("Todos","");
+        cargarTablaProductos(null, null, "Todos");
         
         // Extras
         txtNombresEmp.setText(empleado.getApellidos());
@@ -148,7 +149,7 @@ public class FormInventario extends javax.swing.JFrame {
         lblProductos = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -158,22 +159,22 @@ public class FormInventario extends javax.swing.JFrame {
         txtBuscarProducto = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
-        cbxEstadoStock = new javax.swing.JComboBox<>();
+        cmbEstadoStock = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnAgregarProducto = new javax.swing.JButton();
         btnActualizarProducto = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lblSuficiente = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lblBajo = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        lblSinStock = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProd = new javax.swing.JTable();
@@ -483,9 +484,9 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Total Productos");
 
-        jLabel12.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel12.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
-        jLabel12.setText("18");
+        lblTotal.setBackground(new java.awt.Color(0, 0, 0));
+        lblTotal.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
+        lblTotal.setText("18");
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo caja.png"))); // NOI18N
 
@@ -498,7 +499,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
+                    .addComponent(lblTotal)
                     .addComponent(jLabel2))
                 .addGap(30, 30, 30))
         );
@@ -511,7 +512,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
+                        .addComponent(lblTotal)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -534,6 +535,11 @@ public class FormInventario extends javax.swing.JFrame {
         txtBuscarProducto.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         txtBuscarProducto.setForeground(new java.awt.Color(102, 102, 102));
         txtBuscarProducto.setBorder(null);
+        txtBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarProductoActionPerformed(evt);
+            }
+        });
 
         jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo lupa 2.png"))); // NOI18N
 
@@ -563,9 +569,14 @@ public class FormInventario extends javax.swing.JFrame {
             }
         });
 
-        cbxEstadoStock.setBackground(new java.awt.Color(255, 255, 255));
-        cbxEstadoStock.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        cbxEstadoStock.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Suficiente", "Bajo", "Sin stock" }));
+        cmbEstadoStock.setBackground(new java.awt.Color(255, 255, 255));
+        cmbEstadoStock.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        cmbEstadoStock.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Suficiente", "Bajo", "Sin stock" }));
+        cmbEstadoStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoStockActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logo escoba 2.png"))); // NOI18N
@@ -576,11 +587,11 @@ public class FormInventario extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-        jButton1.setText("Buscar filtros");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -603,10 +614,10 @@ public class FormInventario extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(cbxEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
@@ -618,7 +629,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btnBuscar))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -628,7 +639,7 @@ public class FormInventario extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                            .addComponent(cmbEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
@@ -660,9 +671,9 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Stock suficiente");
 
-        jLabel13.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel13.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
-        jLabel13.setText("9");
+        lblSuficiente.setBackground(new java.awt.Color(0, 0, 0));
+        lblSuficiente.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
+        lblSuficiente.setText("9");
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoStock1.png"))); // NOI18N
 
@@ -675,7 +686,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
+                    .addComponent(lblSuficiente)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
@@ -688,7 +699,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
+                        .addComponent(lblSuficiente)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -701,9 +712,9 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Stock bajo");
 
-        jLabel18.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel18.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
-        jLabel18.setText("5");
+        lblBajo.setBackground(new java.awt.Color(0, 0, 0));
+        lblBajo.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
+        lblBajo.setText("5");
 
         jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoAdvertencia.png"))); // NOI18N
 
@@ -716,7 +727,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
+                    .addComponent(lblBajo)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -729,7 +740,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel18)
+                        .addComponent(lblBajo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -742,9 +753,9 @@ public class FormInventario extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(0, 0, 0));
         jLabel32.setText("Sin stock ");
 
-        jLabel33.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel33.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
-        jLabel33.setText("4");
+        lblSinStock.setBackground(new java.awt.Color(0, 0, 0));
+        lblSinStock.setFont(new java.awt.Font("Inter SemiBold", 0, 17)); // NOI18N
+        lblSinStock.setText("4");
 
         jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logoVacio.png"))); // NOI18N
 
@@ -757,7 +768,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33)
+                    .addComponent(lblSinStock)
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -770,7 +781,7 @@ public class FormInventario extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel33)
+                        .addComponent(lblSinStock)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -970,7 +981,7 @@ public class FormInventario extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -1033,7 +1044,7 @@ public class FormInventario extends javax.swing.JFrame {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         cmbCategoria.setSelectedIndex(0);
-        cbxEstadoStock.setSelectedIndex(0);
+        cmbEstadoStock.setSelectedIndex(0);
         txtBuscarProducto.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -1091,11 +1102,12 @@ public class FormInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String filtro = txtBuscarProducto.getText().trim();
-        String tipoBusqueda = cmbCategoria.getSelectedItem().toString();
-        cargarTablaProductos(tipoBusqueda, filtro);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String nombreProducto = txtBuscarProducto.getText().trim();
+        String categoriaProducto = cmbCategoria.getSelectedItem().toString();
+        String estadoProducto = cmbEstadoStock.getSelectedItem().toString();
+        cargarTablaProductos(nombreProducto, categoriaProducto, estadoProducto);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCajaActionPerformed
         new FormCaja(empleado).setVisible(true);
@@ -1103,20 +1115,20 @@ public class FormInventario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCajaActionPerformed
 
-    protected void cargarTablaProductos (String tipoBusqueda, String filtro) {
+    private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarProductoActionPerformed
+
+    private void cmbEstadoStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEstadoStockActionPerformed
+
+    // Método para cargar las tablas con filtros o sin filtros
+    protected void cargarTablaProductos (String nombre, String categoria, String estadoStock) {
         modelo.setRowCount(0);
         
         try {
-            
-            switch (tipoBusqueda) {
-                case "Todos" -> {
-                    listaProductos = prodControl.verTodosLosProductos();
-                }
-                
-                default -> {
-                    listaProductos = prodControl.verTodosLosProductos();
-                }
-            }
+            listaProductos = prodControl.listarConFiltros(nombre, categoria, estadoStock);
             
             for (Producto prod : listaProductos) {
                 Object[] fila = new Object[]{
@@ -1132,6 +1144,23 @@ public class FormInventario extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
             
+            actualizarEtiquetasResumen();
+            
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
+    }
+    
+    // Método para actualizar las Etiquetas del stock
+    private void actualizarEtiquetasResumen() {
+        try {
+            ResumenStock resumen = prodControl.obtenerResumenStock();
+
+            lblTotal.setText(String.valueOf(resumen.getTotal()));
+            lblSuficiente.setText(String.valueOf(resumen.getSuficiente()));
+            lblBajo.setText(String.valueOf(resumen.getBajo()));
+            lblSinStock.setText(String.valueOf(resumen.getSinStock()));
+
         } catch (Exception e) {
             Mensajes.error(e.getMessage());
         }
@@ -1142,6 +1171,7 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JButton btnAdministracion;
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnBoletas;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnCerrarSesion2;
@@ -1149,24 +1179,19 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnTomarPedido;
-    private javax.swing.JComboBox<String> cbxEstadoStock;
     private javax.swing.JComboBox<String> cmbCategoria;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> cmbEstadoStock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel5;
@@ -1195,12 +1220,16 @@ public class FormInventario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBajo;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHistorial;
     private javax.swing.JLabel lblLogoFlores;
     private javax.swing.JLabel lblLogoFlores1;
     private javax.swing.JLabel lblLogoMarcela;
     private javax.swing.JLabel lblProductos;
+    private javax.swing.JLabel lblSinStock;
+    private javax.swing.JLabel lblSuficiente;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tablaProd;
     private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JLabel txtEstadoCaja;
