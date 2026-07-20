@@ -1,23 +1,33 @@
 package controlador;
 
 import dao.CajaDAO;
+import dao.DetalleVentaDAO;
+import dao.ProductoDAO;
 import dao.VentaDAO;
 import interfaces.ICajaDAO;
+import interfaces.IDetalleVentaDAO;
+import interfaces.IProductoDAO;
 import interfaces.IVentaDAO;
 import java.time.LocalDate;
 import java.util.List;
 import modelo.Caja;
+import modelo.DetalleVenta;
 import modelo.Venta;
+import utilidades.ItemCarrito;
 import utilidades.Validaciones;
 
 public class VentaController {
 
     private final IVentaDAO ventaDAO;
     private final ICajaDAO cajaDAO;
+    private final IDetalleVentaDAO detalleVentaDAO;
+    private final IProductoDAO productoDAO;
 
     public VentaController() {
         this.ventaDAO = new VentaDAO();
         this.cajaDAO = new CajaDAO();
+        this.detalleVentaDAO = new DetalleVentaDAO();
+        this.productoDAO = new ProductoDAO();
     }
 
     public void registrarVenta(Venta venta) throws Exception {
@@ -33,37 +43,22 @@ public class VentaController {
         if (venta.getCliente() != null && venta.getCliente().getIdCliente() <= 0) {
             throw new Exception("El cliente asignado no es válido.");
         }
-        if (venta.getNombreCliente() != null && !Validaciones.soloLetras(venta.getNombreCliente())) {
-            throw new Exception("El nombre solo puede contener letras.");
-        }
-        if (venta.getTelefonoContacto() != null) {
-            if (!Validaciones.soloNumeros(venta.getTelefonoContacto())) {
-                throw new Exception("El telefono solo puede tener numeros.");
-            }
-            if (!(venta.getTelefonoContacto().length() == 7) && !(venta.getTelefonoContacto().length() == 9)) {
-                throw new Exception("El telefono debe tener 7 numeros para fijo y 9 para numero celular.");
-            }
-            if (venta.getTelefonoContacto().length() == 7 && venta.getTelefonoContacto().startsWith("1")) {
-                throw new Exception("El telefono fijo debe empezar por cualquier numero, menos el 1");
-            }
-            if (venta.getTelefonoContacto().length() == 9 && !venta.getTelefonoContacto().startsWith("9")) {
-                throw new Exception("El telefono celular debe empezar con el numero 9.");
-            }
-        }
-        if (venta.getDniCliente() != null) {
-            if (!Validaciones.soloNumeros(venta.getDniCliente())) {
-                throw new Exception("El dni solo puede tener numeros.");
-            }
-            if (!(venta.getDniCliente().length() == 8)) {
-                throw new Exception("El dni debe tener solo 8 números.");
-            }
-        }
+       
         if (Validaciones.campoVacio(venta.getTipoDespacho())) {
             throw new Exception("Seleccione el tipo de despacho.");
         }
         if (Validaciones.campoVacio(venta.getMetodoPago())) {
             throw new Exception("Seleccione el método de pago.");
         }
+        
+        if (venta.getSubtotalVenta() <= 0) {
+            throw new Exception("El subtotal de la venta debe ser mayor a 0.");
+        }
+        
+        if (venta.getIgvVenta() <= 0) {
+            throw new Exception("El IGV de la venta debe ser mayor a 0.");
+        }
+        
         if (venta.getTotalVenta() <= 0) {
             throw new Exception("El total de la venta debe ser mayor a 0.");
         }
@@ -78,6 +73,31 @@ public class VentaController {
         }
 
         ventaDAO.registrarVenta(venta);
+    }
+    
+    public void registrarVentaConDetalles(Venta venta, List<ItemCarrito> carrito) throws Exception {
+        if (carrito == null || carrito.isEmpty()) {
+            throw new Exception("El carrito está vacío. Agregue al menos un producto.");
+        }
+
+        // 1. Cabecera de la venta (reutiliza las validaciones ya existentes en registrarVenta)
+        registrarVenta(venta); // aquí se le asigna el idVenta generado
+
+        // 2. Detalles, uno por cada producto del carrito
+        for (ItemCarrito item : carrito) {
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setVenta(venta);
+            detalle.setProducto(item.getProducto());
+            detalle.setCantidad(item.getCantidad());
+            detalle.setPrecioUnitario(item.getPrecioUnitario());
+            detalle.setPrecioTotal(item.getPrecioTotal());
+            detalleVentaDAO.registrarDetalleVenta(detalle);
+        }
+
+        // 3. Descuento de stock, al final
+        for (ItemCarrito item : carrito) {
+            productoDAO.descontarStock(item.getProducto().getIdProducto(), item.getCantidad());
+        }
     }
 
     public Venta buscarVentaPorID(int id) throws Exception {

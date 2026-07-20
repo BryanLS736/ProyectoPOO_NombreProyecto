@@ -38,12 +38,12 @@ VALUES
 
 -- INSERCIÓN DE VENTAS --
 
-INSERT INTO Venta (id_empleado, id_caja, id_cliente, tipo_despacho, nota_adicional, total_venta, metodo_pago)
+INSERT INTO Venta (id_empleado, id_caja, id_cliente, tipo_despacho, nota_adicional, subtotal_venta, igv_venta, total_venta, metodo_pago)
 VALUES 
-		(1, 1, 1, 'Aquí', 'Sin azúcar', 10.00, 'Efectivo'),
-		(2, 2, 2, 'Llevar', 'Entrega rápida', 8.00, 'Yape'),
-		(3, 1, 3, 'Delivery', 'Llamar antes', 12.00, 'Tarjeta'),
-		(4, 2, 4, 'Aquí', '', 15.00, 'Efectivo');
+		(1, 1, 1, 'Aquí', 'Sin azúcar', ROUND(10.00 / 1.18, 2), ROUND(10.00 - (10.00 / 1.18), 2), 10.00, 'Efectivo'),
+		(2, 2, 2, 'Llevar', 'Entrega rápida',ROUND(8.00 / 1.18, 2), ROUND(8.00 - (8.00 / 1.18), 2), 8.00, 'Yape'),
+		(3, 1, 3, 'Delivery', 'Llamar antes', ROUND(12.00 / 1.18, 2), ROUND(12.00 - (12.00 / 1.18), 2), 12.00, 'Tarjeta'),
+		(4, 2, 4, 'Aquí', '', ROUND(15.00 / 1.18, 2), ROUND(15.00 - (15.00 / 1.18), 2), 15.00, 'Efectivo');
         
 
 -- INSERCIÓN DE DETALLE_VENTA --
