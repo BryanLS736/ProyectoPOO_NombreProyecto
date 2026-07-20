@@ -4,6 +4,7 @@ import dao.ProductoDAO;
 import interfaces.IProductoDAO;
 import java.util.List;
 import modelo.Producto;
+import utilidades.ResumenStock;
 import utilidades.Validaciones;
 
 public class ProductoController {
@@ -178,5 +179,13 @@ public class ProductoController {
         }
 
         return lista;
+    }
+    
+    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock) throws Exception {
+        return productoDAO.listarConFiltros(nombre, categoria, estadoStock);
+    }
+    
+    public ResumenStock obtenerResumenStock() throws Exception {
+        return productoDAO.obtenerResumenStock();
     }
 }

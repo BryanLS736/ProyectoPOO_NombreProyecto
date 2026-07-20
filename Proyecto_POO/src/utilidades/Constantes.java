@@ -32,4 +32,6 @@ public final class Constantes {
     // Monto inicial
     public static final double MONTO_APERTURA_FIJO = 100.0;
 
+    // Cantidad del stock de un producto para considerarse BAJO
+    public static final int STOCK_BAJO_UMBRAL = 10;
 }
