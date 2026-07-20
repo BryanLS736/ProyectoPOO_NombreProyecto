@@ -27,16 +27,14 @@ public class VentaDAO implements IVentaDAO {
                         id_empleado,
                         id_caja,
                         id_cliente,
-                        nombre_cliente,
-                        direccion_entrega,
-                        telefono_contacto,
-                        dni_cliente,
                         tipo_despacho,
                         nota_adicional,
+                        subtotal_venta,
+                        igv_venta,
                         total_venta,
                         metodo_pago
                      )
-                     VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                     VALUES (?,?,?,?,?,?,?,?,?)
                      """;
         
         try (Connection conn = new Conexion().conectar();
@@ -49,14 +47,12 @@ public class VentaDAO implements IVentaDAO {
             } else {
                 ps.setNull(3, Types.INTEGER);
             }
-            SQLUtils.setNullableString(ps, 4, venta.getNombreCliente(), Types.VARCHAR);
-            SQLUtils.setNullableString(ps, 5, venta.getDireccionEntrega(), Types.VARCHAR);
-            SQLUtils.setNullableString(ps, 6, venta.getTelefonoContacto(), Types.VARCHAR);
-            SQLUtils.setNullableString(ps, 7, venta.getDniCliente(), Types.VARCHAR);
-            ps.setString(8, venta.getTipoDespacho());
-            SQLUtils.setNullableString(ps, 9, venta.getNotaAdicional(), Types.VARCHAR);
-            ps.setDouble(10, venta.getTotalVenta());
-            ps.setString(11, venta.getMetodoPago());
+            ps.setString(4, venta.getTipoDespacho());
+            SQLUtils.setNullableString(ps, 5, venta.getNotaAdicional(), Types.VARCHAR);
+            ps.setDouble(6, venta.getSubtotalVenta());
+            ps.setDouble(7, venta.getIgvVenta());
+            ps.setDouble(8, venta.getTotalVenta());
+            ps.setString(9, venta.getMetodoPago());
             ps.executeUpdate();
             
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -233,7 +229,7 @@ public class VentaDAO implements IVentaDAO {
         String sql = """
                  SELECT COALESCE(SUM(total_venta), 0) AS total_ventas
                  FROM Venta
-                 WHERE id_caja = ?
+                 WHERE id_caja = ? AND metodo_pago = 'Efectivo'
                  """;
 
         try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql);) {
@@ -264,12 +260,7 @@ public class VentaDAO implements IVentaDAO {
         Caja caja = new Caja();
         caja.setIdCaja(rs.getInt("id_caja"));
         venta.setCaja(caja);
-        
-        venta.setNombreCliente(rs.getString("nombre_cliente"));
-        venta.setDireccionEntrega(rs.getString("direccion_entrega"));
-        venta.setTelefonoContacto(rs.getString("telefono_contacto"));
-        venta.setDniCliente(rs.getString("dni_cliente"));
-        
+
         venta.setFechaVenta(rs.getDate("fecha_venta").toLocalDate());
         venta.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
         venta.setTipoDespacho(rs.getString("tipo_despacho"));

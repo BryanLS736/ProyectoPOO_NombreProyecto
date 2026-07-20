@@ -24,4 +24,7 @@ public interface IProductoDAO {
     
     // Método para el cálculo y clasificación del stock
     ResumenStock obtenerResumenStock() throws Exception;
+    
+    // Para descontar stock de un producto luego de la venta
+    void descontarStock(int idProducto, int cantidad) throws Exception;
 }

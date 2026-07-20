@@ -352,6 +352,30 @@ public class ProductoDAO implements IProductoDAO{
             throw new Exception("Error al obtener el resumen de stock: " + e.getMessage());
         }
     }
+    
+    // Método de descuento de stock luego de la venta
+    @Override
+    public void descontarStock(int idProducto, int cantidad) throws Exception {
+        String sql = """
+                 UPDATE Producto
+                 SET stock = stock - ?
+                 WHERE id_producto = ? AND stock >= ?
+                 """;
+        try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, cantidad);
+            ps.setInt(2, idProducto);
+            ps.setInt(3, cantidad); // evita stock negativo a nivel BD
+
+            int filas = ps.executeUpdate();
+            if (filas == 0) {
+                throw new Exception("Stock insuficiente o producto no encontrado (ID: " + idProducto + ")");
+            }
+
+        } catch (SQLException e) {
+            throw new Exception("Error al descontar stock: " + e.getMessage());
+        }
+    }
 
     private Producto mapearProducto(ResultSet rs) throws SQLException {
         Producto producto = new Producto();
