@@ -17,9 +17,9 @@ import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
-import vista.area4Boletas.FormBoletas;
+import vista.imagenes.area4Boletas.FormBoletas;
 import vista.area5Administracion.FormAdministracion;
-import vista.area6Caja.FormCaja;
+import vista.area4Caja.FormCaja;
 
 public final class FormInventario extends javax.swing.JFrame {
 
@@ -333,8 +333,6 @@ public final class FormInventario extends javax.swing.JFrame {
         btnBoletas.setBackground(new java.awt.Color(253, 246, 240));
         btnBoletas.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnBoletas.setForeground(new java.awt.Color(0, 0, 0));
-        btnBoletas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/Logo boletas3.png"))); // NOI18N
-        btnBoletas.setText("   Boletas             ");
         btnBoletas.setBorder(null);
         btnBoletas.setBorderPainted(false);
         btnBoletas.setContentAreaFilled(false);
@@ -1083,11 +1081,11 @@ public final class FormInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnBoletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletasActionPerformed
-        deseleccionarBotonesLaterales();
-        btnBoletas.setBackground(new Color(252, 231, 218));
-        btnBoletas.setForeground(new Color(181, 69, 63));
-        new FormBoletas(empleado).setVisible(true);
-        this.dispose();
+//        deseleccionarBotonesLaterales();
+//        btnBoletas.setBackground(new Color(252, 231, 218));
+//        btnBoletas.setForeground(new Color(181, 69, 63));
+//        new FormBoletas(empleado).setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnBoletasActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed

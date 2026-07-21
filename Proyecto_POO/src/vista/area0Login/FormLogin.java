@@ -12,7 +12,7 @@ import modelo.Empleado;
 import utilidades.Mensajes;
 import vista.area1TomarPedido.FormTomarPedido;
 import vista.area5Administracion.FormAdministracion;
-import vista.area6Caja.FormCaja;
+import vista.area4Caja.FormCaja;
 
 public class FormLogin extends javax.swing.JFrame {
 
