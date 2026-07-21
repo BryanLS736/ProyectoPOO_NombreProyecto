@@ -44,20 +44,23 @@ public class DetalleVentaDAO implements IDetalleVentaDAO {
     public List<DetalleVenta> buscarDetallesPorVenta(int idVenta) throws Exception {
         List<DetalleVenta> listaDetalleVenta = new ArrayList<>();
         String sql = """
-                     SELECT *
-                     FROM Detalle_Venta
-                     WHERE id_venta = ?
+                     SELECT dv.*, p.nombre AS nombre_producto
+                     FROM Detalle_Venta dv
+                     LEFT JOIN Producto p ON dv.id_producto = p.id_producto
+                     WHERE dv.id_venta = ?
                      """;
-        
+
         try (Connection conn = new Conexion().conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
             ) {
-            
+
             ps.setInt(1, idVenta);
-            
+
             try (ResultSet rs = ps.executeQuery();) {
                 while (rs.next()) {
-                    listaDetalleVenta.add(mapearDetalleVenta(rs));
+                    DetalleVenta detalle = mapearDetalleVenta(rs);
+                    detalle.getProducto().setNombre(rs.getString("nombre_producto")); // solo aquí, por el JOIN
+                    listaDetalleVenta.add(detalle);
                 }
             }
             return listaDetalleVenta;

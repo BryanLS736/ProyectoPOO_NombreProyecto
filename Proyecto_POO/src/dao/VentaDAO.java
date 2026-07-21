@@ -248,11 +248,56 @@ public class VentaDAO implements IVentaDAO {
         }
     }
     
+    @Override
+    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception {
+        List<Venta> listaVentas = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("""
+            SELECT v.*, e.nombres AS nombre_empleado
+            FROM Venta v
+            LEFT JOIN Empleado e ON v.id_empleado = e.id_empleado
+            WHERE 1=1
+            """);
+        List<Object> parametros = new ArrayList<>();
+
+        if (fechaInicio != null && fechaFinal != null) {
+            sql.append(" AND v.fecha_venta BETWEEN ? AND ?");
+            parametros.add(java.sql.Date.valueOf(fechaInicio));
+            parametros.add(java.sql.Date.valueOf(fechaFinal));
+        }
+
+        if (tipoDespacho != null && !tipoDespacho.equalsIgnoreCase("Todos")) {
+            sql.append(" AND v.tipo_despacho = ?");
+            parametros.add(tipoDespacho);
+        }
+
+        sql.append(" ORDER BY v.fecha_venta DESC, v.hora_venta DESC");
+
+        try (Connection conn = new Conexion().conectar();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Venta venta = mapearVenta(rs);
+                    venta.getEmpleado().setNombres(rs.getString("nombre_empleado")); // solo aquí, por el JOIN
+                    listaVentas.add(venta);
+                }
+            }
+
+            return listaVentas;
+
+        } catch (SQLException e) {
+            throw new Exception("Error al filtrar ventas: " + e.getMessage());
+        }
+    }
+    
     private Venta mapearVenta(ResultSet rs) throws SQLException {
         Venta venta = new Venta();
-
         venta.setIdVenta(rs.getInt("id_venta"));
-        
+
         Empleado empleado = new Empleado();
         empleado.setIdEmpleado(rs.getInt("id_empleado"));
         venta.setEmpleado(empleado);
@@ -265,9 +310,12 @@ public class VentaDAO implements IVentaDAO {
         venta.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
         venta.setTipoDespacho(rs.getString("tipo_despacho"));
         venta.setNotaAdicional(rs.getString("nota_adicional"));
-        
+
+        venta.setSubtotalVenta(rs.getDouble("subtotal_venta"));
+        venta.setIgvVenta(rs.getDouble("igv_venta"));
         venta.setTotalVenta(rs.getDouble("total_venta"));
         venta.setMetodoPago(rs.getString("metodo_pago"));
+
         return venta;
     }
 }

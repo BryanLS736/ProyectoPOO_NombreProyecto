@@ -185,4 +185,18 @@ public class VentaController {
 
         return lista;
     }
+    
+    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception {
+        if (fechaInicio != null && fechaFinal != null && fechaInicio.isAfter(fechaFinal)) {
+            throw new Exception("La fecha de inicio no puede ser posterior a la fecha final.");
+        }
+
+        List<Venta> lista = ventaDAO.listarConFiltros(fechaInicio, fechaFinal, tipoDespacho);
+
+        if (lista.isEmpty()) {
+            throw new Exception("No se encontraron pedidos con los filtros indicados.");
+        }
+
+        return lista;
+    }
 }

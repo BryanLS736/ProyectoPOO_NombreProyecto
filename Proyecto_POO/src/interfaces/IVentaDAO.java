@@ -19,6 +19,8 @@ public interface IVentaDAO {
     
     List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception;
     
+    List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception;
+    
     double sumarVentasPorCaja(int idCaja) throws Exception;
 
 }

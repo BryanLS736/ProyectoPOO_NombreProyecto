@@ -1,11 +1,19 @@
 package vista.area2Historial;
 
 import controlador.CajaController;
+import controlador.DetalleVentaController;
+import controlador.VentaController;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import modelo.Caja;
+import modelo.DetalleVenta;
 import modelo.Empleado;
+import modelo.Venta;
 import utilidades.Mensajes;
 import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
@@ -23,10 +31,18 @@ public class FormHistorial extends javax.swing.JFrame {
     
     // Controladores
     private CajaController cajaControl;
+    private VentaController ventaControl;
     
     // Tipo de rol asignado (va junto al nombre del empleado)
     private String adminLabel = "Administrador(a):";
     private String empleadoLabel = "Empleado(a):";
+
+    // Modelo de tablas
+    DefaultTableModel modeloTblPedidos = new DefaultTableModel();
+    DefaultTableModel modeloTblDetallePedido = new DefaultTableModel();
+
+    // Lista de pedidos para mostrar
+    List<Venta> listaVentas = new ArrayList<>();
     
     public FormHistorial(Empleado empleado) {
         initComponents();
@@ -35,6 +51,42 @@ public class FormHistorial extends javax.swing.JFrame {
         
         // Se inicializa los controladores
         cajaControl = new CajaController();
+        ventaControl = new VentaController();
+
+        // Se asigna el modelo a su tabla respectiva
+        tablaPedidos.setModel(modeloTblPedidos);
+        tablaDetallePedido.setModel(modeloTblDetallePedido);
+
+        Object[] columnasPedidos = new Object[]{
+            "ID Venta",
+            "Fecha",
+            "Hora",
+            "Empleado",
+            "Tipo Despacho",
+            "Método Pago",
+            "Subtotal",
+            "IGV",
+            "Total"
+        };
+
+        Object[] columnasDetalle = new Object[]{
+            "Producto",
+            "Cantidad",
+            "Precio Unitario",
+            "Precio Total"
+        };
+
+        modeloTblPedidos.setColumnIdentifiers(columnasPedidos);
+        modeloTblDetallePedido.setColumnIdentifiers(columnasDetalle);
+
+        tablaPedidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaPedidos.setDefaultEditor(Object.class, null);
+        tablaDetallePedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaDetallePedido.setDefaultEditor(Object.class, null);
+
+        // Carga inicial: fecha 1999-01-01 hasta hoy, sin filtro de despacho
+        cargarTablaPedidos("", "", "Todos");
+
         UtilLabels.refrescarEstadoCaja(txtEstadoCaja, cajaControl, this);
         
         txtNombresEmp.setText(empleado.getApellidos());
@@ -125,11 +177,6 @@ public class FormHistorial extends javax.swing.JFrame {
         txtFechaInicio = new javax.swing.JTextField();
         cmbTipoDespacho = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jLabel10 = new javax.swing.JLabel();
-        txtBuscarPor = new javax.swing.JTextField();
         btnMostrarDetalle = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         pnlSuma2 = new javax.swing.JPanel();
@@ -509,27 +556,14 @@ public class FormHistorial extends javax.swing.JFrame {
             }
         });
 
-        btgGrupoBotones.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
-        jRadioButton1.setText("Nombre");
-
-        btgGrupoBotones.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
-        jRadioButton2.setText("Dni");
-
-        btgGrupoBotones.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
-        jRadioButton3.setText("Nro de pedido");
-
-        jLabel10.setFont(new java.awt.Font("Inter SemiBold", 0, 11)); // NOI18N
-        jLabel10.setText("Buscar por:");
-
-        txtBuscarPor.setBackground(new java.awt.Color(204, 204, 204));
-        txtBuscarPor.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
-
         btnMostrarDetalle.setBackground(new java.awt.Color(194, 194, 194));
         btnMostrarDetalle.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         btnMostrarDetalle.setText("Mostrar detalle");
+        btnMostrarDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarDetalleActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -623,7 +657,7 @@ public class FormHistorial extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlCalculoSuma2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -685,19 +719,8 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(cmbTipoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton3))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -719,16 +742,8 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addComponent(cmbTipoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel9)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar)))
+                        .addGap(43, 43, 43)
+                        .addComponent(btnBuscar))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -738,7 +753,7 @@ public class FormHistorial extends javax.swing.JFrame {
                             .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -946,7 +961,13 @@ public class FormHistorial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBoletasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String fechaInicioTexto = txtFechaInicio.getText();
+        String fechaFinTexto = txtFechaFin.getText();
+        String tipoDespacho = (String) cmbTipoDespacho.getSelectedItem();
 
+        cargarTablaPedidos(fechaInicioTexto, fechaFinTexto, tipoDespacho);
+
+        modeloTblDetallePedido.setRowCount(0); // limpia el detalle de una búsqueda anterior
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
@@ -980,6 +1001,79 @@ public class FormHistorial extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCajaActionPerformed
 
+    private void btnMostrarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarDetalleActionPerformed
+        int filaSeleccionada = tablaPedidos.getSelectedRow();
+        if (filaSeleccionada < 0) {
+            Mensajes.error("Selecciona un pedido de la tabla");
+            return;
+        }
+
+        int idVenta = (int) modeloTblPedidos.getValueAt(filaSeleccionada, 0);
+
+        modeloTblDetallePedido.setRowCount(0);
+
+        try {
+            DetalleVentaController detalleControl = new DetalleVentaController();
+            List<DetalleVenta> detalles = detalleControl.buscarDetallesPorVenta(idVenta);
+
+            for (DetalleVenta detalle : detalles) {
+                Object[] fila = new Object[]{
+                    detalle.getProducto().getNombre(),
+                    detalle.getCantidad(),
+                    String.format("%.2f", detalle.getPrecioUnitario()),
+                    String.format("%.2f", detalle.getPrecioTotal())
+                };
+                modeloTblDetallePedido.addRow(fila);
+            }
+
+        } catch (Exception e) {
+            Mensajes.error("Error al cargar el detalle del pedido: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnMostrarDetalleActionPerformed
+
+    protected void cargarTablaPedidos(String fechaInicioTexto, String fechaFinTexto, String tipoDespacho) {
+        modeloTblPedidos.setRowCount(0);
+
+        LocalDate fechaInicio;
+        LocalDate fechaFin;
+
+        try {
+            fechaInicio = (fechaInicioTexto == null || fechaInicioTexto.isBlank())
+                    ? LocalDate.of(1999, 1, 1)
+                    : LocalDate.parse(fechaInicioTexto.trim());
+
+            fechaFin = (fechaFinTexto == null || fechaFinTexto.isBlank())
+                    ? LocalDate.now()
+                    : LocalDate.parse(fechaFinTexto.trim());
+
+        } catch (DateTimeParseException e) {
+            Mensajes.error("Formato de fecha inválido. Usa yyyy-MM-dd (ej: 2026-07-20)");
+            return;
+        }
+
+        try {
+            listaVentas = ventaControl.listarConFiltros(fechaInicio, fechaFin, tipoDespacho);
+
+            for (Venta venta : listaVentas) {
+                Object[] fila = new Object[]{
+                    venta.getIdVenta(),
+                    venta.getFechaVenta(),
+                    venta.getHoraVenta(),
+                    venta.getEmpleado().getNombres(),
+                    venta.getTipoDespacho(),
+                    venta.getMetodoPago(),
+                    String.format("%.2f", venta.getSubtotalVenta()),
+                    String.format("%.2f", venta.getIgvVenta()),
+                    String.format("%.2f", venta.getTotalVenta())
+                };
+                modeloTblPedidos.addRow(fila);
+            }
+
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgGrupoBotones;
     private javax.swing.JButton btnAdministracion;
@@ -994,7 +1088,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JButton btnTomarPedido;
     private javax.swing.JComboBox<String> cmbTipoDespacho;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -1030,9 +1123,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBuscar;
@@ -1049,7 +1139,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSuma2;
     private javax.swing.JTable tablaDetallePedido;
     private javax.swing.JTable tablaPedidos;
-    private javax.swing.JTextField txtBuscarPor;
     private javax.swing.JLabel txtEstadoCaja;
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
