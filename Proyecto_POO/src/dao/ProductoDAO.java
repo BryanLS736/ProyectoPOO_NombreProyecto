@@ -163,115 +163,9 @@ public class ProductoDAO implements IProductoDAO{
             throw new Exception("Error al buscar el producto por ID: " + e.getMessage());
         }
     }
-
-    @Override
-    public List<Producto> buscarProductoPorNombre(String nombre) throws Exception {
-        List<Producto> listaProductos = new ArrayList<>();
-        String sql = """
-                     SELECT *
-                     FROM Producto
-                     WHERE nombre LIKE ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setString(1, "%" + nombre + "%");
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaProductos.add(mapearProducto(rs));
-                }
-            }
-            
-            return listaProductos;
-        } catch (SQLException e) {
-            throw new Exception("Error al cargar la lista de los productos filtrados por nombre: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Producto> buscarProductoPorCategoria(String categoria) throws Exception {
-        List<Producto> listaProductos = new ArrayList<>();
-        String sql = """
-                     SELECT *
-                     FROM Producto
-                     WHERE categoria = ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setString(1, categoria);
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaProductos.add(mapearProducto(rs));
-                }
-            }
-            
-            return listaProductos;
-        } catch (SQLException e) {
-            throw new Exception("Error al cargar la lista de los productos filtrados por categoria: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Producto> buscarProductoPorStock(Integer stockMin, Integer stockMax) throws Exception {
-        List<Producto> listaProductos = new ArrayList<>();
-        String sql = """
-                     SELECT *
-                     FROM Producto
-                     WHERE stock BETWEEN ? AND ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setInt(1, stockMin == null ? 0 : stockMin);
-            ps.setInt(2, stockMax == null ? Integer.MAX_VALUE : stockMax);
-                        
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaProductos.add(mapearProducto(rs));
-                }
-            }
-            
-            return listaProductos;
-        } catch (SQLException e) {
-            throw new Exception("Error al cargar la lista de los productos filtrados por stock: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Producto> buscarProductoPorPrecio(Double precioMin, Double precioMax) throws Exception {
-        List<Producto> listaProductos = new ArrayList<>();
-        String sql = """
-                     SELECT *
-                     FROM Producto
-                     WHERE precio BETWEEN ? AND ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setDouble(1, precioMin == null ? 0 : precioMin);
-            ps.setDouble(2, precioMax == null ? Double.MAX_VALUE : precioMax);
-                        
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaProductos.add(mapearProducto(rs));
-                }
-            }
-            
-            return listaProductos;
-        } catch (SQLException e) {
-            throw new Exception("Error al cargar la lista de los productos filtrados por precio: " + e.getMessage());
-        }
-    }
     
     @Override
-    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock) throws Exception {
+    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock, Double precioMin, Double precioMax) throws Exception {
         List<Producto> listaProductos = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM Producto WHERE 1=1");
         List<Object> parametros = new ArrayList<>();
@@ -300,6 +194,16 @@ public class ProductoDAO implements IProductoDAO{
                     parametros.add(Constantes.STOCK_BAJO_UMBRAL);
                 }
             }
+        }
+        
+        if (precioMin != null) {
+            sql.append(" AND precio >= ?");
+            parametros.add(precioMin);
+        }
+
+        if (precioMax != null) {
+            sql.append(" AND precio <= ?");
+            parametros.add(precioMax);
         }
 
         try (Connection conn = new Conexion().conectar(); PreparedStatement ps = conn.prepareStatement(sql.toString())) {

@@ -112,77 +112,34 @@ public class ProductoController {
 
         return producto;
     }
+    
+    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock, String precioMinTexto, String precioMaxTexto) throws Exception {
+        Double precioMin = null;
+        Double precioMax = null;
 
-    public List<Producto> buscarProductoPorNombre(String nombre) throws Exception {
-        if (Validaciones.campoVacio(nombre)) {
-            throw new Exception("Ingrese un nombre para realizar la búsqueda.");
+        try {
+            if (precioMinTexto != null && !precioMinTexto.isBlank()) {
+                precioMin = Double.parseDouble(precioMinTexto.trim());
+            }
+            if (precioMaxTexto != null && !precioMaxTexto.isBlank()) {
+                precioMax = Double.parseDouble(precioMaxTexto.trim());
+            }
+        } catch (NumberFormatException e) {
+            throw new Exception("El precio debe ser un número válido (ej: 15.50)");
         }
 
-        List<Producto> lista = productoDAO.buscarProductoPorNombre(nombre.trim());
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron productos con el nombre: " + nombre);
-        }
-
-        return lista;
-    }
-
-    public List<Producto> buscarProductoPorCategoria(String categoria) throws Exception {
-        if (Validaciones.campoVacio(categoria)) {
-            throw new Exception("Ingrese una categoría para realizar la búsqueda.");
-        }
-
-        List<Producto> lista = productoDAO.buscarProductoPorCategoria(categoria.trim());
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron productos en la categoría: " + categoria);
-        }
-
-        return lista;
-    }
-
-    public List<Producto> buscarProductoPorStock(Integer stockMin, Integer stockMax) throws Exception {
-        if (stockMin != null && stockMin < 0) {
-            throw new Exception("El stock mínimo no puede ser negativo.");
-        }
-        if (stockMax != null && stockMax < 0) {
-            throw new Exception("El stock máximo no puede ser negativo.");
-        }
-        if (stockMin != null && stockMax != null && stockMin > stockMax) {
-            throw new Exception("El stock mínimo no puede ser mayor al stock máximo.");
-        }
-
-        List<Producto> lista = productoDAO.buscarProductoPorStock(stockMin, stockMax);
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron productos en ese rango de stock.");
-        }
-
-        return lista;
-    }
-
-    public List<Producto> buscarProductoPorPrecio(Double precioMin, Double precioMax) throws Exception {
         if (precioMin != null && precioMin < 0) {
             throw new Exception("El precio mínimo no puede ser negativo.");
         }
         if (precioMax != null && precioMax < 0) {
             throw new Exception("El precio máximo no puede ser negativo.");
         }
+    
         if (precioMin != null && precioMax != null && precioMin > precioMax) {
             throw new Exception("El precio mínimo no puede ser mayor al precio máximo.");
         }
-
-        List<Producto> lista = productoDAO.buscarProductoPorPrecio(precioMin, precioMax);
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron productos en ese rango de precio.");
-        }
-
-        return lista;
-    }
-    
-    public List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock) throws Exception {
-        return productoDAO.listarConFiltros(nombre, categoria, estadoStock);
+        
+        return productoDAO.listarConFiltros(nombre, categoria, estadoStock, precioMin, precioMax);
     }
     
     public ResumenStock obtenerResumenStock() throws Exception {

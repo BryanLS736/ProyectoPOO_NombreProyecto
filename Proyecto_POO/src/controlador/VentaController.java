@@ -123,75 +123,13 @@ public class VentaController {
 
         return lista;
     }
-
-    public List<Venta> buscarVentaPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFinal) throws Exception {
-        if (fechaInicio == null || fechaFinal == null) {
-            throw new Exception("Las fechas de inicio y fin son obligatorias.");
-        }
-        if (fechaInicio.isAfter(fechaFinal)) {
-            throw new Exception("La fecha de inicio no puede ser posterior a la fecha final.");
-        }
-
-        List<Venta> lista = ventaDAO.buscarVentaPorRangoDeFechas(fechaInicio, fechaFinal);
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron ventas en el rango de fechas indicado.");
-        }
-
-        return lista;
-    }
-
-    public List<Venta> buscarVentaPorDniCliente(String dni) throws Exception {
-        if (Validaciones.campoVacio(dni)
-                || !Validaciones.soloNumeros(dni)
-                || !Validaciones.longitudMinima(dni, 8)
-                || !Validaciones.longitudMaxima(dni, 8)) {
-            throw new Exception("El DNI debe tener exactamente 8 dígitos numéricos.");
-        }
-
-        List<Venta> lista = ventaDAO.buscarVentaPorDniCliente(dni);
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron ventas para el cliente con DNI: " + dni);
-        }
-
-        return lista;
-    }
-
-    public List<Venta> buscarVentaPorNombreCliente(String nombre) throws Exception {
-        if (Validaciones.campoVacio(nombre) || !Validaciones.soloLetras(nombre)) {
-            throw new Exception("Ingrese un nombre válido para realizar la búsqueda.");
-        }
-
-        List<Venta> lista = ventaDAO.buscarVentaPorNombreCliente(nombre.trim());
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron ventas para el cliente con nombre: " + nombre);
-        }
-
-        return lista;
-    }
-
-    public List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception {
-        if (Validaciones.campoVacio(metodoPago)) {
-            throw new Exception("Seleccione un método de pago para realizar la búsqueda.");
-        }
-
-        List<Venta> lista = ventaDAO.buscarVentaPorMetodoPago(metodoPago);
-
-        if (lista.isEmpty()) {
-            throw new Exception("No se encontraron ventas con el método de pago: " + metodoPago);
-        }
-
-        return lista;
-    }
     
-    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception {
+    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho, String metodoPago) throws Exception {
         if (fechaInicio != null && fechaFinal != null && fechaInicio.isAfter(fechaFinal)) {
             throw new Exception("La fecha de inicio no puede ser posterior a la fecha final.");
         }
 
-        List<Venta> lista = ventaDAO.listarConFiltros(fechaInicio, fechaFinal, tipoDespacho);
+        List<Venta> lista = ventaDAO.listarConFiltros(fechaInicio, fechaFinal, tipoDespacho, metodoPago);
 
         if (lista.isEmpty()) {
             throw new Exception("No se encontraron pedidos con los filtros indicados.");

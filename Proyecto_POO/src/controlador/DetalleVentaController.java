@@ -59,17 +59,4 @@ public class DetalleVentaController {
         return lista;
     }
 
-    public DetalleVenta buscarDetallePorID(int id) throws Exception {
-        if (id <= 0) {
-            throw new Exception("El ID del detalle de venta no es válido.");
-        }
-
-        DetalleVenta detalle = detalleVentaDAO.buscarDetallePorID(id);
-
-        if (detalle == null) {
-            throw new Exception("No se encontró ningún detalle de venta con el ID: " + id);
-        }
-
-        return detalle;
-    }
 }

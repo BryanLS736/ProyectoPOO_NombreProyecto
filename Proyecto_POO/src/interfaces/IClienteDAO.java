@@ -3,6 +3,7 @@ package interfaces;
 import java.util.List;
 import modelo.Cliente;
 
+// No implementado aún
 public interface IClienteDAO {
     void registrarCliente(Cliente cliente) throws Exception;
     void actualizarCliente(Cliente cliente) throws Exception;
