@@ -23,7 +23,7 @@ import vista.area4Boletas.FormBoletas;
 import vista.area5Administracion.FormAdministracion;
 import vista.area6Caja.FormCaja;
 
-public class FormHistorial extends javax.swing.JFrame {
+public final class FormHistorial extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormHistorial.class.getName());
 
@@ -85,7 +85,7 @@ public class FormHistorial extends javax.swing.JFrame {
         tablaDetallePedido.setDefaultEditor(Object.class, null);
 
         // Carga inicial: fecha 1999-01-01 hasta hoy, sin filtro de despacho
-        cargarTablaPedidos("", "", "Todos");
+        cargarTablaPedidos("", "", "Todos", "Todos");
 
         UtilLabels.refrescarEstadoCaja(txtEstadoCaja, cajaControl, this);
         
@@ -179,19 +179,13 @@ public class FormHistorial extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnMostrarDetalle = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        pnlSuma2 = new javax.swing.JPanel();
-        jLabel43 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
-        pnlCalculoSuma2 = new javax.swing.JPanel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDetallePedido = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPedidos = new javax.swing.JTable();
+        cmbMetodoPago = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -569,74 +563,6 @@ public class FormHistorial extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel43.setFont(new java.awt.Font("Inter SemiBold", 0, 16)); // NOI18N
-        jLabel43.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel43.setText("     s/ 0.00");
-
-        jLabel44.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
-        jLabel44.setText("  Total:");
-
-        javax.swing.GroupLayout pnlSuma2Layout = new javax.swing.GroupLayout(pnlSuma2);
-        pnlSuma2.setLayout(pnlSuma2Layout);
-        pnlSuma2Layout.setHorizontalGroup(
-            pnlSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSuma2Layout.createSequentialGroup()
-                .addComponent(jLabel44)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        pnlSuma2Layout.setVerticalGroup(
-            pnlSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSuma2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel44)
-                    .addComponent(jLabel43))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel39.setFont(new java.awt.Font("Inter SemiBold", 0, 11)); // NOI18N
-        jLabel39.setText("Subtotal:");
-
-        jLabel40.setFont(new java.awt.Font("Inter SemiBold", 0, 11)); // NOI18N
-        jLabel40.setText("IGV (18%):");
-
-        jLabel41.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel41.setText("s/0.00");
-
-        jLabel42.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel42.setText("s/0.00");
-
-        javax.swing.GroupLayout pnlCalculoSuma2Layout = new javax.swing.GroupLayout(pnlCalculoSuma2);
-        pnlCalculoSuma2.setLayout(pnlCalculoSuma2Layout);
-        pnlCalculoSuma2Layout.setHorizontalGroup(
-            pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCalculoSuma2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel39)
-                    .addComponent(jLabel40))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel42, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(14, 14, 14))
-        );
-        pnlCalculoSuma2Layout.setVerticalGroup(
-            pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCalculoSuma2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel39)
-                    .addComponent(jLabel41))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCalculoSuma2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel40)
-                    .addComponent(jLabel42))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
         tablaDetallePedido.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
         tablaDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -657,25 +583,14 @@ public class FormHistorial extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlCalculoSuma2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlSuma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 127, Short.MAX_VALUE)
-                        .addComponent(pnlCalculoSuma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlSuma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -696,6 +611,13 @@ public class FormHistorial extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaPedidos);
+
+        cmbMetodoPago.setFont(new java.awt.Font("Inter", 0, 11)); // NOI18N
+        cmbMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Efectivo", "Tarjeta", "Yape" }));
+
+        jLabel10.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel10.setFont(new java.awt.Font("Inter SemiBold", 0, 11)); // NOI18N
+        jLabel10.setText("Tipo Método de Pago:");
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -719,8 +641,16 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(cmbTipoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -742,7 +672,12 @@ public class FormHistorial extends javax.swing.JFrame {
                         .addComponent(cmbTipoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel9)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -753,7 +688,7 @@ public class FormHistorial extends javax.swing.JFrame {
                             .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -964,8 +899,9 @@ public class FormHistorial extends javax.swing.JFrame {
         String fechaInicioTexto = txtFechaInicio.getText();
         String fechaFinTexto = txtFechaFin.getText();
         String tipoDespacho = (String) cmbTipoDespacho.getSelectedItem();
+        String metodoPago = (String) cmbMetodoPago.getSelectedItem();
 
-        cargarTablaPedidos(fechaInicioTexto, fechaFinTexto, tipoDespacho);
+        cargarTablaPedidos(fechaInicioTexto, fechaFinTexto, tipoDespacho, metodoPago);
 
         modeloTblDetallePedido.setRowCount(0); // limpia el detalle de una búsqueda anterior
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -1031,7 +967,7 @@ public class FormHistorial extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMostrarDetalleActionPerformed
 
-    protected void cargarTablaPedidos(String fechaInicioTexto, String fechaFinTexto, String tipoDespacho) {
+    protected void cargarTablaPedidos(String fechaInicioTexto, String fechaFinTexto, String tipoDespacho, String metodoPago) {
         modeloTblPedidos.setRowCount(0);
 
         LocalDate fechaInicio;
@@ -1047,12 +983,12 @@ public class FormHistorial extends javax.swing.JFrame {
                     : LocalDate.parse(fechaFinTexto.trim());
 
         } catch (DateTimeParseException e) {
-            Mensajes.error("Formato de fecha inválido. Usa yyyy-MM-dd (ej: 2026-07-20)");
+            Mensajes.error("Formato de fecha inválido. Use yyyy-MM-dd (ej: 2026-07-20)");
             return;
         }
 
         try {
-            listaVentas = ventaControl.listarConFiltros(fechaInicio, fechaFin, tipoDespacho);
+            listaVentas = ventaControl.listarConFiltros(fechaInicio, fechaFin, tipoDespacho, metodoPago);
 
             for (Venta venta : listaVentas) {
                 Object[] fila = new Object[]{
@@ -1086,8 +1022,10 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnMostrarDetalle;
     private javax.swing.JButton btnTomarPedido;
+    private javax.swing.JComboBox<String> cmbMetodoPago;
     private javax.swing.JComboBox<String> cmbTipoDespacho;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -1103,12 +1041,6 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
@@ -1132,11 +1064,9 @@ public class FormHistorial extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogoFlores1;
     private javax.swing.JLabel lblLogoMarcela;
     private javax.swing.JPanel pnlCalculoSuma;
-    private javax.swing.JPanel pnlCalculoSuma2;
     private javax.swing.JPanel pnlLateral;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPanel pnlSuma;
-    private javax.swing.JPanel pnlSuma2;
     private javax.swing.JTable tablaDetallePedido;
     private javax.swing.JTable tablaPedidos;
     private javax.swing.JLabel txtEstadoCaja;

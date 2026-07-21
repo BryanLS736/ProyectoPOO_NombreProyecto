@@ -104,7 +104,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         tablaCarrito.setDefaultEditor(Object.class, null);
         
         // Llamado a carga tabla productos
-        cargarTablaProductos(null, null, "Todos");
+        cargarTablaProductos(null, null, "Todos", null, null);
         
         // 
         txtNombresEmp.setText(empleado.getApellidos());
@@ -205,6 +205,10 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         cmbEstadoStock = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        txtPrecioMin = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtPrecioMax = new javax.swing.JTextField();
         pnlDerecho = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -437,7 +441,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
                 .addComponent(btnCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblLogoFlores))
@@ -579,6 +583,30 @@ public final class FormTomarPedido extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        jLabel13.setText("Precio Minimo");
+
+        txtPrecioMin.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtPrecioMin.setForeground(new java.awt.Color(102, 102, 102));
+        txtPrecioMin.setBorder(null);
+        txtPrecioMin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioMinActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        jLabel15.setText("Precio Máximo");
+
+        txtPrecioMax.setFont(new java.awt.Font("Inter SemiBold", 0, 12)); // NOI18N
+        txtPrecioMax.setForeground(new java.awt.Color(102, 102, 102));
+        txtPrecioMax.setBorder(null);
+        txtPrecioMax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioMaxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -595,11 +623,17 @@ public final class FormTomarPedido extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
                     .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel27)
                     .addComponent(cmbEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel13)
+                    .addComponent(txtPrecioMax)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtPrecioMin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -608,23 +642,33 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar))
+                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel19))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel19))
+                        .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbEstadoStock, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addGap(0, 10, Short.MAX_VALUE))
+                        .addComponent(txtPrecioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout pnlCentralLayout = new javax.swing.GroupLayout(pnlCentral);
@@ -645,7 +689,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
                             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(908, 908, 908)
                         .addComponent(pnlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -654,15 +698,16 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         pnlCentralLayout.setVerticalGroup(
             pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCentralLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCentralLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
+                        .addGap(261, 261, 261)
                         .addComponent(pnlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 307, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCentralLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
@@ -867,23 +912,22 @@ public final class FormTomarPedido extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(cmbMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDerechoLayout.createSequentialGroup()
-                            .addComponent(btnAqui, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnLlevar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12)
-                            .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDerechoLayout.createSequentialGroup()
-                            .addComponent(lblCantidad2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCantidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDerechoLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12)))
+                    .addGroup(pnlDerechoLayout.createSequentialGroup()
+                        .addComponent(btnAqui, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLlevar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlDerechoLayout.createSequentialGroup()
+                        .addComponent(lblCantidad2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCantidad2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlDerechoLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12))
                     .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -1071,7 +1115,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlDerecho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)))
+                    .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)))
             .addComponent(pnlBarraLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1281,7 +1325,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
 
             pedidoController.vaciarCarrito();
             actualizarTablaCarrito();
-            cargarTablaProductos(null, null, "Todos"); // recarga stock real desde BD
+            cargarTablaProductos(null, null, "Todos", null, null); // recarga stock real desde BD
             actualizarTotales();
             txtNotas.setText("");
 
@@ -1376,14 +1420,26 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         txtBuscarProducto.setText("");
         cmbCategoria.setSelectedIndex(0);
         cmbEstadoStock.setSelectedIndex(0);
+        txtPrecioMin.setText("");
+        txtPrecioMax.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String nombreProducto = txtBuscarProducto.getText().trim();
         String categoriaProducto = cmbCategoria.getSelectedItem().toString();
         String estadoProducto = cmbEstadoStock.getSelectedItem().toString();
-        cargarTablaProductos(nombreProducto, categoriaProducto, estadoProducto);
+        String precioMinimo = txtPrecioMin.getText().trim();
+        String precioMaximo = txtPrecioMax.getText().trim();
+        cargarTablaProductos(nombreProducto, categoriaProducto, estadoProducto, precioMinimo, precioMaximo);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtPrecioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioMinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioMinActionPerformed
+
+    private void txtPrecioMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioMaxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioMaxActionPerformed
 
     private void actualizarTablaCarrito() {
         modeloTblCarrito.setRowCount(0);
@@ -1416,34 +1472,34 @@ public final class FormTomarPedido extends javax.swing.JFrame {
         lblTotal.setText(String.format("s/ %.2f", pedidoController.calcularTotal()));
     }
     
-    protected void cargarTablaProductos(String nombre, String categoria, String estadoStock) {
-    modeloTblProducto.setRowCount(0);
-    productosOriginales.clear(); // evita entradas viejas de un filtro anterior
+    protected void cargarTablaProductos(String nombre, String categoria, String estadoStock, String precioMin, String precioMax) {
+        modeloTblProducto.setRowCount(0);
+        productosOriginales.clear(); // evita entradas viejas de un filtro anterior
 
-    try {
-        listaProductos = prodControl.listarConFiltros(nombre, categoria, estadoStock);
+        try {
+            listaProductos = prodControl.listarConFiltros(nombre, categoria, estadoStock, precioMin, precioMax);
 
-        for (Producto prod : listaProductos) {
-            Object[] fila = new Object[]{
-                prod.getIdProducto(),
-                prod.getNombre(),
-                prod.getCategoria(),
-                prod.getStock(),
-                prod.getPrecio(),
-                prod.getUnidMedida(),
-                prod.isActivo()
-            };
+            for (Producto prod : listaProductos) {
+                Object[] fila = new Object[]{
+                    prod.getIdProducto(),
+                    prod.getNombre(),
+                    prod.getCategoria(),
+                    prod.getStock(),
+                    prod.getPrecio(),
+                    prod.getUnidMedida(),
+                    prod.isActivo()
+                };
 
-            modeloTblProducto.addRow(fila);
-            productosOriginales.put(prod.getIdProducto(), prod.getStock());
+                modeloTblProducto.addRow(fila);
+                productosOriginales.put(prod.getIdProducto(), prod.getStock());
+            }
+
+            actualizarStockVisual();
+
+        } catch (Exception e) {
+            Mensajes.error(e.getMessage());
         }
-        
-        actualizarStockVisual();
-
-    } catch (Exception e) {
-        Mensajes.error(e.getMessage());
     }
-}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
@@ -1467,7 +1523,9 @@ public final class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbMetodoPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1515,6 +1573,8 @@ public final class FormTomarPedido extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre2;
     private javax.swing.JLabel txtNombresEmp;
     private javax.swing.JTextArea txtNotas;
+    private javax.swing.JTextField txtPrecioMax;
+    private javax.swing.JTextField txtPrecioMin;
     private javax.swing.JLabel txtRol;
     private javax.swing.JLabel txtRol1;
     // End of variables declaration//GEN-END:variables

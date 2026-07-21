@@ -112,113 +112,55 @@ public class VentaDAO implements IVentaDAO {
             throw new Exception("Error al buscar la venta por ID: " + e.getMessage());
         }
     }
-
+    
     @Override
-    public List<Venta> buscarVentaPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFinal) throws Exception {
+    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho, String metodoPago) throws Exception {
         List<Venta> listaVentas = new ArrayList<>();
-        
-        String sql = """
-                     SELECT *
-                     FROM Venta
-                     WHERE fecha_venta BETWEEN ? AND ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setDate(1, Date.valueOf(fechaInicio));
-            ps.setDate(2, Date.valueOf(fechaFinal));
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaVentas.add(mapearVenta(rs));
-                }
-            }
-            
-            return listaVentas;
-        } catch (SQLException e) {
-            throw new Exception("Error al buscar la venta por rango de fechas: " + e.getMessage());
+        StringBuilder sql = new StringBuilder("""
+            SELECT v.*, e.nombres AS nombre_empleado
+            FROM Venta v
+            LEFT JOIN Empleado e ON v.id_empleado = e.id_empleado
+            WHERE 1=1
+            """);
+        List<Object> parametros = new ArrayList<>();
+
+        if (fechaInicio != null && fechaFinal != null) {
+            sql.append(" AND v.fecha_venta BETWEEN ? AND ?");
+            parametros.add(java.sql.Date.valueOf(fechaInicio));
+            parametros.add(java.sql.Date.valueOf(fechaFinal));
         }
-    }
 
-    @Override
-    public List<Venta> buscarVentaPorDniCliente(String dni) throws Exception {
-        List<Venta> listaVentas = new ArrayList<>();
-        
-        String sql = """
-                     SELECT *
-                     FROM Venta v
-                     WHERE dni _cliente = ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setString(1, dni);
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaVentas.add(mapearVenta(rs));
-                }
-            }
-            
-            return listaVentas;
-        } catch (SQLException e) {
-            throw new Exception("Error al buscar la venta por dni del cliente: " + e.getMessage());
+        if (tipoDespacho != null && !tipoDespacho.equalsIgnoreCase("Todos")) {
+            sql.append(" AND v.tipo_despacho = ?");
+            parametros.add(tipoDespacho);
         }
-    }
 
-    @Override
-    public List<Venta> buscarVentaPorNombreCliente(String nombre) throws Exception {
-        List<Venta> listaVentas = new ArrayList<>();
-        
-        String sql = """
-                     SELECT *
-                     FROM Venta v
-                     WHERE nombre_cliente LIKE ?
-                     """;
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setString(1, "%" + nombre + "%");
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                while (rs.next()) {
-                    listaVentas.add(mapearVenta(rs));
-                }
-            }
-            
-            return listaVentas;
-        } catch (SQLException e) {
-            throw new Exception("Error al buscar la venta por nombre del cliente: " + e.getMessage());
+        if (metodoPago != null && !metodoPago.equalsIgnoreCase("Todos")) {
+            sql.append(" AND v.metodo_pago = ?");
+            parametros.add(metodoPago);
         }
-    }
 
-    @Override
-    public List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception {
-        List<Venta> listaVentas = new ArrayList<>();
-        
-        String sql = """
-                     SELECT *
-                     FROM Venta
-                     WHERE metodo_pago = ?
-                     """;
+        sql.append(" ORDER BY v.fecha_venta DESC, v.hora_venta DESC");
+
         try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setString(1, metodoPago);
-            
-            try (ResultSet rs = ps.executeQuery();) {
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    listaVentas.add(mapearVenta(rs));
+                    Venta venta = mapearVenta(rs);
+                    venta.getEmpleado().setNombres(rs.getString("nombre_empleado"));
+                    listaVentas.add(venta);
                 }
             }
-            
+
             return listaVentas;
+
         } catch (SQLException e) {
-            throw new Exception("Error al buscar la venta metodo de pago: " + e.getMessage());
+            throw new Exception("Error al filtrar ventas: " + e.getMessage());
         }
     }
     
@@ -245,52 +187,6 @@ public class VentaDAO implements IVentaDAO {
             return total;
         } catch (SQLException e) {
             throw new Exception("Error al sumar las ventas de la caja: " + e.getMessage());
-        }
-    }
-    
-    @Override
-    public List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception {
-        List<Venta> listaVentas = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("""
-            SELECT v.*, e.nombres AS nombre_empleado
-            FROM Venta v
-            LEFT JOIN Empleado e ON v.id_empleado = e.id_empleado
-            WHERE 1=1
-            """);
-        List<Object> parametros = new ArrayList<>();
-
-        if (fechaInicio != null && fechaFinal != null) {
-            sql.append(" AND v.fecha_venta BETWEEN ? AND ?");
-            parametros.add(java.sql.Date.valueOf(fechaInicio));
-            parametros.add(java.sql.Date.valueOf(fechaFinal));
-        }
-
-        if (tipoDespacho != null && !tipoDespacho.equalsIgnoreCase("Todos")) {
-            sql.append(" AND v.tipo_despacho = ?");
-            parametros.add(tipoDespacho);
-        }
-
-        sql.append(" ORDER BY v.fecha_venta DESC, v.hora_venta DESC");
-
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-
-            for (int i = 0; i < parametros.size(); i++) {
-                ps.setObject(i + 1, parametros.get(i));
-            }
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Venta venta = mapearVenta(rs);
-                    venta.getEmpleado().setNombres(rs.getString("nombre_empleado")); // solo aquí, por el JOIN
-                    listaVentas.add(venta);
-                }
-            }
-
-            return listaVentas;
-
-        } catch (SQLException e) {
-            throw new Exception("Error al filtrar ventas: " + e.getMessage());
         }
     }
     

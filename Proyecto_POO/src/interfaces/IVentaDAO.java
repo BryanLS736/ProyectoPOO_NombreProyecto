@@ -9,17 +9,10 @@ public interface IVentaDAO {
 
     List<Venta> verTodasLasVentas() throws Exception;
     
+    // No usado
     Venta buscarVentaPorID(int id) throws Exception;
-
-    List<Venta> buscarVentaPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFinal) throws Exception;
-
-    List<Venta> buscarVentaPorDniCliente(String dni) throws Exception;
-
-    List<Venta> buscarVentaPorNombreCliente(String nombre) throws Exception;
     
-    List<Venta> buscarVentaPorMetodoPago(String metodoPago) throws Exception;
-    
-    List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho) throws Exception;
+    List<Venta> listarConFiltros(LocalDate fechaInicio, LocalDate fechaFinal, String tipoDespacho, String metodoPago) throws Exception;
     
     double sumarVentasPorCaja(int idCaja) throws Exception;
 

@@ -68,32 +68,6 @@ public class DetalleVentaDAO implements IDetalleVentaDAO {
             throw new Exception("Error al buscar el detalle venta por id venta:" + e.getMessage());
         }
     }
-
-    @Override
-    public DetalleVenta buscarDetallePorID(int id) throws Exception {
-        DetalleVenta detalleVenta = null;
-        String sql = """
-                     SELECT *
-                     FROM Detalle_Venta
-                     WHERE id_detalle_venta = ?
-                     """;
-        
-        try (Connection conn = new Conexion().conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-            ) {
-            
-            ps.setInt(1, id);
-            
-            try (ResultSet rs = ps.executeQuery();) {
-                if (rs.next()) {
-                    detalleVenta = (mapearDetalleVenta(rs));
-                }
-            }
-            return detalleVenta;
-        } catch (SQLException e) {
-            throw new Exception("Error al buscar el detalle venta por su id" + e.getMessage());
-        }
-    }
     
     public DetalleVenta mapearDetalleVenta (ResultSet rs) throws SQLException {
         DetalleVenta detalleVenta = new DetalleVenta();

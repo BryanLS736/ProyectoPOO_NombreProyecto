@@ -9,6 +9,7 @@ public interface ICajaDAO {
 
     void cerrarCaja(Caja caja) throws Exception;
 
+    // No implementado aún
     Caja buscarCajaPorID(int id) throws Exception;
     
     Caja buscarCajaAbierta() throws Exception;

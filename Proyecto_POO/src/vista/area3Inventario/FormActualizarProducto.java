@@ -270,7 +270,7 @@ public class FormActualizarProducto extends javax.swing.JFrame {
             prodControl.actualizarProducto(prodAgregar);
             
             Mensajes.exito("Producto Actualizado correctamente!");
-            formInventario.cargarTablaProductos(null, null, "Todos");
+            formInventario.cargarTablaProductos(null, null, "Todos", null, null);
             this.dispose();
         } catch (java.lang.NumberFormatException ne) {
             Mensajes.error("Precio y Stock deben ser valores numéricos válidos.");
