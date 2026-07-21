@@ -1,4 +1,4 @@
-package vista.area4Boletas;
+package vista.imagenes.area4Boletas;
 
 import controlador.CajaController;
 import controlador.ProductoController;
@@ -14,7 +14,7 @@ import vista.area1TomarPedido.FormTomarPedido;
 import vista.area2Historial.FormHistorial;
 import vista.area3Inventario.FormInventario;
 import vista.area5Administracion.FormAdministracion;
-import vista.area6Caja.FormCaja;
+import vista.area4Caja.FormCaja;
 
 public class FormBoletas extends javax.swing.JFrame {
     
