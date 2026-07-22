@@ -22,7 +22,7 @@ Sistema desarrollado en Java como proyecto universitario.
 - NetBeans
 - JDK 8 o superior
 - MySQL instalado
-- Ejecutar el script `sql/esquema.sql` para crear la base de datos
+- Ejecutar el script `base-de-datos/2_esquema/1_creacion-tablas.sql` y `base-de-datos/2_esquema/2_insercion_datos.sql` para crear la base de datos
 
 ## Estructura del proyecto
 - `src/` → código fuente Java
@@ -64,7 +64,7 @@ PanaderiaApp/
         ├── interfaces/
         ├── modelo/
         ├── proyecto_poo/
-        ├── util/
+        ├── utilidades/
         └── vista/
 ```
 
@@ -72,17 +72,7 @@ PanaderiaApp/
 
 Contiene las clases que representan las entidades del sistema y las tablas de la base de datos. Estas clases almacenan los datos mediante atributos, constructores, getters y setters.
 
-También incluye la jerarquía de herencia de productos:
-
-```text
-Producto (abstracta)
-├── Pan
-├── Bocadito
-├── Bebida
-└── Pastel
-```
-
-Ejemplos: `Empleado.java`, `Cliente.java`, `Caja.java`, `Venta.java`, `DetalleVenta.java`, `Producto.java`, `Pan.java`, `Bebida.java`, `Bocadito.java`, `Pastel.java`.
+Ejemplos: `Empleado.java`, `Cliente.java`, `Caja.java`, `Venta.java`, `DetalleVenta.java`, `Producto.java`.
 
 **Regla:** las clases de este paquete no deben contener código SQL ni componentes de interfaz gráfica.
 
@@ -96,10 +86,10 @@ Ejemplos:
 
 ```java
 public interface IEmpleadoDAO {
-    boolean registrar(Empleado empleado);
-    boolean modificar(Empleado empleado);
-    boolean eliminar(int id);
-    List<Empleado> listar();
+    void registrarEmpleado(Empleado empleado);
+    void actualizarEmpleado(Empleado empleado);
+    void cambiarEstadoEmpleado(int id);
+    List<Empleado> verTodosLosEmpleados();
 }
 ```
 
@@ -128,7 +118,16 @@ Contiene la clase `Conexion.java`, responsable de administrar la conexión con M
 Todos los DAO obtienen la conexión desde esta clase:
 
 ```java
-Connection conn = Conexion.getInstancia().getConexion();
+public class Conexion {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/panaderia_db";
+    private static final String USUARIO = "root";
+    private static final String PASSWORD = "1234";
+
+    public Connection conectar() throws SQLException {
+        return DriverManager.getConnection(URL, USUARIO, PASSWORD);
+    }
+}
 ```
 
 **Regla:** las conexiones a la base de datos deben centralizarse aquí para evitar duplicación de código y facilitar el mantenimiento.
@@ -141,15 +140,12 @@ Contiene todas las interfaces gráficas desarrolladas con Swing (`JFrame`, `JDia
 
 Ejemplos:
 
-* `LoginForm.java`
-* `MenuPrincipalForm.java`
-* `EmpleadoForm.java`
-* `ClienteForm.java`
-* `ProductoForm.java`
-* `VentaForm.java`
-* `CajaForm.java`
-* `HistorialForm.java`
-* `ReportesForm.java`
+* `FormLogin.java`
+* `FormTomarPedido.java`
+* `FormHistorial.java`
+* `FormInventario.java`
+* `FormCaja.java`
+* `FormAdministracion.java`
 
 **Regla:** la vista se encarga únicamente de mostrar información y capturar acciones del usuario.
 
@@ -179,10 +175,8 @@ Contiene clases reutilizables que pueden ser utilizadas desde cualquier capa del
 
 Ejemplos:
 
-* `Negocio.java` — información fija de la empresa.
-* `PasswordUtil.java` — cifrado y verificación de contraseñas.
-* `ValidacionUtil.java` — validaciones genéricas.
-* `FechaUtil.java` — utilidades para manejo de fechas.
+* `Constantes.java` — información fija como el monto de apertura de la caja.
+* `Mensajes.java` — se guardan JOptionPane con distintos mensajes como login incorrecto, cerrar sesión, etc.
 
 **Regla:** aquí solo deben colocarse herramientas genéricas que no pertenezcan a una entidad específica.
 
@@ -238,7 +232,7 @@ public class Main {
 
 Cada integrante desarrollará su funcionalidad en una rama propia siguiendo la nomenclatura:
 
-```text
+```bash
 feature/nombre-modulo
 ```
 
