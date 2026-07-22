@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import utilidades.Constantes;
-import utilidades.ResumenStock;
+import utilidades._ResumenStock;
 
 public class ProductoDAO implements IProductoDAO{
 
@@ -226,7 +226,7 @@ public class ProductoDAO implements IProductoDAO{
     }
     
     @Override
-    public ResumenStock obtenerResumenStock() throws Exception {
+    public _ResumenStock obtenerResumenStock() throws Exception {
         String sql = """
                  SELECT
                     COUNT(*) AS total,
@@ -242,7 +242,7 @@ public class ProductoDAO implements IProductoDAO{
             ps.setInt(2, Constantes.STOCK_BAJO_UMBRAL);
 
             try (ResultSet rs = ps.executeQuery()) {
-                ResumenStock resumen = new ResumenStock();
+                _ResumenStock resumen = new _ResumenStock();
                 if (rs.next()) {
                     resumen.setTotal(rs.getInt("total"));
                     resumen.setSinStock(rs.getInt("sin_stock"));

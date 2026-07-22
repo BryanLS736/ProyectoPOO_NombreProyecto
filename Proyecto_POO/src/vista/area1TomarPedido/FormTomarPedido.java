@@ -18,7 +18,7 @@ import modelo.Caja;
 import modelo.Empleado;
 import modelo.Producto;
 import modelo.Venta;
-import utilidades.ItemCarrito;
+import utilidades._ItemCarrito;
 import utilidades.Mensajes;
 import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
@@ -877,7 +877,7 @@ public final class FormTomarPedido extends javax.swing.JFrame {
 
         txtNotas.setColumns(20);
         txtNotas.setFont(new java.awt.Font("Inter SemiBold", 0, 13)); // NOI18N
-        txtNotas.setForeground(new java.awt.Color(153, 153, 153));
+        txtNotas.setForeground(new java.awt.Color(102, 102, 102));
         txtNotas.setRows(5);
         txtNotas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1429,9 +1429,10 @@ public final class FormTomarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtNotasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNotasFocusGained
-        txtNotas.setText("");
-        txtNotas.setForeground(Color.black);
-        
+        if(txtNotas.getText().equals("Notas(sin azúcar, caliente,etc)")){
+            txtNotas.setText("");
+        txtNotas.setForeground(Color.decode("#333333"));
+        }
     }//GEN-LAST:event_txtNotasFocusGained
 
     private void txtPrecioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioMinActionPerformed
@@ -1439,14 +1440,15 @@ public final class FormTomarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecioMinActionPerformed
 
     private void txtNotasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNotasFocusLost
-        if(txtNotas.getText().equals(""))
+        if(txtNotas.getText().equals("")){
         txtNotas.setText("Notas(sin azúcar, caliente,etc)");
         txtNotas.setForeground(Color.decode("#90929B"));
+        }
     }//GEN-LAST:event_txtNotasFocusLost
 
     private void actualizarTablaCarrito() {
         modeloTblCarrito.setRowCount(0);
-        for (ItemCarrito item : pedidoController.obtenerCarrito()) {
+        for (_ItemCarrito item : pedidoController.obtenerCarrito()) {
             modeloTblCarrito.addRow(new Object[]{
                 item.getProducto().getIdProducto(),
                 item.getProducto().getNombre(),

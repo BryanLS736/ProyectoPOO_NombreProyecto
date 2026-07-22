@@ -13,7 +13,7 @@ import java.util.List;
 import modelo.Caja;
 import modelo.DetalleVenta;
 import modelo.Venta;
-import utilidades.ItemCarrito;
+import utilidades._ItemCarrito;
 import utilidades.Validaciones;
 
 public class VentaController {
@@ -75,7 +75,7 @@ public class VentaController {
         ventaDAO.registrarVenta(venta);
     }
     
-    public void registrarVentaConDetalles(Venta venta, List<ItemCarrito> carrito) throws Exception {
+    public void registrarVentaConDetalles(Venta venta, List<_ItemCarrito> carrito) throws Exception {
         if (carrito == null || carrito.isEmpty()) {
             throw new Exception("El carrito está vacío. Agregue al menos un producto.");
         }
@@ -84,7 +84,7 @@ public class VentaController {
         registrarVenta(venta); // aquí se le asigna el idVenta generado
 
         // 2. Detalles, uno por cada producto del carrito
-        for (ItemCarrito item : carrito) {
+        for (_ItemCarrito item : carrito) {
             DetalleVenta detalle = new DetalleVenta();
             detalle.setVenta(venta);
             detalle.setProducto(item.getProducto());
@@ -95,7 +95,7 @@ public class VentaController {
         }
 
         // 3. Descuento de stock, al final
-        for (ItemCarrito item : carrito) {
+        for (_ItemCarrito item : carrito) {
             productoDAO.descontarStock(item.getProducto().getIdProducto(), item.getCantidad());
         }
     }

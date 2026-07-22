@@ -2,7 +2,7 @@ package controlador;
 
 import interfaces.IProductoDAO;
 import modelo.Producto;
-import utilidades.ItemCarrito;
+import utilidades._ItemCarrito;
 import utilidades.Mensajes;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 public class PedidoController {
 
     private final IProductoDAO productoDAO;
-    private final List<ItemCarrito> carrito;
+    private final List<_ItemCarrito> carrito;
 
     public PedidoController(IProductoDAO productoDAO) {
         this.productoDAO = productoDAO;
@@ -55,11 +55,11 @@ public class PedidoController {
             return false;
         }
 
-        ItemCarrito existente = buscarItemPorProducto(actual.getIdProducto());
+        _ItemCarrito existente = buscarItemPorProducto(actual.getIdProducto());
         if (existente != null) {
             existente.setCantidad(existente.getCantidad() + cantidad);
         } else {
-            carrito.add(new ItemCarrito(actual, cantidad));
+            carrito.add(new _ItemCarrito(actual, cantidad));
         }
 
         return true;
@@ -90,7 +90,7 @@ public class PedidoController {
             return false;
         }
 
-        ItemCarrito item = carrito.get(filaSeleccionada);
+        _ItemCarrito item = carrito.get(filaSeleccionada);
 
         Producto actual = productoDAO.buscarProductoPorID(item.getProducto().getIdProducto());
         if (actual == null) {
@@ -121,7 +121,7 @@ public class PedidoController {
     // Calculo de precios: total, subtotal e igv
 
     public double calcularTotal() {
-        return carrito.stream().mapToDouble(ItemCarrito::getPrecioTotal).sum();
+        return carrito.stream().mapToDouble(_ItemCarrito::getPrecioTotal).sum();
     }
 
     public double calcularSubtotal() {
@@ -133,7 +133,7 @@ public class PedidoController {
     }
 
     // Métodos auxiliares
-    public List<ItemCarrito> obtenerCarrito() {
+    public List<_ItemCarrito> obtenerCarrito() {
         return carrito;
     }
 
@@ -142,12 +142,12 @@ public class PedidoController {
     }
 
     public int obtenerCantidadEnCarrito(int idProducto) {
-        ItemCarrito item = buscarItemPorProducto(idProducto);
+        _ItemCarrito item = buscarItemPorProducto(idProducto);
         return item != null ? item.getCantidad() : 0;
     }
 
-    private ItemCarrito buscarItemPorProducto(int idProducto) {
-        for (ItemCarrito item : carrito) {
+    private _ItemCarrito buscarItemPorProducto(int idProducto) {
+        for (_ItemCarrito item : carrito) {
             if (item.getProducto().getIdProducto() == idProducto) {
                 return item;
             }
