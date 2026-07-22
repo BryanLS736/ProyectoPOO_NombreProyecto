@@ -15,7 +15,7 @@ public class Mensajes {
                 JOptionPane.WARNING_MESSAGE);
     }
 
-    // Campos incorrectos
+    // Datos son incorrectos
     public static void loginIncorrecto() {
         JOptionPane.showMessageDialog(null,
                 "Usuario o contraseña incorrectos.",
@@ -23,7 +23,7 @@ public class Mensajes {
                 JOptionPane.ERROR_MESSAGE);
     }
     
-    // Cerrar Sesión
+    // Mensaje de Cerrar Sesión
     public static boolean cerrarSesion() {
         int respuesta = JOptionPane.showConfirmDialog(null,
                 "¿Esta seguro que desea salir de la sesión?",
@@ -33,7 +33,7 @@ public class Mensajes {
         return respuesta == JOptionPane.YES_OPTION;
     }
 
-    // Confirmación de guardar un registro
+    // Registro ha sido guardado exitosamente
     public static void registroGuardado() {
         JOptionPane.showMessageDialog(null,
                 "Registro guardado correctamente.",

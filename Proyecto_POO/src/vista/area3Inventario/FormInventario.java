@@ -12,7 +12,7 @@ import modelo.Caja;
 import modelo.Empleado;
 import modelo.Producto;
 import utilidades.Mensajes;
-import utilidades.ResumenStock;
+import utilidades._ResumenStock;
 import utilidades.UtilLabels;
 import vista.area0Login.FormLogin;
 import vista.area1TomarPedido.FormTomarPedido;
@@ -1212,7 +1212,7 @@ public final class FormInventario extends javax.swing.JFrame {
     // Método para actualizar las Etiquetas del stock
     private void actualizarEtiquetasResumen() {
         try {
-            ResumenStock resumen = prodControl.obtenerResumenStock();
+            _ResumenStock resumen = prodControl.obtenerResumenStock();
 
             lblTotal.setText(String.valueOf(resumen.getTotal()));
             lblSuficiente.setText(String.valueOf(resumen.getSuficiente()));

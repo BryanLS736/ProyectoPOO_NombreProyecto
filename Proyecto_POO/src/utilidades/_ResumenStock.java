@@ -1,7 +1,8 @@
 package utilidades;
 
 // Clase que calcula el stock del inventario y los clasifica
-public class ResumenStock {
+public class _ResumenStock {
+    
     private int total;
     private int suficiente;
     private int bajo;

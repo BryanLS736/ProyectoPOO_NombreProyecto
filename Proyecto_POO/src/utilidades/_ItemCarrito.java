@@ -2,12 +2,13 @@ package utilidades;
 
 import modelo.Producto;
 
-public class ItemCarrito {
+public class _ItemCarrito {
+    
     private Producto producto;
     private int cantidad;
     private double precioUnitario;
 
-    public ItemCarrito(Producto producto, int cantidad) {
+    public _ItemCarrito(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
         this.precioUnitario = producto.getPrecio();
@@ -28,7 +29,7 @@ public class ItemCarrito {
     public double getPrecioUnitario() {
         return precioUnitario;
     }
-
+    
     public double getPrecioTotal() {
         return precioUnitario * cantidad;
     }

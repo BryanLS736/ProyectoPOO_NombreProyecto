@@ -2,7 +2,7 @@ package interfaces;
 
 import java.util.List;
 import modelo.Producto;
-import utilidades.ResumenStock;
+import utilidades._ResumenStock;
 
 public interface IProductoDAO {
     void registrarProducto(Producto producto) throws Exception;
@@ -19,7 +19,7 @@ public interface IProductoDAO {
     List<Producto> listarConFiltros(String nombre, String categoria, String estadoStock, Double precioMin, Double precioMax) throws Exception;
     
     // Método para el cálculo y clasificación del stock
-    ResumenStock obtenerResumenStock() throws Exception;
+    _ResumenStock obtenerResumenStock() throws Exception;
     
     // Para descontar stock de un producto luego de la venta
     void descontarStock(int idProducto, int cantidad) throws Exception;
